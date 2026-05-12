@@ -13,9 +13,9 @@ export function useGoogleAnalytics() {
     script.async = true;
     document.head.appendChild(script);
 
-    window.dataLayer = window.dataLayer || [];
+    (window as any).dataLayer = (window as any).dataLayer || [];
     function gtag(...args: any[]) {
-      window.dataLayer.push(arguments);
+      (window as any).dataLayer.push(arguments);
     }
     gtag('js', new Date());
     gtag('config', ANALYTICS.GA_ID);
@@ -47,13 +47,13 @@ export function useMetaPixel() {
 export function trackEvent(eventName: string, eventData?: any) {
   if (typeof window !== 'undefined') {
     // Google Analytics
-    if (window.gtag) {
-      window.gtag('event', eventName, eventData);
+    if ((window as any).gtag) {
+      (window as any).gtag('event', eventName, eventData);
     }
 
     // Meta Pixel
-    if (window.fbq) {
-      window.fbq('track', eventName, eventData);
+    if ((window as any).fbq) {
+      (window as any).fbq('track', eventName, eventData);
     }
   }
 }
