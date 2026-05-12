@@ -26,7 +26,12 @@ export interface Tarotista {
   especialidad: string;
   bio?: string;
   rating?: number;
+  numero_resenas?: number;
   disponible: boolean;
+  numero_telefono?: string;
+  email?: string;
+  precio_por_minuto?: number;
+  imagen_url?: string;
 }
 
 export interface CreateCheckoutRequest {
