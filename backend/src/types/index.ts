@@ -86,6 +86,7 @@ export interface CreateSessionRequest {
   minutes: 10 | 15 | 20 | 30;
   email: string;
   phone: string;
+  tarotista_id?: string;
 }
 
 export interface CreateCheckoutRequest {
