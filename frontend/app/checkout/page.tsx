@@ -11,7 +11,7 @@ import { useCreateSession, useCreateCheckout } from '@/lib/hooks';
 export default function CheckoutPage() {
   const searchParams = useSearchParams();
   const minutes = parseInt(searchParams.get('minutes') || '15') as 10 | 15 | 20 | 30;
-  const taroistaId = searchParams.get('tarotista');
+  const taroistaId = searchParams.get('tarotista') || undefined;
   const pricing = PRICING[minutes];
 
   const [formData, setFormData] = useState({
