@@ -1,6 +1,6 @@
 import { supabase } from '../config/database';
 import { logger } from '../utils/logger';
-import { AdminDashboardStats, PaginatedResponse } from '../types';
+import { AdminDashboardStats, PaginatedResponse, Session, User } from '../types';
 
 export const adminService = {
   async getDashboardStats(): Promise<AdminDashboardStats> {
@@ -64,7 +64,7 @@ export const adminService = {
   async getAllSessions(
     page: number = 1,
     limit: number = 50
-  ): Promise<PaginatedResponse> {
+  ): Promise<PaginatedResponse<Session>> {
     try {
       const offset = (page - 1) * limit;
 
@@ -93,7 +93,7 @@ export const adminService = {
   async getAllCustomers(
     page: number = 1,
     limit: number = 50
-  ): Promise<PaginatedResponse> {
+  ): Promise<PaginatedResponse<User>> {
     try {
       const offset = (page - 1) * limit;
 
