@@ -15,7 +15,7 @@ export function useGoogleAnalytics() {
 
     (window as any).dataLayer = (window as any).dataLayer || [];
     function gtag(...args: any[]) {
-      (window as any).dataLayer.push(arguments);
+      (window as any).dataLayer.push(args);
     }
     gtag('js', new Date());
     gtag('config', ANALYTICS.GA_ID);
