@@ -11,19 +11,19 @@ export default function TestimonialsSection() {
   const testimonials = [
     {
       name: 'María Delgado',
-      role: 'Abogada',
+      role: '',
       content: 'La lectura fue increíblemente precisa. Me ayudó a ver mi situación laboral desde una perspectiva completamente nueva. La recomiendo sin dudas.',
       rating: 5
     },
     {
       name: 'Carlos Mendez',
-      role: 'Empresario',
+      role: '',
       content: 'Profesional, acertada y transformadora. Esta experiencia superó mis expectativas. Definitivamente vuelvo a hacer una consulta.',
       rating: 5
     },
     {
       name: 'Lucía Rivera',
-      role: 'Diseñadora',
+      role: '',
       content: 'La tarotista captó cosas que yo nunca mencioné. Sentí una conexión espiritual genuina. Experiencia maravillosa y sanadora.',
       rating: 5
     }
@@ -72,7 +72,7 @@ export default function TestimonialsSection() {
               {/* Author */}
               <div className="border-t border-purple-200 pt-4">
                 <p className="text-gray-900 font-bold text-sm">{testimonial.name}</p>
-                <p className="text-gray-600 text-xs">{testimonial.role}</p>
+                {testimonial.role && <p className="text-gray-600 text-xs">{testimonial.role}</p>}
               </div>
             </motion.div>
           ))}

@@ -31,7 +31,7 @@ router.post(
       }
 
       // Upload to Supabase Storage
-      const fileName = `${tarotista.nombre.toLowerCase().replace(/\s+/g, '_')}_${Date.now()}.jpg`;
+      const fileName = `${tarotista.nombre.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, '_')}_${Date.now()}.jpg`;
       const { error: uploadError } = await supabase.storage
         .from('tarotistas')
         .upload(fileName, req.file.buffer, {

@@ -1,23 +1,18 @@
 export const PRICING = {
-  10: {
-    minutes: 10,
-    price: 9.99,
-    display: '$9.99',
-  },
   15: {
     minutes: 15,
-    price: 14.99,
-    display: '$14.99',
+    price: 10,
+    display: '€10,00',
   },
   20: {
     minutes: 20,
-    price: 19.99,
-    display: '$19.99',
+    price: 15,
+    display: '€15,00',
   },
   30: {
     minutes: 30,
-    price: 29.99,
-    display: '$29.99',
+    price: 20,
+    display: '€20,00',
   },
 } as const;
 
