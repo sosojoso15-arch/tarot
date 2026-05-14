@@ -1,17 +1,14 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Star, MessageCircle, Phone, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useRef, useState, useEffect } from 'react';
+import { Star } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { api } from '@/lib/api';
+import Link from 'next/link';
 
 export default function TarotistsGrid() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
   const [tarotistas, setTarotistas] = useState<any[]>([]);
 
-  // Cargar tarotistas reales
   useEffect(() => {
     const loadTarotistas = async () => {
       try {
@@ -24,52 +21,8 @@ export default function TarotistsGrid() {
     loadTarotistas();
   }, []);
 
-  const checkScroll = () => {
-    if (scrollRef.current) {
-      setCanScrollLeft(scrollRef.current.scrollLeft > 0);
-      setCanScrollRight(
-        scrollRef.current.scrollLeft <
-          scrollRef.current.scrollWidth - scrollRef.current.clientWidth - 10
-      );
-    }
-  };
-
-  const scroll = (direction: 'left' | 'right') => {
-    if (scrollRef.current) {
-      const scrollAmount = 400;
-      scrollRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth'
-      });
-      setTimeout(checkScroll, 100);
-    }
-  };
-
-  // Autoplay - scroll lento y fluido continuo
-  useEffect(() => {
-    let scrollSpeed = 0.5; // píxeles por frame
-    let animationFrameId: number;
-
-    const autoScroll = () => {
-      if (scrollRef.current) {
-        const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-
-        // Si llegó al final, reinicia
-        if (scrollLeft + clientWidth >= scrollWidth - 10) {
-          scrollRef.current.scrollLeft = 0;
-        } else {
-          scrollRef.current.scrollLeft += scrollSpeed;
-        }
-      }
-      animationFrameId = requestAnimationFrame(autoScroll);
-    };
-
-    animationFrameId = requestAnimationFrame(autoScroll);
-    return () => cancelAnimationFrame(animationFrameId);
-  }, []);
-
   return (
-    <section id="tarotistas" className="bg-gradient-to-b from-purple-50 to-white py-20 px-6">
+    <section id="tarotistas" className="bg-white py-20 px-6">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -86,35 +39,15 @@ export default function TarotistsGrid() {
           </p>
         </motion.div>
 
-        {/* Carousel Container */}
-        <div className="relative">
-          {/* Scroll Buttons */}
-          {canScrollLeft && (
-            <button
-              onClick={() => scroll('left')}
-              className="absolute left-0 top-1/3 -translate-y-1/2 z-20 bg-white rounded-full p-3 shadow-lg hover:shadow-xl hover:bg-gray-50 transition"
-            >
-              <ChevronLeft className="w-6 h-6 text-purple-700" />
-            </button>
-          )}
-
-          {canScrollRight && (
-            <button
-              onClick={() => scroll('right')}
-              className="absolute right-0 top-1/3 -translate-y-1/2 z-20 bg-white rounded-full p-3 shadow-lg hover:shadow-xl hover:bg-gray-50 transition"
-            >
-              <ChevronRight className="w-6 h-6 text-purple-700" />
-            </button>
-          )}
-
-          {/* Carousel */}
-          <div
-            ref={scrollRef}
-            onScroll={checkScroll}
-            className="flex gap-6 overflow-x-auto scroll-smooth pb-4 px-8"
-            style={{ scrollBehavior: 'smooth', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          >
+        {/* Grid 4 Columnas */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {tarotistas.map((tarotista, index) => {
+                .split(' ')
+                .map((word: string) => word[0])
+                .join('')
+                .toUpperCase()
+                .slice(0, 2);
+
               const initials = tarotista.nombre
                 .split(' ')
                 .map((word: string) => word[0])
@@ -129,94 +62,76 @@ export default function TarotistsGrid() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="flex-shrink-0 w-72 bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition border border-purple-100"
+                  className="bg-white rounded-2xl overflow-hidden border border-gray-200 hover:shadow-lg transition"
                 >
-                  {/* Header with gradient */}
-                  <div className="h-24 bg-gradient-to-r from-purple-600 via-purple-500 to-purple-400 relative">
-                    {tarotista.disponible && (
-                      <span className="absolute top-4 right-4 bg-green-500 text-white text-xs px-3 py-1 rounded-full font-bold flex items-center gap-1">
-                        <span className="w-2 h-2 bg-white rounded-full"></span>
-                        Disponible
-                      </span>
+                  {/* Imagen */}
+                  <div className="relative h-40 bg-gray-100 overflow-hidden">
+                    {tarotista.imagen_url ? (
+                      <img
+                        src={tarotista.imagen_url}
+                        alt={tarotista.nombre}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center">
+                        <span className="text-4xl font-bold text-white">{initials}</span>
+                      </div>
                     )}
                   </div>
 
-                  {/* Avatar */}
-                  <div className="relative px-6 pb-6">
-                    <div className="flex justify-center -mt-12 mb-4">
-                      {tarotista.imagen_url ? (
-                        <img
-                          src={tarotista.imagen_url}
-                          alt={tarotista.nombre}
-                          className="w-24 h-24 rounded-full border-4 border-white shadow-lg object-cover"
-                        />
-                      ) : (
-                        <div className="w-24 h-24 rounded-full bg-gradient-to-br from-gold-400 to-gold-500 flex items-center justify-center text-white font-bold text-2xl border-4 border-white shadow-lg">
-                          {initials}
-                        </div>
-                      )}
+                  {/* Contenido */}
+                  <div className="p-4">
+                    <h3 className="text-base font-bold text-gray-900 mb-1">{tarotista.nombre}</h3>
+                    <p className="text-amber-600 font-semibold text-xs mb-3">{tarotista.especialidad}</p>
+
+                    {/* Rating */}
+                    <div className="flex items-center gap-1 mb-3">
+                      <div className="flex gap-0.5">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            className={`w-3 h-3 ${
+                              i < Math.round(tarotista.rating || 5)
+                                ? 'fill-amber-500 text-amber-500'
+                                : 'text-gray-300'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      <span className="text-gray-600 text-xs ml-1">
+                        {(tarotista.rating || 5).toFixed(1)}
+                      </span>
                     </div>
 
-                    {/* Info */}
-                    <div className="text-center mb-4">
-                      <h3 className="text-lg font-bold text-gray-900 mb-1">{tarotista.nombre}</h3>
-                      <p className="text-purple-700 font-semibold text-sm mb-3">{tarotista.especialidad}</p>
-
-                      {/* Rating */}
-                      <div className="flex items-center justify-center gap-2 mb-4">
-                        <div className="flex gap-1">
-                          {[...Array(5)].map((_, i) => (
-                            <Star
-                              key={i}
-                              className={`w-3 h-3 ${
-                                i < Math.round(tarotista.rating || 5)
-                                  ? 'fill-gold-500 text-gold-500'
-                                  : 'text-gray-300'
-                              }`}
-                            />
-                          ))}
-                        </div>
-                        <span className="text-gray-600 text-xs font-medium">
-                          {(tarotista.rating || 5).toFixed(1)} ({tarotista.numero_resenas || 0})
-                        </span>
+                    {/* Precios */}
+                    <div className="space-y-1.5 mb-4 text-xs">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">15 min</span>
+                        <span className="font-bold">€10</span>
                       </div>
-
-                      {/* Price tag */}
-                      <div className="bg-gradient-to-r from-purple-600 to-purple-700 text-white py-2 px-4 rounded-full inline-block mb-5">
-                        <div className="font-bold text-sm">€{tarotista.precio_por_minuto || 0.50}/min</div>
-                        <div className="text-xs opacity-90">Llamada</div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">20 min</span>
+                        <span className="font-bold">€15</span>
                       </div>
-
-                      {/* Buttons */}
-                      <div className="flex gap-2">
-                        <button className="flex-1 bg-purple-700 text-white py-2 rounded-lg hover:bg-purple-800 transition flex items-center justify-center gap-2 font-semibold text-xs">
-                          <Phone className="w-4 h-4" />
-                          Llamar
-                        </button>
-                        <button className="flex-1 bg-purple-100 text-purple-700 py-2 rounded-lg hover:bg-purple-200 transition flex items-center justify-center gap-2 font-semibold text-xs">
-                          <MessageCircle className="w-4 h-4" />
-                          Chat
-                        </button>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">30 min</span>
+                        <span className="font-bold">€20</span>
                       </div>
                     </div>
+
+                    {/* Botón */}
+                    <Link
+                      href={`/tarotistas?minutes=15&tarotista=${tarotista.id}`}
+                      className="w-full bg-gray-900 text-white py-2 rounded-lg text-xs font-semibold hover:bg-gray-800 transition text-center block"
+                    >
+                      Seleccionar
+                    </Link>
                   </div>
                 </motion.div>
               );
             })}
-          </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="flex justify-center mt-8">
-          <p className="text-gray-500 text-sm">Desliza para ver más tarotistas →</p>
         </div>
       </div>
-
-      <style jsx>{`
-        div::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
     </section>
   );
 }

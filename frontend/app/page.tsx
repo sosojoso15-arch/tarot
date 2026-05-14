@@ -16,8 +16,6 @@ export default function Home() {
       <HowItWorksSection />
       <TarotistsGrid />
       <TestimonialsSection />
-      <PricingSection />
-      <FAQSection />
       <FinalCTASection />
       <FooterNew />
     </main>

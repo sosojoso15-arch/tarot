@@ -8,20 +8,20 @@ export default function HowItWorks() {
     {
       number: 1,
       icon: Users,
-      title: 'Elige tu Tarotista',
-      description: 'Selecciona entre nuestros expertos certificados según tu necesidad y disponibilidad',
+      title: 'Elige tu tarotista',
+      description: 'Conecta con quien más resuena contigo.',
     },
     {
       number: 2,
       icon: CreditCard,
-      title: 'Realiza el Pago',
-      description: 'Completa el pago de forma segura con tu método preferido',
+      title: 'Selecciona tu consulta',
+      description: 'Escoge la duración que necesitas.',
     },
     {
       number: 3,
       icon: MessageSquare,
-      title: 'Inicia tu Consulta',
-      description: 'Conecta con tu tarotista por teléfono, chat o videollamada al instante',
+      title: 'Recibe tu guía',
+      description: 'Habla por llamada o chatea en vivo.',
     },
   ];
 
