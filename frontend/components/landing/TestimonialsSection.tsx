@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Star } from 'lucide-react';
+import { Star, Heart } from 'lucide-react';
 
 export default function TestimonialsSection() {
   const ref = useRef(null);
@@ -10,21 +10,18 @@ export default function TestimonialsSection() {
 
   const testimonials = [
     {
-      name: 'María Delgado',
-      role: '',
-      content: 'La lectura fue increíblemente precisa. Me ayudó a ver mi situación laboral desde una perspectiva completamente nueva. La recomiendo sin dudas.',
+      name: 'Marta, Valencia',
+      content: 'Gloria me ayudó a entender lo que estaba viviendo. Su lectura fue clara, profunda y muy certera.',
       rating: 5
     },
     {
-      name: 'Carlos Mendez',
-      role: '',
-      content: 'Profesional, acertada y transformadora. Esta experiencia superó mis expectativas. Definitivamente vuelvo a hacer una consulta.',
+      name: 'Lucía, Madrid',
+      content: 'Tenía dudas sobre mi relación y salí de la consulta con mucha paz y claridad. Gracias de corazón.',
       rating: 5
     },
     {
-      name: 'Lucía Rivera',
-      role: '',
-      content: 'La tarotista captó cosas que yo nunca mencioné. Sentí una conexión espiritual genuina. Experiencia maravillosa y sanadora.',
+      name: 'Ana, Barcelona',
+      content: 'La mejor lectura que he tenido. Conecta desde el alma y te dice exactamente lo que necesitas oír.',
       rating: 5
     }
   ];
@@ -39,15 +36,12 @@ export default function TestimonialsSection() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Testimonios de Nuestros Clientes
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+            Lo que dicen nuestros clientes
           </h2>
-          <p className="text-gray-600 text-lg">
-            Miles de personas han transformado sus vidas con nuestros tarotistas
-          </p>
         </motion.div>
 
-        {/* Testimonials Grid */}
+        {/* Testimonials Row */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
             <motion.div
@@ -55,25 +49,27 @@ export default function TestimonialsSection() {
               initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
               transition={{ duration: 0.8, delay: index * 0.1 }}
-              className="bg-gradient-to-br from-purple-50 to-white rounded-xl p-8 border border-purple-200 hover:shadow-lg transition"
+              className="bg-white rounded-xl p-8 border border-gray-200 relative hover:shadow-lg transition"
             >
+              {/* Heart Icon */}
+              <button className="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition">
+                <Heart className="w-5 h-5" />
+              </button>
+
               {/* Rating */}
-              <div className="flex gap-2 mb-6">
+              <div className="flex gap-1 mb-4">
                 {Array(testimonial.rating).fill(0).map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-gold-500 text-gold-500" />
+                  <Star key={i} className="w-4 h-4 fill-amber-500 text-amber-500" />
                 ))}
               </div>
 
               {/* Quote */}
-              <p className="text-gray-700 text-base leading-relaxed mb-6">
+              <p className="text-gray-700 text-sm leading-relaxed mb-6">
                 "{testimonial.content}"
               </p>
 
               {/* Author */}
-              <div className="border-t border-purple-200 pt-4">
-                <p className="text-gray-900 font-bold text-sm">{testimonial.name}</p>
-                {testimonial.role && <p className="text-gray-600 text-xs">{testimonial.role}</p>}
-              </div>
+              <p className="text-gray-900 font-bold text-sm">{testimonial.name}</p>
             </motion.div>
           ))}
         </div>

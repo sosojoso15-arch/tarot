@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { api } from '@/lib/api';
 import Link from 'next/link';
 
 export default function TarotistsGrid() {
@@ -12,8 +11,11 @@ export default function TarotistsGrid() {
   useEffect(() => {
     const loadTarotistas = async () => {
       try {
-        const data = await api.getAvailableTarotistas();
-        setTarotistas(data);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/tarotistas/available`);
+        const result = await response.json();
+        if (result.success) {
+          setTarotistas(result.data);
+        }
       } catch (error) {
         console.error('Error loading tarotistas:', error);
       }

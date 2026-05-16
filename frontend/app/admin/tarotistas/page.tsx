@@ -1,8 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { api } from '@/lib/api';
-import Image from 'next/image';
 import { Star, Power } from 'lucide-react';
 
 export default function TaroistasAdminPage() {
