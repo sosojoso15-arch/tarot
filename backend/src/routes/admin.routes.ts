@@ -66,4 +66,23 @@ router.get(
   })
 );
 
+// Get all tarotistas
+router.get(
+  '/tarotistas',
+  asyncHandler(async (req: Request, res: Response) => {
+    const tarotistas = await adminService.getAllTarotistas();
+    res.json({ success: true, data: tarotistas });
+  })
+);
+
+// Toggle tarotista status
+router.post(
+  '/tarotistas/:id/toggle',
+  asyncHandler(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const result = await adminService.toggleTaroistaStatus(id);
+    res.json({ success: true, data: result });
+  })
+);
+
 export default router;

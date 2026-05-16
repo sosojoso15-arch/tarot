@@ -199,5 +199,50 @@ export const adminService = {
       logger.error('Get analytics error:', error);
       throw error;
     }
+  },
+
+  async getAllTarotistas() {
+    try {
+      const { data: tarotistas, error } = await supabase
+        .from('tarotistas')
+        .select('*')
+        .order('nombre');
+
+      if (error) throw error;
+
+      return tarotistas || [];
+    } catch (error) {
+      logger.error('Get all tarotistas error:', error);
+      throw error;
+    }
+  },
+
+  async toggleTaroistaStatus(taroistaId: string) {
+    try {
+      const { data: tarotista, error: fetchError } = await supabase
+        .from('tarotistas')
+        .select('activo')
+        .eq('id', taroistaId)
+        .single();
+
+      if (fetchError || !tarotista) {
+        throw new Error('Tarotista no encontrado');
+      }
+
+      const { data: updated, error: updateError } = await supabase
+        .from('tarotistas')
+        .update({ activo: !tarotista.activo })
+        .eq('id', taroistaId)
+        .select()
+        .single();
+
+      if (updateError) throw updateError;
+
+      logger.info(`Tarotista ${taroistaId} toggled to ${!tarotista.activo}`);
+      return updated;
+    } catch (error) {
+      logger.error('Toggle tarotista status error:', error);
+      throw error;
+    }
   }
 };
