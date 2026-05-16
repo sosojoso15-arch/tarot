@@ -51,12 +51,15 @@ export default function Hero() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative hidden lg:block h-96"
+              className="relative hidden lg:block"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-amber-100 via-yellow-50 to-orange-50 rounded-2xl" />
-              <div className="absolute inset-4 flex items-center justify-center text-center text-gray-400">
-                [Imagen tarot, velas y cartas]
-              </div>
+              <Image
+                src="/hero"
+                alt="Tarot, velas y cartas"
+                width={500}
+                height={500}
+                className="w-full h-auto rounded-2xl"
+              />
             </motion.div>
           </div>
 
