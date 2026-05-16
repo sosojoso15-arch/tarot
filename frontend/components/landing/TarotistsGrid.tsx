@@ -7,6 +7,7 @@ import Link from 'next/link';
 
 export default function TarotistsGrid() {
   const [tarotistas, setTarotistas] = useState<any[]>([]);
+  const [selectedMinutes, setSelectedMinutes] = useState<Record<string, number>>({});
 
   useEffect(() => {
     const loadTarotistas = async () => {
@@ -99,25 +100,30 @@ export default function TarotistsGrid() {
                       </span>
                     </div>
 
-                    {/* Precios */}
-                    <div className="space-y-1.5 mb-4 text-xs">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">15 min</span>
-                        <span className="font-bold">€10</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">20 min</span>
-                        <span className="font-bold">€15</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">30 min</span>
-                        <span className="font-bold">€20</span>
-                      </div>
+                    {/* Selector de Paquete */}
+                    <div className="space-y-2 mb-4">
+                      {[
+                        { minutes: 15, price: '€10' },
+                        { minutes: 20, price: '€15' },
+                        { minutes: 30, price: '€20' }
+                      ].map(pkg => (
+                        <button
+                          key={pkg.minutes}
+                          onClick={() => setSelectedMinutes({ ...selectedMinutes, [tarotista.id]: pkg.minutes })}
+                          className={`w-full py-2 px-3 rounded-lg text-xs font-semibold transition border-2 ${
+                            selectedMinutes[tarotista.id] === pkg.minutes
+                              ? 'bg-amber-600 text-white border-amber-600'
+                              : 'bg-white text-gray-700 border-gray-200 hover:border-amber-600'
+                          }`}
+                        >
+                          {pkg.minutes} min - {pkg.price}
+                        </button>
+                      ))}
                     </div>
 
                     {/* Botón */}
                     <Link
-                      href={`/checkout?minutes=15&tarotista=${tarotista.id}`}
+                      href={`/checkout?minutes=${selectedMinutes[tarotista.id] || 15}&tarotista=${tarotista.id}`}
                       className="w-full bg-gray-900 text-white py-2 rounded-lg text-xs font-semibold hover:bg-gray-800 transition text-center block"
                     >
                       Seleccionar
