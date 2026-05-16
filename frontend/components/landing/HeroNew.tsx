@@ -54,7 +54,7 @@ export default function Hero() {
               className="relative hidden lg:block"
             >
               <Image
-                src="/hero"
+                src="/hero.jpg"
                 alt="Tarot, velas y cartas"
                 width={500}
                 height={500}
