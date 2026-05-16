@@ -61,7 +61,7 @@ export default function TarotistsGrid() {
                   className="bg-white rounded-2xl overflow-hidden border border-gray-200 hover:shadow-lg transition"
                 >
                   {/* Imagen */}
-                  <div className="relative h-40 bg-gray-100 overflow-hidden">
+                  <div className="relative h-72 bg-gray-100 overflow-hidden">
                     {tarotista.imagen_url ? (
                       <img
                         src={tarotista.imagen_url}
