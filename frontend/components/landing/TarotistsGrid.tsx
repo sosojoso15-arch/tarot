@@ -42,12 +42,6 @@ export default function TarotistsGrid() {
         {/* Grid 4 Columnas */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {tarotistas.map((tarotista, index) => {
-                .split(' ')
-                .map((word: string) => word[0])
-                .join('')
-                .toUpperCase()
-                .slice(0, 2);
-
               const initials = tarotista.nombre
                 .split(' ')
                 .map((word: string) => word[0])
