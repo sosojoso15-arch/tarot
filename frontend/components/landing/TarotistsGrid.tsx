@@ -117,7 +117,7 @@ export default function TarotistsGrid() {
 
                     {/* Botón */}
                     <Link
-                      href={`/tarotistas?minutes=15&tarotista=${tarotista.id}`}
+                      href={`/checkout?minutes=15&tarotista=${tarotista.id}`}
                       className="w-full bg-gray-900 text-white py-2 rounded-lg text-xs font-semibold hover:bg-gray-800 transition text-center block"
                     >
                       Seleccionar
