@@ -11,6 +11,7 @@ import callsRoutes from './routes/calls.routes';
 import uploadsRoutes from './routes/uploads.routes';
 import { errorHandler } from './middleware/errorHandler';
 import { logger } from './utils/logger';
+import { callService } from './services/call.service';
 
 dotenv.config();
 
@@ -72,6 +73,13 @@ async function start() {
       logger.info(`Server running on port ${PORT}`);
       logger.info(`Environment: ${process.env.NODE_ENV || 'development'}`);
     });
+
+    // Monitorear llamadas activas cada 10 segundos
+    setInterval(() => {
+      callService.monitorActiveCalls();
+    }, 10000);
+
+    logger.info('Call monitoring started (every 10s)');
   } catch (error) {
     logger.error('Failed to start server:', error);
     process.exit(1);

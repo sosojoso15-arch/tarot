@@ -53,13 +53,13 @@ export const callService = {
           .from('call_logs')
           .insert({
             session_id: sessionId,
-            tarotista_id: taroistaId,
-            client_phone: clientPhone,
-            tarotista_phone: tarotista.numero_telefono,
+            user_id: '', // será obtenido de session
+            phone_called: tarotista.numero_telefono,
             zadarma_call_id: response.data.call_id,
-            status: 'initiated',
-            duration_limit: session.minutes * 60,
-            started_at: new Date().toISOString()
+            call_status: 'initiated',
+            duration_seconds: session.minutes * 60,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
           })
           .select()
           .single();
@@ -68,7 +68,15 @@ export const callService = {
           logger.warn('Error logging call:', logError);
         }
 
-        logger.info(`Llamada iniciada: ${response.data.call_id}`);
+        // Programar colgar automático al terminar tiempo
+        const durationSeconds = session.minutes * 60;
+        setTimeout(() => {
+          callService.hangupCall(response.data.call_id).catch(err => {
+            logger.error('Error auto-hanging up call:', err);
+          });
+        }, durationSeconds * 1000);
+
+        logger.info(`Llamada iniciada: ${response.data.call_id} (${session.minutes} min)`);
         return {
           success: true,
           callId: response.data.call_id,
@@ -130,8 +138,7 @@ export const callService = {
         .update({
           call_status: status,
           duration_seconds: duration,
-          cost,
-          ended_at: new Date().toISOString()
+          updated_at: new Date().toISOString()
         })
         .eq('zadarma_call_id', call_id);
 
@@ -144,6 +151,53 @@ export const callService = {
     } catch (error: any) {
       logger.error('Error handling webhook:', error?.message || error);
       throw new ApiError(500, 'Error procesando webhook');
+    }
+  },
+
+  // Monitorear llamadas activas y colgar las que superan su duración
+  async monitorActiveCalls() {
+    try {
+      // Obtener todas las llamadas en progreso
+      const { data: activeCalls, error } = await supabase
+        .from('call_logs')
+        .select('id, zadarma_call_id, duration_seconds, created_at, session_id')
+        .eq('call_status', 'initiated')
+        .or('call_status.eq.connected');
+
+      if (error) {
+        logger.error('Error fetching active calls:', error);
+        return;
+      }
+
+      if (!activeCalls || activeCalls.length === 0) {
+        return;
+      }
+
+      const now = Date.now();
+
+      for (const call of activeCalls) {
+        const createdAt = new Date(call.created_at).getTime();
+        const elapsedSeconds = (now - createdAt) / 1000;
+        const limitSeconds = call.duration_seconds;
+
+        // Si ha pasado el tiempo límite, colgar
+        if (elapsedSeconds > limitSeconds) {
+          try {
+            await this.hangupCall(call.zadarma_call_id);
+            logger.info(`Auto-hang up: ${call.zadarma_call_id} (${elapsedSeconds}s > ${limitSeconds}s)`);
+
+            // Actualizar sesión
+            await supabase
+              .from('sessions')
+              .update({ status: 'completed', minutes_used: limitSeconds / 60 })
+              .eq('id', call.session_id);
+          } catch (err) {
+            logger.error('Error auto-hanging up call:', err);
+          }
+        }
+      }
+    } catch (error: any) {
+      logger.error('Error monitoring active calls:', error?.message || error);
     }
   }
 };
