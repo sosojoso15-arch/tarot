@@ -20,7 +20,7 @@ export const ZADARMA_PHONE_NUMBER = process.env.NEXT_PUBLIC_ZADARMA_PHONE_NUMBER
 
 export const SEO = {
   title: 'Lectura de Tarot Telefónica | Consulta Online',
-  description: 'Consulta tarot profesional por teléfono. Sesiones de 10, 15, 20 o 30 minutos. Pago seguro con Stripe. Respuestas claras y precisas.',
+  description: 'Consulta tarot profesional por teléfono. Sesiones de 15, 20 o 30 minutos. Pago seguro con Stripe. Respuestas claras y precisas.',
   keywords: 'tarot, lectura de tarot, tarot telefónico, consulta tarot online',
   og: {
     title: 'Lectura de Tarot Telefónica',

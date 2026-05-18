@@ -9,19 +9,19 @@ export default function HowItWorks() {
       number: 1,
       icon: Users,
       title: 'Elige tu tarotista',
-      description: 'Conecta con quien más resuena contigo.',
+      description: 'Conecta con la persona indicada para ayudarte a comprender lo que hoy preocupa a tu alma.',
     },
     {
       number: 2,
       icon: CreditCard,
       title: 'Selecciona tu consulta',
-      description: 'Escoge la duración que necesitas.',
+      description: 'Dedícate este momento y recibe una guía personalizada para tu situación.',
     },
     {
       number: 3,
       icon: MessageSquare,
       title: 'Recibe tu guía',
-      description: 'Habla por llamada o chatea en vivo.',
+      description: 'Habla o chatea ahora con tu tarotista y encuentra la paz, la claridad y las respuestas que tu corazón necesita escuchar.',
     },
   ];
 
@@ -35,8 +35,8 @@ export default function HowItWorks() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            ¿Cómo Funciona?
+          <h2 className="text-4xl md:text-5xl font-bold text-blue-950 mb-4">
+            Tu respuesta puede estar más cerca de lo que imaginas
           </h2>
           <p className="text-gray-600 text-lg">
             Solo 3 pasos simples para conectar con tu tarotista

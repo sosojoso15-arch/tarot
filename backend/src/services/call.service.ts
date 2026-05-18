@@ -160,7 +160,7 @@ export const callService = {
       // Obtener todas las llamadas en progreso
       const { data: activeCalls, error } = await supabase
         .from('call_logs')
-        .select('id, zadarma_call_id, duration_seconds, created_at, session_id')
+        .select('id, duration_seconds, created_at, session_id, zadarma_call_id')
         .eq('call_status', 'initiated')
         .or('call_status.eq.connected');
 

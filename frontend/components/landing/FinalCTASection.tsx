@@ -13,29 +13,29 @@ export default function FinalCTASection() {
     {
       icon: Moon,
       title: '24/7',
-      description: 'Disponibles las 24 horas, los 7 días de la semana'
+      description: 'Atención espiritual disponible cada día, durante todo el día, para acompañarte cuando más lo necesites.'
     },
     {
       icon: Lock,
       title: 'Tu espacio seguro',
-      description: 'Aquí siempre serás escuchado sin juicios'
+      description: 'Un lugar donde sentirte escuchado, comprendido y acompañado.'
     },
     {
       icon: Shield,
       title: '100% Confidencial',
-      description: 'Tu privacidad es nuestra prioridad'
+      description: 'Cada consulta es privada, cercana y completamente confidencial.'
     },
     {
       icon: Heart,
       title: 'Conexión desde el alma',
-      description: 'Te escuchamos con empatía, sinceridad y amor'
+      description: 'Te acompañamos con empatía, claridad y honestidad.'
     }
   ];
 
   return (
     <>
       {/* Features Row */}
-      <section className="bg-gray-900 text-white py-16 px-6">
+      <section className="bg-slate-950 text-white py-16 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => {
@@ -48,7 +48,7 @@ export default function FinalCTASection() {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   className="text-center"
                 >
-                  <Icon className="w-8 h-8 text-amber-600 mx-auto mb-3" />
+                  <Icon className="w-8 h-8 text-yellow-500 mx-auto mb-3" />
                   <h3 className="text-lg font-bold mb-2">{feature.title}</h3>
                   <p className="text-gray-300 text-sm">{feature.description}</p>
                 </motion.div>
@@ -59,7 +59,7 @@ export default function FinalCTASection() {
       </section>
 
       {/* CTA Section */}
-      <section ref={ref} className="bg-gray-900 py-20 px-6 border-t border-gray-800">
+      <section ref={ref} className="bg-slate-950 py-20 px-6 border-t border-slate-800">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -67,16 +67,16 @@ export default function FinalCTASection() {
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              ¿Quieres formar parte de nuestro equipo?
+              ¿Sientes que tu don puede ayudar a otras personas?
             </h2>
 
             <p className="text-gray-300 text-lg mb-10">
-              Envíanos tu currículum y únete a nuestras tarotistas certificadas.
+              Únete a un espacio espiritual donde poder ayudar, guiar y conectar con otras almas.
             </p>
 
             <Link
               href="mailto:hello@vocesdelama.es"
-              className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white px-8 py-3 rounded-lg font-bold transition"
+              className="inline-flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-slate-950 px-8 py-3 rounded-lg font-bold transition"
             >
               ENVIAR CURRICULUM
               <ArrowRight className="w-5 h-5" />

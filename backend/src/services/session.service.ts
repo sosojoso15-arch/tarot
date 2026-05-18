@@ -48,9 +48,11 @@ export const sessionService = {
         .from('sessions')
         .insert({
           user_id: user.id,
-          tarotista_id: tarotista_id || null,
           minutes: validated.minutes,
           status: 'pending',
+          price_cents: pricing.amount_cents,
+          currency: pricing.currency,
+          session_code: sessionCode,
           expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
         })
         .select()

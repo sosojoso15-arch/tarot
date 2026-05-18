@@ -15,10 +15,9 @@ export const stripe = new Stripe(stripeSecretKey, {
 export const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || '';
 
 export const PRICING = {
-  10: { minutes: 10, amount_cents: 999, display: '$9.99' },
-  15: { minutes: 15, amount_cents: 1499, display: '$14.99' },
-  20: { minutes: 20, amount_cents: 1999, display: '$19.99' },
-  30: { minutes: 30, amount_cents: 2999, display: '$29.99' }
+  15: { minutes: 15, amount_cents: 1000, currency: 'EUR', display: '€10' },
+  20: { minutes: 20, amount_cents: 1500, currency: 'EUR', display: '€15' },
+  30: { minutes: 30, amount_cents: 2000, currency: 'EUR', display: '€20' }
 } as const;
 
 export function getPricing(minutes: number) {

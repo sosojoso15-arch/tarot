@@ -19,7 +19,7 @@ const migrations = [
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
         stripe_payment_intent_id VARCHAR(255) UNIQUE,
-        minutes INTEGER NOT NULL CHECK (minutes IN (10, 15, 20, 30)),
+        minutes INTEGER NOT NULL CHECK (minutes IN (15, 20, 30)),
         status VARCHAR(50) DEFAULT 'pending' CHECK (status IN ('pending', 'confirmed', 'in_progress', 'completed', 'expired', 'cancelled')),
         price_cents INTEGER NOT NULL,
         currency VARCHAR(3) DEFAULT 'USD',

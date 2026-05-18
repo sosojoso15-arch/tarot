@@ -24,6 +24,7 @@ app.use(cors({
     const allowedOrigins = [
       'http://localhost:3000',
       'http://localhost:3001',
+      'http://localhost:3002',
       'https://voces-del-alma.com',
       'https://www.voces-del-alma.com',
       process.env.CORS_ORIGIN

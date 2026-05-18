@@ -28,21 +28,22 @@ export default function Hero() {
       {/* Hero Section - 2 Columns */}
       <section className="bg-white pt-8 pb-16 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center mb-16">
+          <div className="flex flex-col lg:flex-row gap-12 items-center mb-16">
             {/* Left Column */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
+              className="flex-1"
             >
-              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+              <h1 className="text-5xl md:text-6xl font-bold text-blue-950 mb-6 leading-tight">
                 Cuando todo <br />
                 parece confuso, <br />
-                <span className="text-amber-600">tu alma ya conoce <br />
+                <span className="text-yellow-600">tu alma ya conoce <br />
                 la respuesta.</span>
               </h1>
               <p className="text-gray-600 leading-relaxed">
-                Conecta con nuestras tarotistas certificadas y recibe lecturas personalizadas que te ayudarán a encontrar claridad, propósito y dirección en tu vida.
+                Conecta con nuestras tarotistas y descubre las respuestas y la visión clara que necesitas para avanzar con más paz, seguridad y luz en tu camino.
               </p>
             </motion.div>
 
@@ -51,15 +52,17 @@ export default function Hero() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative hidden lg:block"
+              className="flex-1 w-full"
             >
-              <Image
-                src="/hero.jpg"
-                alt="Tarot, velas y cartas"
-                width={500}
-                height={500}
-                className="w-full h-auto rounded-2xl"
-              />
+              <div className="relative w-full h-96 rounded-2xl overflow-hidden">
+                <Image
+                  src="/hero.jpg"
+                  alt="Tarot, velas y cartas"
+                  fill
+                  className="object-cover w-full h-full"
+                  priority
+                />
+              </div>
             </motion.div>
           </div>
 

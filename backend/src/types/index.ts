@@ -15,7 +15,7 @@ export interface Session {
   id: string;
   user_id: string;
   stripe_payment_intent_id: string;
-  minutes: 10 | 15 | 20 | 30;
+  minutes: 15 | 20 | 30;
   status: SessionStatus;
   price_cents: number;
   currency: string;
@@ -83,7 +83,7 @@ export interface AnalyticsEvent {
 
 // Request/Response types
 export interface CreateSessionRequest {
-  minutes: 10 | 15 | 20 | 30;
+  minutes: 15 | 20 | 30;
   email: string;
   phone: string;
   tarotista_id?: string;
