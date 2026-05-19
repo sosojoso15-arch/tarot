@@ -9,7 +9,7 @@ import FooterNew from '@/components/shared/FooterNew';
 
 export default function Home() {
   return (
-    <main className="bg-white">
+    <main className="bg-yellow-50">
       <HeroNew />
       <HowItWorksSection />
       <TarotistsGrid />

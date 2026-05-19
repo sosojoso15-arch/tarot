@@ -12,11 +12,11 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-6">
-              <Globe className="w-6 h-6 text-purple-500" />
-              <span className="font-bold text-lg">Tarot Espiritual</span>
+              <Globe className="w-6 h-6 text-yellow-500" />
+              <span className="font-bold text-lg">VOCES DEL ALMA</span>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
-              Guía espiritual profesional a través de lecturas de tarot. Conecta con tarotistas certificadas 24/7.
+              Conecta con nuestras tarotistas certificadas para recibir guía espiritual profesional. Disponibles 24/7.
             </p>
           </div>
 
@@ -46,13 +46,13 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-6 text-sm uppercase tracking-wide">Síguenos</h4>
             <div className="flex gap-4">
-              <a href="#" className="bg-purple-700 hover:bg-purple-800 p-3 rounded-full transition">
+              <a href="#" className="bg-yellow-500 hover:bg-yellow-600 p-3 rounded-full transition">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="bg-purple-700 hover:bg-purple-800 p-3 rounded-full transition">
+              <a href="#" className="bg-yellow-500 hover:bg-yellow-600 p-3 rounded-full transition">
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="#" className="bg-purple-700 hover:bg-purple-800 p-3 rounded-full transition">
+              <a href="#" className="bg-yellow-500 hover:bg-yellow-600 p-3 rounded-full transition">
                 <Mail className="w-5 h-5" />
               </a>
             </div>
@@ -61,7 +61,7 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-gray-400">
-          <p>&copy; {currentYear} Tarot Espiritual. Todos los derechos reservados.</p>
+          <p>&copy; {currentYear} VOCES DEL ALMA. Todos los derechos reservados.</p>
           <p>Creado con intención espiritual</p>
         </div>
       </div>

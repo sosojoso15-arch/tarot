@@ -50,7 +50,7 @@ export default function TarotistsGrid() {
   };
 
   return (
-    <section id="tarotistas" className="bg-white py-20 px-6">
+    <section id="tarotistas" className="bg-yellow-50 py-20 px-6">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -59,10 +59,10 @@ export default function TarotistsGrid() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-blue-950 mb-4">
             Nuestros Tarotistas Certificados
           </h2>
-          <p className="text-gray-600 text-lg">
+          <p className="text-blue-950 text-lg">
             Expertos en lecturas de tarot con años de experiencia
           </p>
         </motion.div>
@@ -121,7 +121,7 @@ export default function TarotistsGrid() {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center">
+                      <div className="w-full h-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
                         <span className="text-4xl font-bold text-white">{initials}</span>
                       </div>
                     )}
@@ -129,8 +129,8 @@ export default function TarotistsGrid() {
 
                   {/* Contenido */}
                   <div className="p-4">
-                    <h3 className="text-base font-bold text-gray-900 mb-1">{tarotista.nombre}</h3>
-                    <p className="text-amber-600 font-semibold text-xs mb-2">{tarotista.especialidad}</p>
+                    <h3 className="text-base font-bold text-blue-950 mb-1">{tarotista.nombre}</h3>
+                    <p className="text-yellow-600 font-semibold text-xs mb-2">{tarotista.especialidad}</p>
 
                     {/* Descripción */}
                     {tarotista.bio && (
@@ -147,7 +147,7 @@ export default function TarotistsGrid() {
                             key={i}
                             className={`w-3 h-3 ${
                               i < Math.round(tarotista.rating || 5)
-                                ? 'fill-amber-500 text-amber-500'
+                                ? 'fill-yellow-500 text-yellow-500'
                                 : 'text-gray-300'
                             }`}
                           />
@@ -185,8 +185,8 @@ export default function TarotistsGrid() {
                           onClick={() => setSelectedMinutes({ ...selectedMinutes, [tarotista.id]: pkg.minutes })}
                           className={`w-full py-2 px-3 rounded-lg text-xs font-semibold transition border-2 ${
                             selectedMinutes[tarotista.id] === pkg.minutes
-                              ? 'bg-amber-600 text-white border-amber-600'
-                              : 'bg-white text-gray-700 border-gray-200 hover:border-amber-600'
+                              ? 'bg-yellow-500 text-white border-yellow-500'
+                              : 'bg-white text-gray-700 border-gray-200 hover:border-yellow-500'
                           }`}
                         >
                           {pkg.minutes} min - {pkg.price}
@@ -228,7 +228,7 @@ export default function TarotistsGrid() {
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <div className="w-full h-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center">
+                <div className="w-full h-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
                   <span className="text-6xl font-bold text-white">
                     {selectedTarotista.nombre
                       .split(' ')
@@ -249,8 +249,8 @@ export default function TarotistsGrid() {
             {/* Contenido */}
             <div className="flex-1 p-6 md:p-8 space-y-4 overflow-y-auto">
               <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-2">{selectedTarotista.nombre}</h2>
-                <p className="text-amber-600 font-semibold text-lg mb-3">{selectedTarotista.especialidad}</p>
+                <h2 className="text-3xl font-bold text-blue-950 mb-2">{selectedTarotista.nombre}</h2>
+                <p className="text-yellow-600 font-semibold text-lg mb-3">{selectedTarotista.especialidad}</p>
 
                 {/* Rating */}
                 <div className="flex items-center gap-2 mb-4">
@@ -260,7 +260,7 @@ export default function TarotistsGrid() {
                         key={i}
                         className={`w-4 h-4 ${
                           i < Math.round(selectedTarotista.rating || 5)
-                            ? 'fill-amber-500 text-amber-500'
+                            ? 'fill-yellow-500 text-yellow-500'
                             : 'text-gray-300'
                         }`}
                       />
@@ -282,14 +282,14 @@ export default function TarotistsGrid() {
               {/* Descripción */}
               {selectedTarotista.bio && (
                 <div>
-                  <h3 className="font-bold text-gray-900 mb-2">Sobre ella</h3>
+                  <h3 className="font-bold text-blue-950 mb-2">Sobre ella</h3>
                   <p className="text-gray-600 leading-relaxed">{selectedTarotista.bio}</p>
                 </div>
               )}
 
               {/* Selector de Paquete */}
               <div>
-                <h3 className="font-bold text-gray-900 mb-3">Elige tu sesión</h3>
+                <h3 className="font-bold text-blue-950 mb-3">Elige tu sesión</h3>
                 <div className="grid grid-cols-3 gap-2 mb-4">
                   {[
                     { minutes: 15, price: '€10' },
@@ -301,8 +301,8 @@ export default function TarotistsGrid() {
                       onClick={() => setSelectedMinutes({ ...selectedMinutes, [selectedTarotista.id]: pkg.minutes })}
                       className={`py-2 px-3 rounded-lg text-xs font-semibold transition border-2 ${
                         selectedMinutes[selectedTarotista.id] === pkg.minutes
-                          ? 'bg-amber-600 text-white border-amber-600'
-                          : 'bg-white text-gray-700 border-gray-200 hover:border-amber-600'
+                          ? 'bg-yellow-500 text-white border-yellow-500'
+                          : 'bg-white text-gray-700 border-gray-200 hover:border-yellow-500'
                       }`}
                     >
                       {pkg.minutes} min<br/>{pkg.price}
@@ -315,7 +315,7 @@ export default function TarotistsGrid() {
               <div className="flex gap-3">
                 <button
                   onClick={closeModal}
-                  className="flex-1 bg-gray-200 text-gray-900 py-3 rounded-lg font-semibold hover:bg-gray-300 transition"
+                  className="flex-1 bg-gray-200 text-blue-950 py-3 rounded-lg font-semibold hover:bg-gray-300 transition"
                 >
                   Cerrar
                 </button>

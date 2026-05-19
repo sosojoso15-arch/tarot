@@ -26,7 +26,7 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section id="como-funciona" className="bg-white py-20 px-6">
+    <section id="como-funciona" className="bg-yellow-50 py-20 px-6">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -38,7 +38,7 @@ export default function HowItWorks() {
           <h2 className="text-4xl md:text-5xl font-bold text-blue-950 mb-4">
             Tu respuesta puede estar más cerca de lo que imaginas
           </h2>
-          <p className="text-gray-600 text-lg">
+          <p className="text-blue-950 text-lg">
             Solo 3 pasos simples para conectar con tu tarotista
           </p>
         </motion.div>
@@ -56,30 +56,30 @@ export default function HowItWorks() {
                 className="relative"
               >
                 {/* Step Number Circle */}
-                <div className="absolute -top-4 -left-4 w-12 h-12 bg-gold-500 text-white rounded-full flex items-center justify-center font-bold text-lg z-10">
+                <div className="absolute -top-4 -left-4 w-12 h-12 bg-yellow-500 text-white rounded-full flex items-center justify-center font-bold text-lg z-10">
                   {step.number}
                 </div>
 
                 {/* Card */}
-                <div className="bg-gradient-to-br from-purple-50 to-white rounded-xl p-8 border border-purple-200 h-full">
+                <div className="bg-gradient-to-br from-yellow-100 to-white rounded-xl p-8 border border-yellow-200 h-full">
                   <div className="flex justify-center mb-6">
-                    <div className="bg-purple-100 p-4 rounded-full">
-                      <Icon className="w-8 h-8 text-purple-700" />
+                    <div className="bg-yellow-100 p-4 rounded-full">
+                      <Icon className="w-8 h-8 text-yellow-600" />
                     </div>
                   </div>
 
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3 text-center">
+                  <h3 className="text-2xl font-bold text-blue-950 mb-3 text-center">
                     {step.title}
                   </h3>
 
-                  <p className="text-gray-600 text-center leading-relaxed">
+                  <p className="text-blue-950 text-center leading-relaxed">
                     {step.description}
                   </p>
                 </div>
 
                 {/* Arrow */}
                 {index < steps.length - 1 && (
-                  <div className="hidden md:block absolute top-1/2 -right-6 text-2xl text-purple-700 font-bold">
+                  <div className="hidden md:block absolute top-1/2 -right-6 text-2xl text-yellow-600 font-bold">
                     →
                   </div>
                 )}

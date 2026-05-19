@@ -26,7 +26,7 @@ export default function Hero() {
       </header>
 
       {/* Hero Section - 2 Columns */}
-      <section className="bg-white pt-8 pb-16 px-6">
+      <section className="bg-yellow-50 pt-8 pb-16 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row gap-12 items-center mb-16">
             {/* Left Column */}
@@ -42,7 +42,7 @@ export default function Hero() {
                 <span className="text-yellow-600">tu alma ya conoce <br />
                 la respuesta.</span>
               </h1>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-blue-950 leading-relaxed">
                 Conecta con nuestras tarotistas y descubre las respuestas y la visión clara que necesitas para avanzar con más paz, seguridad y luz en tu camino.
               </p>
             </motion.div>
@@ -71,15 +71,15 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16 bg-amber-50 rounded-2xl p-8"
+            className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16 bg-white rounded-2xl p-8"
           >
             {stats.map((stat, index) => {
               const Icon = stat.icon;
               return (
                 <div key={index} className="text-center">
-                  <Icon className="w-6 h-6 text-amber-600 mx-auto mb-2" />
-                  <p className="text-2xl font-bold text-gray-900 mb-1">{stat.number}</p>
-                  <p className="text-xs text-gray-600">{stat.label}</p>
+                  <Icon className="w-6 h-6 text-yellow-600 mx-auto mb-2" />
+                  <p className="text-2xl font-bold text-blue-950 mb-1">{stat.number}</p>
+                  <p className="text-xs text-blue-950">{stat.label}</p>
                 </div>
               );
             })}
@@ -90,7 +90,7 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-center text-gray-700 text-lg max-w-3xl mx-auto"
+            className="text-center text-blue-950 text-lg max-w-3xl mx-auto"
           >
             Detrás de cada consulta hay una emoción, <br />
             una herida o una esperanza buscando claridad.

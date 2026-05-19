@@ -27,7 +27,7 @@ export default function TestimonialsSection() {
   ];
 
   return (
-    <section ref={ref} id="testimonios" className="bg-white py-20 px-6">
+    <section ref={ref} id="testimonios" className="bg-yellow-50 py-20 px-6">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <motion.div
@@ -36,7 +36,7 @@ export default function TestimonialsSection() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+          <h2 className="text-4xl md:text-5xl font-bold text-blue-950">
             Lo que dicen nuestros clientes
           </h2>
         </motion.div>
@@ -59,7 +59,7 @@ export default function TestimonialsSection() {
               {/* Rating */}
               <div className="flex gap-1 mb-4">
                 {Array(testimonial.rating).fill(0).map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-amber-500 text-amber-500" />
+                  <Star key={i} className="w-4 h-4 fill-yellow-500 text-yellow-500" />
                 ))}
               </div>
 
@@ -69,7 +69,7 @@ export default function TestimonialsSection() {
               </p>
 
               {/* Author */}
-              <p className="text-gray-900 font-bold text-sm">{testimonial.name}</p>
+              <p className="text-blue-950 font-bold text-sm">{testimonial.name}</p>
             </motion.div>
           ))}
         </div>

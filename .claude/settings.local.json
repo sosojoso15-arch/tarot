@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(npx tsx *)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\suare\\\\Documents\\\\tarot\\\\backend\\\\src\" -Recurse -Directory | Select-Object -First 20 | ForEach-Object { $_.FullName.Replace\\('C:\\\\Users\\\\suare\\\\Documents\\\\tarot\\\\backend\\\\src\\\\', ''\\) })"
     ]
   }
 }
