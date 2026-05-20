@@ -89,7 +89,7 @@ export default function TarotistsGrid() {
   };
 
   return (
-    <section id="tarotistas" className="bg-yellow-50 py-20 px-6">
+    <section id="tarotistas" className="bg-slate-950 py-20 px-6">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -98,10 +98,12 @@ export default function TarotistsGrid() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-blue-950 mb-4">
-            Nuestros Tarotistas Certificados
-          </h2>
-          <p className="text-blue-950 text-lg">
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="text-yellow-500 text-2xl">✦</div>
+            <h2 className="text-4xl md:text-5xl font-bold text-yellow-500">TAROTISTAS</h2>
+            <div className="text-yellow-500 text-2xl">✦</div>
+          </div>
+          <p className="text-gray-300 text-lg">
             Expertos en lecturas de tarot con años de experiencia
           </p>
         </motion.div>
@@ -120,15 +122,15 @@ export default function TarotistsGrid() {
           {/* Botones navegación */}
           <button
             onClick={() => scroll('left')}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition"
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-slate-800/70 hover:bg-slate-700 p-2 rounded-full shadow-lg transition"
           >
-            <ChevronLeft className="w-6 h-6 text-slate-950" />
+            <ChevronLeft className="w-6 h-6 text-yellow-500" />
           </button>
           <button
             onClick={() => scroll('right')}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition"
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-slate-800/70 hover:bg-slate-700 p-2 rounded-full shadow-lg transition"
           >
-            <ChevronRight className="w-6 h-6 text-slate-950" />
+            <ChevronRight className="w-6 h-6 text-yellow-500" />
           </button>
 
           {/* Carrusel */}
@@ -142,6 +144,9 @@ export default function TarotistsGrid() {
                 .toUpperCase()
                 .slice(0, 2);
 
+              const stats = taroistaStatsData[tarotista.id];
+              const firstOpinion = stats?.opiniones[0];
+
               return (
                 <motion.div
                   key={`${tarotista.id}-${index}`}
@@ -149,98 +154,50 @@ export default function TarotistsGrid() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="bg-white rounded-2xl overflow-hidden border border-gray-200 hover:shadow-lg transition flex-shrink-0 w-64 sm:w-72"
+                  className="bg-slate-900 border border-yellow-500/30 rounded-2xl p-6 flex-shrink-0 w-80 hover:border-yellow-500/60 transition"
                 >
-                  {/* Imagen */}
-                  <div className="relative h-96 bg-gray-100 overflow-hidden">
-                    {tarotista.imagen_url ? (
-                      <img
-                        src={tarotista.imagen_url}
-                        alt={tarotista.nombre}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
-                        <span className="text-4xl font-bold text-white">{initials}</span>
-                      </div>
-                    )}
+                  {/* Foto circular */}
+                  <div className="flex justify-center mb-6">
+                    <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-yellow-500">
+                      {tarotista.imagen_url ? (
+                        <img
+                          src={tarotista.imagen_url}
+                          alt={tarotista.nombre}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
+                          <span className="text-5xl font-bold text-white">{initials}</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
 
-                  {/* Contenido */}
-                  <div className="p-4">
-                    <h3 className="text-base font-bold text-blue-950 mb-1">{tarotista.nombre}</h3>
-                    <p className="text-yellow-600 font-semibold text-xs mb-2">{tarotista.especialidad}</p>
+                  {/* Nombre y especialidad */}
+                  <h3 className="text-2xl font-bold text-yellow-500 text-center mb-1">{tarotista.nombre}</h3>
+                  <p className="text-yellow-400 font-semibold text-sm text-center mb-4">{tarotista.especialidad}</p>
 
-                    {/* Descripción */}
-                    {tarotista.bio && (
-                      <p className="text-gray-600 text-xs mb-3 line-clamp-2">
-                        {tarotista.bio}
+                  {/* Divider */}
+                  <div className="flex justify-center mb-4">
+                    <div className="text-yellow-500">✦</div>
+                  </div>
+
+                  {/* Opinion */}
+                  {firstOpinion && (
+                    <div className="mb-6">
+                      <p className="text-gray-300 text-sm text-center italic leading-relaxed">
+                        "{firstOpinion.texto}"
                       </p>
-                    )}
-
-                    {/* Rating */}
-                    <div className="flex items-center gap-1 mb-3">
-                      <div className="flex gap-0.5">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            className={`w-3 h-3 ${
-                              i < Math.round(tarotista.rating || 5)
-                                ? 'fill-yellow-500 text-yellow-500'
-                                : 'text-gray-300'
-                            }`}
-                          />
-                        ))}
-                      </div>
-                      <span className="text-gray-600 text-xs ml-1">
-                        {(tarotista.rating || 5).toFixed(1)}
-                      </span>
                     </div>
+                  )}
 
-                    {/* Modalidad */}
-                    <div className="mb-3">
-                      <span className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
-                        Llamada
-                      </span>
-                    </div>
-
-                    {/* Botón Ver Más */}
-                    <button
-                      onClick={() => openModal(tarotista)}
-                      className="w-full bg-blue-50 text-blue-700 py-2 px-3 rounded-lg text-xs font-semibold hover:bg-blue-100 transition mb-3"
-                    >
-                      Ver información completa
-                    </button>
-
-                    {/* Selector de Paquete */}
-                    <div className="space-y-2 mb-4">
-                      {[
-                        { minutes: 15, price: '€10' },
-                        { minutes: 20, price: '€15' },
-                        { minutes: 30, price: '€20' }
-                      ].map(pkg => (
-                        <button
-                          key={pkg.minutes}
-                          onClick={() => setSelectedMinutes({ ...selectedMinutes, [tarotista.id]: pkg.minutes })}
-                          className={`w-full py-2 px-3 rounded-lg text-xs font-semibold transition border-2 ${
-                            selectedMinutes[tarotista.id] === pkg.minutes
-                              ? 'bg-yellow-500 text-white border-yellow-500'
-                              : 'bg-white text-gray-700 border-gray-200 hover:border-yellow-500'
-                          }`}
-                        >
-                          {pkg.minutes} min - {pkg.price}
-                        </button>
-                      ))}
-                    </div>
-
-                    {/* Botón */}
-                    <Link
-                      href={`/checkout?minutes=${selectedMinutes[tarotista.id] || 15}&tarotista=${tarotista.id}`}
-                      className="w-full bg-gray-900 text-white py-2 rounded-lg text-xs font-semibold hover:bg-gray-800 transition text-center block"
-                    >
-                      Seleccionar
-                    </Link>
-                  </div>
+                  {/* Botón Ver Perfil */}
+                  <button
+                    onClick={() => openModal(tarotista)}
+                    className="w-full border-2 border-yellow-500 text-yellow-500 font-bold py-3 rounded-lg hover:bg-yellow-500/10 transition mb-4 uppercase text-sm"
+                  >
+                    VER PERFIL COMPLETO
+                  </button>
                 </motion.div>
               );
             }) : null}
