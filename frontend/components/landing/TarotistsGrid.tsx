@@ -144,9 +144,6 @@ export default function TarotistsGrid() {
                 .toUpperCase()
                 .slice(0, 2);
 
-              const stats = taroistaStatsData[tarotista.id];
-              const firstOpinion = stats?.opiniones[0];
-
               return (
                 <motion.div
                   key={`${tarotista.id}-${index}`}
@@ -154,47 +151,36 @@ export default function TarotistsGrid() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="bg-slate-900 border border-yellow-500/30 rounded-2xl p-6 flex-shrink-0 w-80 hover:border-yellow-500/60 transition"
+                  className="bg-slate-900 border border-yellow-500/30 rounded-2xl p-6 flex-shrink-0 w-80 hover:border-yellow-500/60 transition flex flex-col items-center"
                 >
                   {/* Foto circular */}
-                  <div className="flex justify-center mb-6">
-                    <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-yellow-500">
-                      {tarotista.imagen_url ? (
-                        <img
-                          src={tarotista.imagen_url}
-                          alt={tarotista.nombre}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
-                          <span className="text-5xl font-bold text-white">{initials}</span>
-                        </div>
-                      )}
-                    </div>
+                  <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-yellow-500 mb-6">
+                    {tarotista.imagen_url ? (
+                      <img
+                        src={tarotista.imagen_url}
+                        alt={tarotista.nombre}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
+                        <span className="text-4xl font-bold text-white">{initials}</span>
+                      </div>
+                    )}
                   </div>
 
-                  {/* Nombre y especialidad */}
+                  {/* Nombre */}
                   <h3 className="text-2xl font-bold text-yellow-500 text-center mb-1">{tarotista.nombre}</h3>
+
+                  {/* Especialidad */}
                   <p className="text-yellow-400 font-semibold text-sm text-center mb-4">{tarotista.especialidad}</p>
 
                   {/* Divider */}
-                  <div className="flex justify-center mb-4">
-                    <div className="text-yellow-500">✦</div>
-                  </div>
-
-                  {/* Opinion */}
-                  {firstOpinion && (
-                    <div className="mb-6">
-                      <p className="text-gray-300 text-sm text-center italic leading-relaxed">
-                        "{firstOpinion.texto}"
-                      </p>
-                    </div>
-                  )}
+                  <div className="text-yellow-500 text-lg mb-4">✦</div>
 
                   {/* Botón Ver Perfil */}
                   <button
                     onClick={() => openModal(tarotista)}
-                    className="w-full border-2 border-yellow-500 text-yellow-500 font-bold py-3 rounded-lg hover:bg-yellow-500/10 transition mb-4 uppercase text-sm"
+                    className="w-full border-2 border-yellow-500 text-yellow-500 font-bold py-3 rounded-lg hover:bg-yellow-500/10 transition uppercase text-sm tracking-wide"
                   >
                     VER PERFIL COMPLETO
                   </button>
