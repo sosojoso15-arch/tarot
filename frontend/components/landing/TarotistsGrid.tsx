@@ -5,6 +5,45 @@ import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
+const taroistaStatsData: Record<string, any> = {
+  '1': {
+    consultas: '40.632',
+    aciertos: '99.9%',
+    experiencia: '39 años',
+    opiniones: [
+      { nombre: 'Marta', hace: '1 hora', texto: 'Silvia es maravillosa, su empatía y su don especial para conectar con las personas la hacen única. Me ayudó muchísimo a entender mi situación.', estrellas: 5 },
+      { nombre: 'Ana', hace: '3 horas', texto: 'Increíble su consulta, todo lo que me dijo se cumplió. Muy acertada y con una conexión impresionante. 100% recomendada.', estrellas: 5 }
+    ]
+  },
+  '2': {
+    consultas: '35.420',
+    aciertos: '99.7%',
+    experiencia: '34 años',
+    opiniones: [
+      { nombre: 'Laura', hace: '2 horas', texto: 'Gloria es increíble, la conocco hace años y siempre me da soluciònes muy concretas y acertadas.', estrellas: 5 },
+      { nombre: 'Carlos', hace: '5 horas', texto: 'Muy profesional y empática. Me ayudó a ver claro en una situación confusa.', estrellas: 5 }
+    ]
+  },
+  '3': {
+    consultas: '28.150',
+    aciertos: '98.8%',
+    experiencia: '26 años',
+    opiniones: [
+      { nombre: 'Patricia', hace: '30 minutos', texto: 'Marian es excelente, muy clara y directa. La recomiendo sin dudarlo.', estrellas: 5 },
+      { nombre: 'Diego', hace: '4 horas', texto: 'Tuve mi primera consulta con Marian y fue rápida, directa y muy informativa.', estrellas: 5 }
+    ]
+  },
+  '4': {
+    consultas: '31.890',
+    aciertos: '99.4%',
+    experiencia: '29 años',
+    opiniones: [
+      { nombre: 'Elena', hace: '45 minutos', texto: 'Excelente en todos los sentidos. La recomiendo, acudo a ella siempre que tengo dudas.', estrellas: 5 },
+      { nombre: 'Roberto', hace: '3 horas', texto: 'Me encantó hablar con Paulina, transmite mucha paz y confianza. Sin duda volveré.', estrellas: 5 }
+    ]
+  }
+};
+
 export default function TarotistsGrid() {
   const [tarotistas, setTarotistas] = useState<any[]>([]);
   const [selectedMinutes, setSelectedMinutes] = useState<Record<string, number>>({});
@@ -210,87 +249,155 @@ export default function TarotistsGrid() {
         </div>
       </div>
 
-      {/* Modal */}
+      {/* Modal - Estilo Wengo */}
       {modalOpen && selectedTarotista && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-2 md:p-4">
+        <div className="fixed inset-0 bg-slate-900/70 z-50 flex items-center justify-center p-2 md:p-4 overflow-y-auto">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="bg-white rounded-2xl w-full max-w-5xl h-[90vh] overflow-y-auto flex flex-col md:flex-row"
+            className="bg-slate-950 rounded-2xl w-full max-w-5xl my-8 border border-yellow-500/30"
           >
-            {/* Header con foto - Grande en desktop */}
-            <div className="relative w-full md:w-1/2 h-64 md:h-full bg-gray-100 flex-shrink-0">
-              {selectedTarotista.imagen_url ? (
-                <img
-                  src={selectedTarotista.imagen_url}
-                  alt={selectedTarotista.nombre}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="w-full h-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
-                  <span className="text-6xl font-bold text-white">
-                    {selectedTarotista.nombre
-                      .split(' ')
-                      .map((w: string) => w[0])
-                      .join('')
-                      .slice(0, 2)}
-                  </span>
-                </div>
-              )}
+            {/* Header */}
+            <div className="relative p-8 pb-4 border-b border-yellow-500/20">
               <button
                 onClick={closeModal}
-                className="absolute top-4 right-4 bg-white/90 hover:bg-white p-2 rounded-full"
+                className="absolute top-4 right-4 text-white/60 hover:text-white text-2xl"
               >
                 ✕
               </button>
-            </div>
 
-            {/* Contenido */}
-            <div className="flex-1 p-6 md:p-8 space-y-4 overflow-y-auto">
-              <div>
-                <h2 className="text-3xl font-bold text-blue-950 mb-2">{selectedTarotista.nombre}</h2>
-                <p className="text-yellow-600 font-semibold text-lg mb-3">{selectedTarotista.especialidad}</p>
-
-                {/* Rating */}
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="flex gap-0.5">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`w-4 h-4 ${
-                          i < Math.round(selectedTarotista.rating || 5)
-                            ? 'fill-yellow-500 text-yellow-500'
-                            : 'text-gray-300'
-                        }`}
+              <div className="flex flex-col md:flex-row gap-8 items-start md:items-center">
+                {/* Foto circular grande */}
+                <div className="w-40 h-40 md:w-48 md:h-48 flex-shrink-0">
+                  <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-yellow-500">
+                    {selectedTarotista.imagen_url ? (
+                      <img
+                        src={selectedTarotista.imagen_url}
+                        alt={selectedTarotista.nombre}
+                        className="w-full h-full object-cover"
                       />
-                    ))}
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
+                        <span className="text-6xl font-bold text-white">
+                          {selectedTarotista.nombre
+                            .split(' ')
+                            .map((w: string) => w[0])
+                            .join('')
+                            .slice(0, 2)}
+                        </span>
+                      </div>
+                    )}
                   </div>
-                  <span className="text-gray-600">
-                    {(selectedTarotista.rating || 5).toFixed(1)}
-                  </span>
+                </div>
+
+                {/* Título y stats */}
+                <div className="flex-1">
+                  <h2 className="text-4xl font-bold text-yellow-500 mb-2">{selectedTarotista.nombre}</h2>
+                  <p className="text-yellow-400 font-semibold text-lg mb-6">{selectedTarotista.especialidad}</p>
+
+                  {/* Stats */}
+                  <div className="grid grid-cols-3 gap-4 mb-6">
+                    {taroistaStatsData[selectedTarotista.id]?.consultas && (
+                      <>
+                        <div className="text-center border border-yellow-500/30 rounded-lg p-3">
+                          <p className="text-yellow-500 text-2xl font-bold">{taroistaStatsData[selectedTarotista.id].consultas}</p>
+                          <p className="text-gray-300 text-xs mt-1">Consultas</p>
+                        </div>
+                        <div className="text-center border border-yellow-500/30 rounded-lg p-3">
+                          <p className="text-yellow-500 text-2xl font-bold">{taroistaStatsData[selectedTarotista.id].aciertos}</p>
+                          <p className="text-gray-300 text-xs mt-1">De aciertos</p>
+                        </div>
+                        <div className="text-center border border-yellow-500/30 rounded-lg p-3">
+                          <p className="text-yellow-500 text-2xl font-bold">{taroistaStatsData[selectedTarotista.id].experiencia}</p>
+                          <p className="text-gray-300 text-xs mt-1">De experiencia</p>
+                        </div>
+                      </>
+                    )}
+                  </div>
+
+                  {/* Rating */}
+                  <div className="flex items-center gap-2">
+                    <div className="flex gap-1">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className="w-5 h-5 fill-yellow-500 text-yellow-500"
+                        />
+                      ))}
+                    </div>
+                    <span className="text-yellow-500 font-bold">4.9/5</span>
+                    <span className="text-gray-400 text-sm">Basado en 40.632 opiniones</span>
+                  </div>
                 </div>
               </div>
+            </div>
 
-              {/* Modalidad */}
-              <div>
-                <span className="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-semibold">
-                  Llamada
-                </span>
-              </div>
-
+            {/* Contenido principal */}
+            <div className="p-8 space-y-8 max-h-[60vh] overflow-y-auto">
               {/* Descripción */}
               {selectedTarotista.bio && (
                 <div>
-                  <h3 className="font-bold text-blue-950 mb-2">Sobre ella</h3>
-                  <p className="text-gray-600 leading-relaxed">{selectedTarotista.bio}</p>
+                  <h3 className="text-yellow-500 font-bold text-lg mb-3">EL PERFIL DE {selectedTarotista.nombre.toUpperCase()}</h3>
+                  <p className="text-gray-300 leading-relaxed text-sm">{selectedTarotista.bio}</p>
+                </div>
+              )}
+
+              {/* Horario */}
+              <div>
+                <h3 className="text-yellow-500 font-bold text-lg mb-4">AGENDA DE {selectedTarotista.nombre.toUpperCase()}</h3>
+                <p className="text-gray-400 text-sm mb-4">Estoy disponible inmediatamente hasta las 24:00.</p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+                  {['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES', 'SÁBADO', 'DOMINGO'].map((day, idx) => (
+                    <div key={day} className="border border-yellow-500/30 rounded p-2">
+                      <p className="text-yellow-500 font-bold mb-2">{day}</p>
+                      <p className="text-gray-400 text-xs">00:00 - 00:15</p>
+                      <p className="text-gray-400 text-xs">11:00 - 13:45</p>
+                      <p className="text-gray-400 text-xs">15:30 - 24:00</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Opiniones */}
+              {taroistaStatsData[selectedTarotista.id]?.opiniones && (
+                <div>
+                  <h3 className="text-yellow-500 font-bold text-lg mb-4">COMENTARIOS DE MIS LLAMADAS</h3>
+                  <div className="space-y-4">
+                    {taroistaStatsData[selectedTarotista.id].opiniones.map((opinion: any, idx: number) => (
+                      <div key={idx} className="border border-yellow-500/30 rounded-lg p-4 bg-slate-900/50">
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className="w-8 h-8 rounded-full bg-yellow-500 flex items-center justify-center text-slate-950 font-bold text-sm">
+                            {opinion.nombre[0]}
+                          </div>
+                          <div>
+                            <p className="text-white font-bold text-sm">{opinion.nombre}</p>
+                            <p className="text-gray-400 text-xs">Hace {opinion.hace}</p>
+                          </div>
+                        </div>
+                        <div className="flex gap-0.5 mb-2">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              className={`w-3 h-3 ${
+                                i < opinion.estrellas
+                                  ? 'fill-yellow-500 text-yellow-500'
+                                  : 'text-gray-600'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                        <p className="text-gray-300 text-sm leading-relaxed">"{opinion.texto}"</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
 
               {/* Selector de Paquete */}
               <div>
-                <h3 className="font-bold text-blue-950 mb-3">Elige tu sesión</h3>
-                <div className="grid grid-cols-3 gap-2 mb-4">
+                <h3 className="text-yellow-500 font-bold text-lg mb-4">CONSULTAS</h3>
+                <div className="grid grid-cols-3 gap-3 mb-6">
                   {[
                     { minutes: 15, price: '€10' },
                     { minutes: 20, price: '€15' },
@@ -299,31 +406,24 @@ export default function TarotistsGrid() {
                     <button
                       key={pkg.minutes}
                       onClick={() => setSelectedMinutes({ ...selectedMinutes, [selectedTarotista.id]: pkg.minutes })}
-                      className={`py-2 px-3 rounded-lg text-xs font-semibold transition border-2 ${
+                      className={`py-3 px-3 rounded-lg font-semibold transition border-2 ${
                         selectedMinutes[selectedTarotista.id] === pkg.minutes
-                          ? 'bg-yellow-500 text-white border-yellow-500'
-                          : 'bg-white text-gray-700 border-gray-200 hover:border-yellow-500'
+                          ? 'bg-yellow-500 text-slate-950 border-yellow-500'
+                          : 'bg-slate-900 text-yellow-500 border-yellow-500/30 hover:border-yellow-500'
                       }`}
                     >
-                      {pkg.minutes} min<br/>{pkg.price}
+                      <p className="font-bold">{pkg.minutes} min</p>
+                      <p className="text-sm">{pkg.price}</p>
                     </button>
                   ))}
                 </div>
-              </div>
 
-              {/* Botones */}
-              <div className="flex gap-3">
-                <button
-                  onClick={closeModal}
-                  className="flex-1 bg-gray-200 text-blue-950 py-3 rounded-lg font-semibold hover:bg-gray-300 transition"
-                >
-                  Cerrar
-                </button>
+                {/* Botón CTA */}
                 <Link
                   href={`/checkout?minutes=${selectedMinutes[selectedTarotista.id] || 15}&tarotista=${selectedTarotista.id}`}
-                  className="flex-1 bg-gray-900 text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition text-center"
+                  className="w-full bg-yellow-500 hover:bg-yellow-600 text-slate-950 py-3 rounded-lg font-bold transition text-center block"
                 >
-                  Continuar
+                  CONSULTAR AHORA →
                 </Link>
               </div>
             </div>
