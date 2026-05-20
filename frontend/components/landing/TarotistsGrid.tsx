@@ -348,7 +348,7 @@ export default function TarotistsGrid() {
                 <h3 className="text-yellow-500 font-bold text-lg mb-4">AGENDA DE {selectedTarotista.nombre.toUpperCase()}</h3>
                 <p className="text-gray-400 text-sm mb-4">Estoy disponible inmediatamente hasta las 24:00.</p>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
-                  {['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES', 'SÁBADO', 'DOMINGO'].map((day, idx) => (
+                  {['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES', 'SÁBADO', 'DOMINGO'].map((day) => (
                     <div key={day} className="border border-yellow-500/30 rounded p-2">
                       <p className="text-yellow-500 font-bold mb-2">{day}</p>
                       <p className="text-gray-400 text-xs">00:00 - 00:15</p>
