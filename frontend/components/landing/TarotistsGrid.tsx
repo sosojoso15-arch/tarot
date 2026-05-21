@@ -144,7 +144,8 @@ export default function TarotistsGrid() {
                 .toUpperCase()
                 .slice(0, 2);
 
-              const stats = taroistaStatsData[String(tarotista.id)];
+              const taroistaIndex = String(index + 1);
+              const stats = taroistaStatsData[taroistaIndex];
               const firstOpinion = stats?.opiniones?.[0];
 
               return (
