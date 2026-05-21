@@ -68,6 +68,33 @@ const taroistaStatsData: Record<string, any> = {
       { nombre: 'Valeria', hace: '1 hora', texto: 'Marcos es excepcional, sus lecturas nocturnas tienen una vibra muy especial y profunda.', estrellas: 5 },
       { nombre: 'Carlos', hace: '3 horas', texto: 'Acompañamiento nocturno impecable. Me siento transformado después de hablar con él.', estrellas: 5 }
     ]
+  },
+  '8': {
+    consultas: '27.890',
+    aciertos: '99.3%',
+    experiencia: '26 años',
+    opiniones: [
+      { nombre: 'Isabela', hace: '45 minutos', texto: 'Raquel tiene un don natural para la lectura intuitiva. Sus interpretaciones son profundas y acertadas.', estrellas: 5 },
+      { nombre: 'Miguel', hace: '2 horas', texto: 'Excelente tarotista intuitiva. Me ayudó a entender mensajes que necesitaba escuchar.', estrellas: 5 }
+    ]
+  },
+  '9': {
+    consultas: '23.560',
+    aciertos: '99.0%',
+    experiencia: '22 años',
+    opiniones: [
+      { nombre: 'Patricia', hace: '1 hora', texto: 'Yeyo ofrece orientación espiritual nocturna excepcional. Sus mensajes llegan al alma.', estrellas: 5 },
+      { nombre: 'Diego', hace: '2 horas', texto: 'La orientación espiritual que recibí fue transformadora. Muy recomendado para noches.', estrellas: 5 }
+    ]
+  },
+  '10': {
+    consultas: '32.100',
+    aciertos: '99.5%',
+    experiencia: '31 años',
+    opiniones: [
+      { nombre: 'Cristina', hace: '30 minutos', texto: 'Verónica es una canalización espiritual pura. Sus mensajes traen claridad y paz.', estrellas: 5 },
+      { nombre: 'Fernando', hace: '3 horas', texto: 'Su capacidad de canalización espiritual es extraordinaria. Me cambió la perspectiva de todo.', estrellas: 5 }
+    ]
   }
 };
 
