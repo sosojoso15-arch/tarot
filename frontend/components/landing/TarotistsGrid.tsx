@@ -280,12 +280,12 @@ export default function TarotistsGrid() {
               ✕
             </button>
 
-            <div className="p-8 md:p-12">
+            <div className="p-8">
               {/* Top Section - Photo + Info + Consultas Box */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+              <div className="grid grid-cols-3 gap-6 mb-12">
                 {/* Photo - Left */}
-                <div className="flex justify-center md:col-span-1">
-                  <div className="w-44 h-44 rounded-full overflow-hidden border-4 border-yellow-500 shadow-2xl flex-shrink-0 relative">
+                <div className="flex justify-center items-start">
+                  <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-yellow-500 shadow-2xl flex-shrink-0 relative">
                     {selectedTarotista.imagen_url ? (
                       <img
                         src={selectedTarotista.imagen_url}
@@ -307,9 +307,9 @@ export default function TarotistsGrid() {
                 </div>
 
                 {/* Info - Center */}
-                <div className="md:col-span-1 flex flex-col justify-center">
-                  <h2 className="text-4xl font-bold text-yellow-500 mb-1">{selectedTarotista.nombre}</h2>
-                  <p className="text-yellow-400 font-semibold text-lg mb-6">{selectedTarotista.especialidad}</p>
+                <div className="flex flex-col justify-start">
+                  <h2 className="text-3xl font-bold text-yellow-500 mb-1">{selectedTarotista.nombre}</h2>
+                  <p className="text-yellow-400 font-semibold text-base mb-4">{selectedTarotista.especialidad}</p>
 
                   {/* Opinion Quote */}
                   {taroistaStatsData[String(selectedTarotista.id % 10 || 10)]?.opiniones?.[0] && (
@@ -326,12 +326,12 @@ export default function TarotistsGrid() {
                 </div>
 
                 {/* Consultas Box - Right */}
-                <div className="border-2 border-yellow-500/40 rounded-2xl p-6 bg-slate-900/50 flex flex-col justify-between md:col-span-1">
+                <div className="border-2 border-yellow-500/40 rounded-2xl p-5 bg-slate-900/50 flex flex-col justify-between">
                   <div>
-                    <h3 className="text-yellow-500 font-bold text-lg mb-6 text-center uppercase tracking-wide">✦ CONSULTAS ✦</h3>
+                    <h3 className="text-yellow-500 font-bold text-sm mb-4 text-center uppercase tracking-wide">✦ CONSULTAS ✦</h3>
 
                     {/* Pricing Options */}
-                    <div className="space-y-3 mb-6">
+                    <div className="space-y-2 mb-4">
                       {[
                         { minutes: 15, price: '10 €' },
                         { minutes: 20, price: '15 €' },
@@ -340,25 +340,25 @@ export default function TarotistsGrid() {
                         <div
                           key={pkg.minutes}
                           onClick={() => setSelectedMinutes({ ...selectedMinutes, [selectedTarotista.id]: pkg.minutes })}
-                          className={`py-3 px-4 rounded-lg font-semibold transition border cursor-pointer flex justify-between items-center ${
+                          className={`py-2 px-3 rounded-lg font-semibold transition border cursor-pointer flex justify-between items-center text-xs ${
                             selectedMinutes[selectedTarotista.id] === pkg.minutes
                               ? 'bg-yellow-500/20 text-yellow-500 border-yellow-500'
                               : 'bg-transparent text-gray-300 border-yellow-500/30 hover:border-yellow-500'
                           }`}
                         >
-                          <span>{pkg.minutes} minutos</span>
-                          <span className="text-sm">{pkg.price}</span>
+                          <span>{pkg.minutes} min</span>
+                          <span>{pkg.price}</span>
                         </div>
                       ))}
                     </div>
 
                     {/* Contact Options */}
-                    <p className="text-yellow-400 text-xs mb-4 text-center">Elige tu forma de consulta</p>
-                    <div className="space-y-2 mb-6">
-                      <button className="w-full border-2 border-yellow-500/40 text-yellow-500 py-2 px-4 rounded-lg hover:border-yellow-500 transition text-xs font-semibold">
+                    <p className="text-yellow-400 text-xs mb-3 text-center">Forma consulta</p>
+                    <div className="space-y-1.5 mb-4">
+                      <button className="w-full border-2 border-yellow-500/40 text-yellow-500 py-1.5 px-3 rounded-lg hover:border-yellow-500 transition text-xs font-semibold">
                         ☎️ TELÉFONO
                       </button>
-                      <button className="w-full border-2 border-yellow-500/40 text-yellow-500 py-2 px-4 rounded-lg hover:border-yellow-500 transition text-xs font-semibold">
+                      <button className="w-full border-2 border-yellow-500/40 text-yellow-500 py-1.5 px-3 rounded-lg hover:border-yellow-500 transition text-xs font-semibold">
                         💬 CHAT
                       </button>
                     </div>
@@ -367,9 +367,9 @@ export default function TarotistsGrid() {
                   {/* CTA Button */}
                   <Link
                     href={`/checkout?minutes=${selectedMinutes[selectedTarotista.id] || 15}&tarotista=${selectedTarotista.id}`}
-                    className="w-full bg-yellow-600 hover:bg-yellow-500 text-slate-950 py-3 rounded-lg font-bold transition text-center block uppercase text-sm tracking-wide"
+                    className="w-full bg-yellow-600 hover:bg-yellow-500 text-slate-950 py-2 rounded-lg font-bold transition text-center block uppercase text-xs"
                   >
-                    CONSULTAR AHORA ✦
+                    CONSULTAR AHORA
                   </Link>
                 </div>
               </div>

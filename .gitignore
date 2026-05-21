@@ -64,3 +64,5 @@ stripe_*.json
 tmp/
 temp/
 *.tmp
+
+.vercel
