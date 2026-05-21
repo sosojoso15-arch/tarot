@@ -155,11 +155,11 @@ export default function TarotistsGrid() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="bg-slate-900 border border-yellow-500/30 rounded-2xl p-6 flex-shrink-0 w-80 hover:border-yellow-500/60 transition flex flex-col"
+                  className="bg-slate-900 border border-yellow-500/40 rounded-2xl p-5 flex-shrink-0 w-72 hover:border-yellow-500/60 transition flex flex-col items-center"
                 >
-                  {/* Foto circular */}
-                  <div className="flex justify-center mb-6">
-                    <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-yellow-500">
+                  {/* Foto circular - más grande */}
+                  <div className="mb-4">
+                    <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-yellow-500 flex-shrink-0">
                       {tarotista.imagen_url ? (
                         <img
                           src={tarotista.imagen_url}
@@ -168,7 +168,7 @@ export default function TarotistsGrid() {
                         />
                       ) : (
                         <div className="w-full h-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
-                          <span className="text-4xl font-bold text-white">{initials}</span>
+                          <span className="text-5xl font-bold text-white">{initials}</span>
                         </div>
                       )}
                     </div>
@@ -178,28 +178,26 @@ export default function TarotistsGrid() {
                   <h3 className="text-2xl font-bold text-yellow-500 text-center mb-1">{tarotista.nombre}</h3>
 
                   {/* Especialidad */}
-                  <p className="text-yellow-400 font-semibold text-sm text-center mb-4">{tarotista.especialidad}</p>
+                  <p className="text-yellow-400 font-semibold text-xs text-center mb-3">{tarotista.especialidad}</p>
 
                   {/* Divider */}
-                  <div className="flex justify-center mb-4">
-                    <div className="text-yellow-500 text-lg">✦</div>
-                  </div>
+                  <div className="text-yellow-500 text-sm mb-3">✦</div>
 
                   {/* Opinion */}
                   {firstOpinion && (
-                    <div className="mb-6 flex-grow flex flex-col items-center justify-center">
-                      <p className="text-yellow-500 text-xl mb-2">❝</p>
+                    <div className="mb-4 flex-grow flex flex-col items-center justify-center px-2">
+                      <p className="text-yellow-500 text-lg mb-1">❝</p>
                       <p className="text-yellow-400 text-xs text-center leading-relaxed italic">
                         {firstOpinion.texto}
                       </p>
-                      <p className="text-yellow-500 mt-3">✦</p>
+                      <p className="text-yellow-500 mt-1 text-sm">✦</p>
                     </div>
                   )}
 
                   {/* Botón Ver Perfil */}
                   <button
                     onClick={() => openModal(tarotista)}
-                    className="w-full border-2 border-yellow-500 text-yellow-500 font-bold py-3 rounded-lg hover:bg-yellow-500/10 transition uppercase text-sm tracking-wide"
+                    className="w-full border-2 border-yellow-500 text-yellow-500 font-bold py-2 rounded-lg hover:bg-yellow-500/10 transition uppercase text-xs tracking-wide"
                   >
                     VER PERFIL COMPLETO
                   </button>
