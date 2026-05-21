@@ -41,6 +41,33 @@ const taroistaStatsData: Record<string, any> = {
       { nombre: 'Elena', hace: '45 minutos', texto: 'Excelente en todos los sentidos. La recomiendo, acudo a ella siempre que tengo dudas.', estrellas: 5 },
       { nombre: 'Roberto', hace: '3 horas', texto: 'Me encantó hablar con Paulina, transmite mucha paz y confianza. Sin duda volveré.', estrellas: 5 }
     ]
+  },
+  '5': {
+    consultas: '26.750',
+    aciertos: '99.2%',
+    experiencia: '25 años',
+    opiniones: [
+      { nombre: 'Sofía', hace: '1 hora', texto: 'Paola Andrea es increíble, sus lecturas son muy precisas y detalladas. Totalmente recomendada.', estrellas: 5 },
+      { nombre: 'Juan', hace: '2 horas', texto: 'Excelente consulta, me ayudó a ver las cosas desde otra perspectiva. Muy profesional.', estrellas: 5 }
+    ]
+  },
+  '6': {
+    consultas: '29.450',
+    aciertos: '98.9%',
+    experiencia: '27 años',
+    opiniones: [
+      { nombre: 'Daniela', hace: '30 minutos', texto: 'Mercedes es maravillosa, tiene un don especial para conectar. Me siento escuchada y comprendida.', estrellas: 5 },
+      { nombre: 'Andrés', hace: '2 horas', texto: 'Sus consultas simentales son las mejores. Recomiendo sin dudarlo a cualquiera que la necesite.', estrellas: 5 }
+    ]
+  },
+  '7': {
+    consultas: '24.320',
+    aciertos: '99.1%',
+    experiencia: '23 años',
+    opiniones: [
+      { nombre: 'Valeria', hace: '1 hora', texto: 'Marcos es excepcional, sus lecturas nocturnas tienen una vibra muy especial y profunda.', estrellas: 5 },
+      { nombre: 'Carlos', hace: '3 horas', texto: 'Acompañamiento nocturno impecable. Me siento transformado después de hablar con él.', estrellas: 5 }
+    ]
   }
 };
 
