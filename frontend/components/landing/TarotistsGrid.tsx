@@ -188,8 +188,8 @@ export default function TarotistsGrid() {
                   {/* Opinion */}
                   {firstOpinion && (
                     <div className="mb-6 flex-grow flex flex-col items-center justify-center">
-                      <p className="text-yellow-500 text-2xl mb-3">❝</p>
-                      <p className="text-gray-300 text-xs text-center leading-relaxed italic">
+                      <p className="text-yellow-500 text-xl mb-2">❝</p>
+                      <p className="text-yellow-400 text-xs text-center leading-relaxed italic">
                         {firstOpinion.texto}
                       </p>
                       <p className="text-yellow-500 mt-3">✦</p>
