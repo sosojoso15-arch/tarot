@@ -273,18 +273,18 @@ export default function TarotistsGrid() {
             className="bg-slate-950 rounded-2xl w-full max-w-5xl my-8 border border-yellow-500/30"
           >
             {/* Header */}
-            <div className="relative p-8 pb-4 border-b border-yellow-500/20">
+            <div className="relative p-8 border-b border-yellow-500/20 bg-gradient-to-b from-slate-900 to-slate-950">
               <button
                 onClick={closeModal}
-                className="absolute top-4 right-4 text-white/60 hover:text-white text-2xl"
+                className="absolute top-4 right-4 text-white/60 hover:text-white text-3xl font-bold"
               >
                 ✕
               </button>
 
-              <div className="flex flex-col md:flex-row gap-8 items-start md:items-center">
+              <div className="flex flex-col items-center text-center mb-8">
                 {/* Foto circular grande */}
-                <div className="w-40 h-40 md:w-48 md:h-48 flex-shrink-0">
-                  <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-yellow-500">
+                <div className="w-48 h-48 mb-6">
+                  <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-yellow-500 shadow-lg">
                     {selectedTarotista.imagen_url ? (
                       <img
                         src={selectedTarotista.imagen_url}
@@ -293,7 +293,7 @@ export default function TarotistsGrid() {
                       />
                     ) : (
                       <div className="w-full h-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
-                        <span className="text-6xl font-bold text-white">
+                        <span className="text-7xl font-bold text-white">
                           {selectedTarotista.nombre
                             .split(' ')
                             .map((w: string) => w[0])
@@ -305,43 +305,50 @@ export default function TarotistsGrid() {
                   </div>
                 </div>
 
-                {/* Título y stats */}
-                <div className="flex-1">
-                  <h2 className="text-4xl font-bold text-yellow-500 mb-2">{selectedTarotista.nombre}</h2>
-                  <p className="text-yellow-400 font-semibold text-lg mb-6">{selectedTarotista.especialidad}</p>
+                {/* Título y especialidad */}
+                <h2 className="text-5xl font-bold text-yellow-500 mb-2">{selectedTarotista.nombre}</h2>
+                <p className="text-yellow-400 font-semibold text-xl mb-6">{selectedTarotista.especialidad}</p>
 
-                  {/* Stats */}
-                  <div className="grid grid-cols-3 gap-4 mb-6">
-                    {taroistaStatsData[selectedTarotista.id]?.consultas && (
-                      <>
-                        <div className="text-center border border-yellow-500/30 rounded-lg p-3">
-                          <p className="text-yellow-500 text-2xl font-bold">{taroistaStatsData[selectedTarotista.id].consultas}</p>
-                          <p className="text-gray-300 text-xs mt-1">Consultas</p>
-                        </div>
-                        <div className="text-center border border-yellow-500/30 rounded-lg p-3">
-                          <p className="text-yellow-500 text-2xl font-bold">{taroistaStatsData[selectedTarotista.id].aciertos}</p>
-                          <p className="text-gray-300 text-xs mt-1">De aciertos</p>
-                        </div>
-                        <div className="text-center border border-yellow-500/30 rounded-lg p-3">
-                          <p className="text-yellow-500 text-2xl font-bold">{taroistaStatsData[selectedTarotista.id].experiencia}</p>
-                          <p className="text-gray-300 text-xs mt-1">De experiencia</p>
-                        </div>
-                      </>
-                    )}
+                {/* Opinion */}
+                {taroistaStatsData[String(Object.keys(taroistaStatsData).length === Object.keys(taroistaStatsData).findIndex(k => taroistaStatsData[k].consultas === taroistaStatsData[String(selectedTarotista.id % 10 || 10)].consultas) + 1 ? selectedTarotista.id : (selectedTarotista.id || 1))]?.opiniones?.[0] || taroistaStatsData['1']?.opiniones?.[0] ? (
+                  <div className="mb-6 max-w-2xl mx-auto">
+                    <p className="text-yellow-400 text-3xl mb-3">❝</p>
+                    <p className="text-gray-200 text-sm leading-relaxed italic">
+                      {(taroistaStatsData[String(selectedTarotista.id % 10 || 10)]?.opiniones?.[0] || taroistaStatsData['1']?.opiniones?.[0]).texto}
+                    </p>
+                    <p className="text-yellow-400 text-xs mt-3">
+                      {(taroistaStatsData[String(selectedTarotista.id % 10 || 10)]?.opiniones?.[0] || taroistaStatsData['1']?.opiniones?.[0]).nombre}
+                    </p>
                   </div>
+                ) : null}
 
-                  {/* Rating */}
-                  <div className="flex items-center gap-2">
-                    <div className="flex gap-1">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className="w-5 h-5 fill-yellow-500 text-yellow-500"
-                        />
-                      ))}
-                    </div>
-                    <span className="text-yellow-500 font-bold">4.9/5</span>
-                    <span className="text-gray-400 text-sm">Basado en 40.632 opiniones</span>
+                {/* Rating */}
+                <div className="flex items-center justify-center gap-2 mb-6">
+                  <div className="flex gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className="w-5 h-5 fill-yellow-500 text-yellow-500"
+                      />
+                    ))}
+                  </div>
+                  <span className="text-yellow-500 font-bold">4.9/5</span>
+                  <span className="text-gray-400 text-sm">Basado en 40.632 opiniones</span>
+                </div>
+
+                {/* Stats */}
+                <div className="grid grid-cols-3 gap-4 w-full">
+                  <div className="text-center border border-yellow-500/40 rounded-lg p-3 bg-slate-900/50">
+                    <p className="text-yellow-500 text-2xl font-bold">{(taroistaStatsData[String(selectedTarotista.id % 10 || 10)] || taroistaStatsData['1']).consultas}</p>
+                    <p className="text-gray-300 text-xs mt-1">Consultas</p>
+                  </div>
+                  <div className="text-center border border-yellow-500/40 rounded-lg p-3 bg-slate-900/50">
+                    <p className="text-yellow-500 text-2xl font-bold">{(taroistaStatsData[String(selectedTarotista.id % 10 || 10)] || taroistaStatsData['1']).aciertos}</p>
+                    <p className="text-gray-300 text-xs mt-1">De aciertos</p>
+                  </div>
+                  <div className="text-center border border-yellow-500/40 rounded-lg p-3 bg-slate-900/50">
+                    <p className="text-yellow-500 text-2xl font-bold">{(taroistaStatsData[String(selectedTarotista.id % 10 || 10)] || taroistaStatsData['1']).experiencia}</p>
+                    <p className="text-gray-300 text-xs mt-1">De experiencia</p>
                   </div>
                 </div>
               </div>
