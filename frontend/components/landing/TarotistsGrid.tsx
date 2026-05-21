@@ -263,28 +263,29 @@ export default function TarotistsGrid() {
         </div>
       </div>
 
-      {/* Modal - Estilo Wengo */}
+      {/* Modal - Estilo Wengo Completo */}
       {modalOpen && selectedTarotista && (
-        <div className="fixed inset-0 bg-slate-900/70 z-50 flex items-center justify-center p-2 md:p-4 overflow-y-auto">
+        <div className="fixed inset-0 bg-slate-900/80 z-50 flex items-center justify-center p-2 md:p-4 overflow-y-auto">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="bg-slate-950 rounded-2xl w-full max-w-5xl my-8 border border-yellow-500/30"
+            className="bg-slate-950 rounded-3xl w-full max-w-5xl my-8 border border-yellow-500/40 relative"
           >
-            {/* Header */}
-            <div className="relative p-8 border-b border-yellow-500/20 bg-gradient-to-b from-slate-900 to-slate-950">
-              <button
-                onClick={closeModal}
-                className="absolute top-4 right-4 text-white/60 hover:text-white text-3xl font-bold"
-              >
-                ✕
-              </button>
+            {/* Close Button */}
+            <button
+              onClick={closeModal}
+              className="absolute top-6 right-6 text-white/60 hover:text-white text-3xl font-bold z-10"
+            >
+              ✕
+            </button>
 
-              <div className="flex flex-col items-center text-center mb-8">
-                {/* Foto circular grande */}
-                <div className="w-48 h-48 mb-6">
-                  <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-yellow-500 shadow-lg">
+            <div className="p-8 md:p-12">
+              {/* Top Section - Photo + Info + Consultas Box */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                {/* Photo - Left */}
+                <div className="flex justify-center md:col-span-1">
+                  <div className="w-44 h-44 rounded-full overflow-hidden border-4 border-yellow-500 shadow-2xl flex-shrink-0 relative">
                     {selectedTarotista.imagen_url ? (
                       <img
                         src={selectedTarotista.imagen_url}
@@ -293,7 +294,7 @@ export default function TarotistsGrid() {
                       />
                     ) : (
                       <div className="w-full h-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
-                        <span className="text-7xl font-bold text-white">
+                        <span className="text-6xl font-bold text-white">
                           {selectedTarotista.nombre
                             .split(' ')
                             .map((w: string) => w[0])
@@ -305,98 +306,135 @@ export default function TarotistsGrid() {
                   </div>
                 </div>
 
-                {/* Título y especialidad */}
-                <h2 className="text-5xl font-bold text-yellow-500 mb-2">{selectedTarotista.nombre}</h2>
-                <p className="text-yellow-400 font-semibold text-xl mb-6">{selectedTarotista.especialidad}</p>
+                {/* Info - Center */}
+                <div className="md:col-span-1 flex flex-col justify-center">
+                  <h2 className="text-4xl font-bold text-yellow-500 mb-1">{selectedTarotista.nombre}</h2>
+                  <p className="text-yellow-400 font-semibold text-lg mb-6">{selectedTarotista.especialidad}</p>
 
-                {/* Opinion */}
-                {taroistaStatsData[String(Object.keys(taroistaStatsData).length === Object.keys(taroistaStatsData).findIndex(k => taroistaStatsData[k].consultas === taroistaStatsData[String(selectedTarotista.id % 10 || 10)].consultas) + 1 ? selectedTarotista.id : (selectedTarotista.id || 1))]?.opiniones?.[0] || taroistaStatsData['1']?.opiniones?.[0] ? (
-                  <div className="mb-6 max-w-2xl mx-auto">
-                    <p className="text-yellow-400 text-3xl mb-3">❝</p>
-                    <p className="text-gray-200 text-sm leading-relaxed italic">
-                      {(taroistaStatsData[String(selectedTarotista.id % 10 || 10)]?.opiniones?.[0] || taroistaStatsData['1']?.opiniones?.[0]).texto}
-                    </p>
-                    <p className="text-yellow-400 text-xs mt-3">
-                      {(taroistaStatsData[String(selectedTarotista.id % 10 || 10)]?.opiniones?.[0] || taroistaStatsData['1']?.opiniones?.[0]).nombre}
-                    </p>
+                  {/* Opinion Quote */}
+                  {taroistaStatsData[String(selectedTarotista.id % 10 || 10)]?.opiniones?.[0] && (
+                    <div className="mb-4">
+                      <p className="text-yellow-400 text-3xl mb-2">❝</p>
+                      <p className="text-gray-200 text-sm leading-relaxed italic">
+                        {taroistaStatsData[String(selectedTarotista.id % 10 || 10)]?.opiniones?.[0].texto}
+                      </p>
+                      <p className="text-yellow-400 text-xs mt-2">
+                        por {taroistaStatsData[String(selectedTarotista.id % 10 || 10)]?.opiniones?.[0].nombre}, {taroistaStatsData[String(selectedTarotista.id % 10 || 10)]?.opiniones?.[0].hace}
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Consultas Box - Right */}
+                <div className="border-2 border-yellow-500/40 rounded-2xl p-6 bg-slate-900/50 flex flex-col justify-between md:col-span-1">
+                  <div>
+                    <h3 className="text-yellow-500 font-bold text-lg mb-6 text-center uppercase tracking-wide">✦ CONSULTAS ✦</h3>
+
+                    {/* Pricing Options */}
+                    <div className="space-y-3 mb-6">
+                      {[
+                        { minutes: 15, price: '10 €' },
+                        { minutes: 20, price: '15 €' },
+                        { minutes: 30, price: '20 €' }
+                      ].map(pkg => (
+                        <div
+                          key={pkg.minutes}
+                          onClick={() => setSelectedMinutes({ ...selectedMinutes, [selectedTarotista.id]: pkg.minutes })}
+                          className={`py-3 px-4 rounded-lg font-semibold transition border cursor-pointer flex justify-between items-center ${
+                            selectedMinutes[selectedTarotista.id] === pkg.minutes
+                              ? 'bg-yellow-500/20 text-yellow-500 border-yellow-500'
+                              : 'bg-transparent text-gray-300 border-yellow-500/30 hover:border-yellow-500'
+                          }`}
+                        >
+                          <span>{pkg.minutes} minutos</span>
+                          <span className="text-sm">{pkg.price}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Contact Options */}
+                    <p className="text-yellow-400 text-xs mb-4 text-center">Elige tu forma de consulta</p>
+                    <div className="space-y-2 mb-6">
+                      <button className="w-full border-2 border-yellow-500/40 text-yellow-500 py-2 px-4 rounded-lg hover:border-yellow-500 transition text-xs font-semibold">
+                        ☎️ TELÉFONO
+                      </button>
+                      <button className="w-full border-2 border-yellow-500/40 text-yellow-500 py-2 px-4 rounded-lg hover:border-yellow-500 transition text-xs font-semibold">
+                        💬 CHAT
+                      </button>
+                    </div>
                   </div>
-                ) : null}
 
-                {/* Rating */}
-                <div className="flex items-center justify-center gap-2 mb-6">
-                  <div className="flex gap-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className="w-5 h-5 fill-yellow-500 text-yellow-500"
-                      />
+                  {/* CTA Button */}
+                  <Link
+                    href={`/checkout?minutes=${selectedMinutes[selectedTarotista.id] || 15}&tarotista=${selectedTarotista.id}`}
+                    className="w-full bg-yellow-600 hover:bg-yellow-500 text-slate-950 py-3 rounded-lg font-bold transition text-center block uppercase text-sm tracking-wide"
+                  >
+                    CONSULTAR AHORA ✦
+                  </Link>
+                </div>
+              </div>
+
+              {/* Stats Boxes */}
+              <div className="grid grid-cols-3 gap-4 mb-12">
+                <div className="border-2 border-yellow-500/40 rounded-xl p-4 text-center bg-slate-900/30">
+                  <p className="text-yellow-500 text-3xl font-bold">💬 {(taroistaStatsData[String(selectedTarotista.id % 10 || 10)] || taroistaStatsData['1']).consultas}</p>
+                  <p className="text-gray-400 text-xs mt-2">consultas</p>
+                </div>
+                <div className="border-2 border-yellow-500/40 rounded-xl p-4 text-center bg-slate-900/30">
+                  <p className="text-yellow-500 text-3xl font-bold">😊 {(taroistaStatsData[String(selectedTarotista.id % 10 || 10)] || taroistaStatsData['1']).aciertos}</p>
+                  <p className="text-gray-400 text-xs mt-2">de aciertos</p>
+                </div>
+                <div className="border-2 border-yellow-500/40 rounded-xl p-4 text-center bg-slate-900/30">
+                  <p className="text-yellow-500 text-3xl font-bold">⭐ {(taroistaStatsData[String(selectedTarotista.id % 10 || 10)] || taroistaStatsData['1']).experiencia}</p>
+                  <p className="text-gray-400 text-xs mt-2">de experiencia</p>
+                </div>
+              </div>
+
+              {/* Profile & Agenda - 2 Columns */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                {/* Profile */}
+                {selectedTarotista.bio && (
+                  <div className="border-2 border-yellow-500/40 rounded-xl p-6 bg-slate-900/30">
+                    <h3 className="text-yellow-500 font-bold text-lg mb-4 uppercase tracking-wide">✦ EL PERFIL DE {selectedTarotista.nombre.toUpperCase()} ✦</h3>
+                    <p className="text-gray-300 leading-relaxed text-sm">{selectedTarotista.bio}</p>
+                  </div>
+                )}
+
+                {/* Agenda */}
+                <div className="border-2 border-yellow-500/40 rounded-xl p-6 bg-slate-900/30">
+                  <h3 className="text-yellow-500 font-bold text-lg mb-4 uppercase tracking-wide">✦ AGENDA DE {selectedTarotista.nombre.toUpperCase()} ✦</h3>
+                  <p className="text-gray-400 text-xs mb-4">Estoy disponible inmediatamente hasta las 24:00.</p>
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    {['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES', 'SÁBADO', 'DOMINGO'].map((day) => (
+                      <div key={day} className="border border-yellow-500/30 rounded p-2 text-center">
+                        <p className="text-yellow-500 font-bold mb-1 text-xs">{day}</p>
+                        <p className="text-gray-400 text-xs leading-tight">00:00 - 00:15</p>
+                      </div>
                     ))}
                   </div>
-                  <span className="text-yellow-500 font-bold">4.9/5</span>
-                  <span className="text-gray-400 text-sm">Basado en 40.632 opiniones</span>
-                </div>
-
-                {/* Stats */}
-                <div className="grid grid-cols-3 gap-4 w-full">
-                  <div className="text-center border border-yellow-500/40 rounded-lg p-3 bg-slate-900/50">
-                    <p className="text-yellow-500 text-2xl font-bold">{(taroistaStatsData[String(selectedTarotista.id % 10 || 10)] || taroistaStatsData['1']).consultas}</p>
-                    <p className="text-gray-300 text-xs mt-1">Consultas</p>
-                  </div>
-                  <div className="text-center border border-yellow-500/40 rounded-lg p-3 bg-slate-900/50">
-                    <p className="text-yellow-500 text-2xl font-bold">{(taroistaStatsData[String(selectedTarotista.id % 10 || 10)] || taroistaStatsData['1']).aciertos}</p>
-                    <p className="text-gray-300 text-xs mt-1">De aciertos</p>
-                  </div>
-                  <div className="text-center border border-yellow-500/40 rounded-lg p-3 bg-slate-900/50">
-                    <p className="text-yellow-500 text-2xl font-bold">{(taroistaStatsData[String(selectedTarotista.id % 10 || 10)] || taroistaStatsData['1']).experiencia}</p>
-                    <p className="text-gray-300 text-xs mt-1">De experiencia</p>
-                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Contenido principal */}
-            <div className="p-8 space-y-8 max-h-[60vh] overflow-y-auto">
-              {/* Descripción */}
-              {selectedTarotista.bio && (
+              {/* Opinions/Comments */}
+              {taroistaStatsData[String(selectedTarotista.id % 10 || 10)]?.opiniones && (
                 <div>
-                  <h3 className="text-yellow-500 font-bold text-lg mb-3">EL PERFIL DE {selectedTarotista.nombre.toUpperCase()}</h3>
-                  <p className="text-gray-300 leading-relaxed text-sm">{selectedTarotista.bio}</p>
-                </div>
-              )}
-
-              {/* Horario */}
-              <div>
-                <h3 className="text-yellow-500 font-bold text-lg mb-4">AGENDA DE {selectedTarotista.nombre.toUpperCase()}</h3>
-                <p className="text-gray-400 text-sm mb-4">Estoy disponible inmediatamente hasta las 24:00.</p>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
-                  {['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES', 'SÁBADO', 'DOMINGO'].map((day) => (
-                    <div key={day} className="border border-yellow-500/30 rounded p-2">
-                      <p className="text-yellow-500 font-bold mb-2">{day}</p>
-                      <p className="text-gray-400 text-xs">00:00 - 00:15</p>
-                      <p className="text-gray-400 text-xs">11:00 - 13:45</p>
-                      <p className="text-gray-400 text-xs">15:30 - 24:00</p>
+                  <div className="text-center mb-8">
+                    <h3 className="text-yellow-500 font-bold text-lg uppercase tracking-wide">✦ COMENTARIOS DE MIS LLAMADAS ✦</h3>
+                    <div className="flex items-center justify-center gap-2 mt-4">
+                      <div className="flex gap-0.5">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-yellow-500 text-yellow-500" />
+                        ))}
+                      </div>
+                      <span className="text-yellow-500 font-bold">4.9/5</span>
+                      <span className="text-gray-400 text-xs">Basado en {(taroistaStatsData[String(selectedTarotista.id % 10 || 10)] || taroistaStatsData['1']).consultas} opiniones</span>
                     </div>
-                  ))}
-                </div>
-              </div>
+                  </div>
 
-              {/* Opiniones */}
-              {taroistaStatsData[selectedTarotista.id]?.opiniones && (
-                <div>
-                  <h3 className="text-yellow-500 font-bold text-lg mb-4">COMENTARIOS DE MIS LLAMADAS</h3>
-                  <div className="space-y-4">
-                    {taroistaStatsData[selectedTarotista.id].opiniones.map((opinion: any, idx: number) => (
-                      <div key={idx} className="border border-yellow-500/30 rounded-lg p-4 bg-slate-900/50">
-                        <div className="flex items-center gap-2 mb-2">
-                          <div className="w-8 h-8 rounded-full bg-yellow-500 flex items-center justify-center text-slate-950 font-bold text-sm">
-                            {opinion.nombre[0]}
-                          </div>
-                          <div>
-                            <p className="text-white font-bold text-sm">{opinion.nombre}</p>
-                            <p className="text-gray-400 text-xs">Hace {opinion.hace}</p>
-                          </div>
-                        </div>
-                        <div className="flex gap-0.5 mb-2">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {taroistaStatsData[String(selectedTarotista.id % 10 || 10)].opiniones.slice(0, 3).map((opinion: any, idx: number) => (
+                      <div key={idx} className="border-2 border-yellow-500/30 rounded-xl p-4 bg-slate-900/30">
+                        <div className="flex gap-0.5 mb-3">
                           {[...Array(5)].map((_, i) => (
                             <Star
                               key={i}
@@ -408,45 +446,22 @@ export default function TarotistsGrid() {
                             />
                           ))}
                         </div>
-                        <p className="text-gray-300 text-sm leading-relaxed">"{opinion.texto}"</p>
+                        <p className="text-yellow-400 text-2xl mb-2">❝</p>
+                        <p className="text-gray-300 text-xs leading-relaxed mb-3">"{opinion.texto}"</p>
+                        <div className="flex items-center gap-2">
+                          <div className="w-6 h-6 rounded-full bg-yellow-500 flex items-center justify-center text-slate-950 font-bold text-xs">
+                            {opinion.nombre[0]}
+                          </div>
+                          <div>
+                            <p className="text-white font-bold text-xs">{opinion.nombre}</p>
+                            <p className="text-gray-400 text-xs">Hace {opinion.hace}</p>
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
                 </div>
               )}
-
-              {/* Selector de Paquete */}
-              <div>
-                <h3 className="text-yellow-500 font-bold text-lg mb-4">CONSULTAS</h3>
-                <div className="grid grid-cols-3 gap-3 mb-6">
-                  {[
-                    { minutes: 15, price: '€10' },
-                    { minutes: 20, price: '€15' },
-                    { minutes: 30, price: '€20' }
-                  ].map(pkg => (
-                    <button
-                      key={pkg.minutes}
-                      onClick={() => setSelectedMinutes({ ...selectedMinutes, [selectedTarotista.id]: pkg.minutes })}
-                      className={`py-3 px-3 rounded-lg font-semibold transition border-2 ${
-                        selectedMinutes[selectedTarotista.id] === pkg.minutes
-                          ? 'bg-yellow-500 text-slate-950 border-yellow-500'
-                          : 'bg-slate-900 text-yellow-500 border-yellow-500/30 hover:border-yellow-500'
-                      }`}
-                    >
-                      <p className="font-bold">{pkg.minutes} min</p>
-                      <p className="text-sm">{pkg.price}</p>
-                    </button>
-                  ))}
-                </div>
-
-                {/* Botón CTA */}
-                <Link
-                  href={`/checkout?minutes=${selectedMinutes[selectedTarotista.id] || 15}&tarotista=${selectedTarotista.id}`}
-                  className="w-full bg-yellow-500 hover:bg-yellow-600 text-slate-950 py-3 rounded-lg font-bold transition text-center block"
-                >
-                  CONSULTAR AHORA →
-                </Link>
-              </div>
             </div>
           </motion.div>
         </div>
