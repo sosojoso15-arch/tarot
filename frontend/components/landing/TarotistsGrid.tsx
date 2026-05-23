@@ -307,14 +307,14 @@ export default function TarotistsGrid() {
                 </div>
 
                 {/* Info - Center */}
-                <div className="flex flex-col justify-start">
-                  <h2 className="text-xl font-bold text-yellow-500 mb-0.5">{selectedTarotista.nombre}</h2>
-                  <p className="text-yellow-400 font-semibold text-xs mb-2">{selectedTarotista.especialidad}</p>
+                <div className="flex flex-col justify-start gap-0.5">
+                  <h2 className="text-lg font-bold text-yellow-500">{selectedTarotista.nombre}</h2>
+                  <p className="text-yellow-400 font-semibold text-xs">{selectedTarotista.especialidad}</p>
 
                   {/* Opinion Quote */}
                   {taroistaStatsData[String(selectedTarotista.id % 10 || 10)]?.opiniones?.[0] && (
-                    <div className="mb-1 hidden md:block">
-                      <p className="text-yellow-400 text-xs italic line-clamp-2">
+                    <div>
+                      <p className="text-yellow-400 text-xs italic line-clamp-3">
                         "{taroistaStatsData[String(selectedTarotista.id % 10 || 10)]?.opiniones?.[0].texto}"
                       </p>
                     </div>
@@ -394,10 +394,11 @@ export default function TarotistsGrid() {
                 {/* Agenda */}
                 <div className="border border-yellow-500/40 rounded p-2 bg-slate-900/30 col-span-1">
                   <h3 className="text-yellow-500 font-bold text-xs mb-1">AGENDA</h3>
-                  <div className="grid grid-cols-3.5 gap-0.5 text-xs">
+                  <div className="space-y-0.5 text-xs">
                     {['L', 'M', 'X', 'J', 'V', 'S', 'D'].map((day) => (
-                      <div key={day} className="border border-yellow-500/30 rounded p-1 text-center">
+                      <div key={day} className="border border-yellow-500/30 rounded p-0.5 text-center">
                         <p className="text-yellow-500 font-bold text-xs">{day}</p>
+                        <p className="text-gray-400 text-xs">00:00-24:00</p>
                       </div>
                     ))}
                   </div>
