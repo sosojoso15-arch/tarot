@@ -381,20 +381,20 @@ export default function TarotistsGrid() {
                 </div>
               </div>
 
-              {/* Profile & Agenda - 2 Columns */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3">
+              {/* Profile & Agenda - 2 Columns Always */}
+              <div className="grid grid-cols-2 gap-2 mb-3">
                 {/* Profile */}
                 {selectedTarotista.bio && (
-                  <div className="border border-yellow-500/40 rounded p-2 bg-slate-900/30">
+                  <div className="border border-yellow-500/40 rounded p-2 bg-slate-900/30 col-span-1">
                     <h3 className="text-yellow-500 font-bold text-xs mb-1">PERFIL</h3>
-                    <p className="text-gray-300 text-xs line-clamp-3">{selectedTarotista.bio}</p>
+                    <p className="text-gray-300 text-xs line-clamp-4">{selectedTarotista.bio}</p>
                   </div>
                 )}
 
                 {/* Agenda */}
-                <div className="border border-yellow-500/40 rounded p-2 bg-slate-900/30">
+                <div className="border border-yellow-500/40 rounded p-2 bg-slate-900/30 col-span-1">
                   <h3 className="text-yellow-500 font-bold text-xs mb-1">AGENDA</h3>
-                  <div className="grid grid-cols-2 gap-1 text-xs">
+                  <div className="grid grid-cols-3.5 gap-0.5 text-xs">
                     {['L', 'M', 'X', 'J', 'V', 'S', 'D'].map((day) => (
                       <div key={day} className="border border-yellow-500/30 rounded p-1 text-center">
                         <p className="text-yellow-500 font-bold text-xs">{day}</p>
