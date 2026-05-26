@@ -98,6 +98,30 @@ const taroistaStatsData: Record<string, any> = {
   }
 };
 
+// Mapeo de tarotistas con imagen de perfil especial
+const tarotistaImageMap: Record<string, string> = {
+  'paqui': '/PAQUI.jpg',
+  'mercedes': '/mercedes.jpeg',
+  'gloria': '/gloria.jpg',
+  'yeyo': '/yeyo.jpg',
+  'rubi': '/rubi.jpg',
+  'minerva': '/minerva.jpg',
+  'paulina': '/paulina.jpg',
+  'marian': '/marian.jpg',
+  'marcos': '/marcos.jpg',
+};
+
+const getSpecialImage = (nombre: string | undefined): string | null => {
+  if (!nombre) return null;
+  const lowerName = nombre.toLowerCase().trim();
+  for (const key in tarotistaImageMap) {
+    if (lowerName.includes(key)) {
+      return tarotistaImageMap[key];
+    }
+  }
+  return null;
+};
+
 export default function TarotistsGrid() {
   const [tarotistas, setTarotistas] = useState<any[]>([]);
   const [selectedMinutes, setSelectedMinutes] = useState<Record<string, number>>({});
@@ -264,7 +288,66 @@ export default function TarotistsGrid() {
       </div>
 
       {/* Modal - Estilo Wengo Compacto */}
-      {modalOpen && selectedTarotista && (
+      {modalOpen && selectedTarotista && getSpecialImage(selectedTarotista.nombre) ? (
+        <div className="fixed inset-0 bg-slate-900/80 z-50 flex items-center justify-center p-2 overflow-auto">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="bg-slate-950 rounded-2xl w-full max-w-2xl my-4 border border-yellow-500/40 relative flex flex-col max-h-[95vh]"
+          >
+            {/* Close Button */}
+            <button
+              onClick={closeModal}
+              className="absolute top-4 right-4 text-white bg-black/50 w-10 h-10 rounded-full hover:text-yellow-400 text-2xl font-bold z-10 flex items-center justify-center"
+            >
+              ✕
+            </button>
+
+            {/* Special Image - Full, scrollable */}
+            <div className="overflow-y-auto rounded-t-2xl">
+              <img
+                src={getSpecialImage(selectedTarotista.nombre)!}
+                alt={selectedTarotista.nombre}
+                className="w-full h-auto block"
+              />
+            </div>
+
+            {/* Pricing + Consultar Button - Fixed Bottom */}
+            <div className="p-4 border-t border-yellow-500/30 bg-slate-950 space-y-3">
+              {/* Pricing Options */}
+              <div className="grid grid-cols-3 gap-2">
+                {[
+                  { minutes: 15, price: '10€' },
+                  { minutes: 20, price: '15€' },
+                  { minutes: 30, price: '20€' }
+                ].map(pkg => (
+                  <button
+                    key={pkg.minutes}
+                    onClick={() => setSelectedMinutes({ ...selectedMinutes, [selectedTarotista.id]: pkg.minutes })}
+                    className={`py-2 px-2 rounded-lg text-sm font-semibold transition border flex flex-col items-center ${
+                      selectedMinutes[selectedTarotista.id] === pkg.minutes
+                        ? 'bg-yellow-500/20 text-yellow-500 border-yellow-500'
+                        : 'bg-transparent text-gray-300 border-yellow-500/30 hover:border-yellow-500/60'
+                    }`}
+                  >
+                    <span>{pkg.minutes}m</span>
+                    <span className="text-yellow-500 font-bold">{pkg.price}</span>
+                  </button>
+                ))}
+              </div>
+
+              {/* CTA Button */}
+              <Link
+                href={`/checkout?minutes=${selectedMinutes[selectedTarotista.id] || 15}&tarotista=${selectedTarotista.id}`}
+                className="block w-full bg-yellow-600 hover:bg-yellow-500 text-slate-950 py-3 rounded-lg font-bold text-center text-base transition"
+              >
+                CONSULTAR AHORA
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      ) : modalOpen && selectedTarotista && (
         <div className="fixed inset-0 bg-slate-900/80 z-50 flex items-center justify-center p-2 overflow-auto">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}

@@ -75,12 +75,12 @@ async function start() {
       logger.info(`Environment: ${process.env.NODE_ENV || 'development'}`);
     });
 
-    // Monitorear llamadas activas cada 10 segundos
-    setInterval(() => {
-      callService.monitorActiveCalls();
-    }, 10000);
+    // Monitorear llamadas activas cada 10 segundos (DESACTIVADO - columna BD falta)
+    // setInterval(() => {
+    //   callService.monitorActiveCalls();
+    // }, 10000);
 
-    logger.info('Call monitoring started (every 10s)');
+    // logger.info('Call monitoring started (every 10s)');
   } catch (error) {
     logger.error('Failed to start server:', error);
     process.exit(1);
