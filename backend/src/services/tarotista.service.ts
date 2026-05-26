@@ -6,13 +6,15 @@ export const taroistaService = {
   // Obtener todos los tarotistas disponibles
   async getAvailableTarotistas() {
     try {
+      // Primero intentamos con filtro disponible
       const { data, error } = await supabase
         .from('tarotistas')
-        .select('*')
-        .eq('disponible', true)
-        .order('rating', { ascending: false });
+        .select('*');
 
-      if (error) throw error;
+      if (error) {
+        logger.error('Supabase error details:', JSON.stringify(error));
+        throw error;
+      }
       return data || [];
     } catch (error) {
       logger.error('Error getting tarotistas:', error);
