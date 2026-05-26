@@ -104,8 +104,9 @@ const tarotistaImageMap: Record<string, string> = {
   'mercedes': '/mercedes.jpeg',
   'gloria': '/gloria.jpg',
   'yeyo': '/yeyo.jpg',
-  'rubi': '/rubi.jpg',
-  'minerva': '/minerva.jpg',
+  'raquel': '/minerva.jpg',
+  'verónica': '/rubi.jpg',
+  'veronica': '/rubi.jpg',
   'paulina': '/paulina.jpg',
   'marian': '/marian.jpg',
   'marcos': '/marcos.jpg',
@@ -135,7 +136,10 @@ export default function TarotistsGrid() {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/tarotistas/available`);
         const result = await response.json();
         if (result.success) {
-          setTarotistas(result.data);
+          const filtered = result.data.filter((t: any) =>
+            !t.nombre.toLowerCase().includes('paola')
+          );
+          setTarotistas(filtered);
         }
       } catch (error) {
         console.error('Error loading tarotistas:', error);
