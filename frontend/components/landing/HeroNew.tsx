@@ -56,7 +56,7 @@ export default function Hero() {
             >
               <div className="relative w-full h-96 rounded-2xl overflow-hidden">
                 <Image
-                  src="/hero.jpg"
+                  src="/inicio.jpeg"
                   alt="Tarot, velas y cartas"
                   fill
                   className="object-cover w-full h-full"

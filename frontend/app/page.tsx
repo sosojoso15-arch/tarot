@@ -10,8 +10,8 @@ export default function Home() {
   return (
     <main className="bg-yellow-50">
       <HeroNew />
-      <HowItWorksSection />
       <TarotistsGrid />
+      <HowItWorksSection />
       <FinalCTASection />
       <FooterNew />
     </main>
