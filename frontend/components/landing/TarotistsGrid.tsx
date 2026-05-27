@@ -123,8 +123,20 @@ const getSpecialImage = (nombre: string | undefined): string | null => {
   return null;
 };
 
+const staticTarotistas = [
+  { id: '342320f1-4151-40c0-8abe-255372bc0ce4', nombre: 'Paqui', especialidad: 'Tarot y Videncia', imagen_url: 'https://tpaddfpibktbaystjblq.supabase.co/storage/v1/object/public/tarotistas/paqui_1778562642153.jpg' },
+  { id: '939441a0-e85f-485c-8631-2e131dfa1775', nombre: 'Gloria Miranda', especialidad: 'Tarot Evolutivo', imagen_url: 'https://tpaddfpibktbaystjblq.supabase.co/storage/v1/object/public/tarotistas/gloria_miranda_1778562659427.jpg' },
+  { id: '4620ebac-2d72-4e24-9693-c502320af724', nombre: 'Marian', especialidad: 'Tarot y Reiki', imagen_url: 'https://tpaddfpibktbaystjblq.supabase.co/storage/v1/object/public/tarotistas/marian_1778562906800.jpg' },
+  { id: 'b0335491-9e31-4488-9292-ab89532ef7a0', nombre: 'Paulina', especialidad: 'Tarot Terapéutico', imagen_url: 'https://tpaddfpibktbaystjblq.supabase.co/storage/v1/object/public/tarotistas/paulina_1778650234616.jpg' },
+  { id: '18beff79-cdc7-4b12-9ef3-066180ac5cf2', nombre: 'Mercedes', especialidad: 'Consultas Sentimentales', imagen_url: 'https://tpaddfpibktbaystjblq.supabase.co/storage/v1/object/public/tarotistas/mercedes_1778649370330.jpg' },
+  { id: '0c12defa-6e5c-4cce-802d-913cd3476136', nombre: 'Marcos', especialidad: 'Acompañamiento Nocturno', imagen_url: 'https://tpaddfpibktbaystjblq.supabase.co/storage/v1/object/public/tarotistas/marcos_1778562782805.jpg' },
+  { id: 'ad9be26f-5121-49a6-b5ce-492c6bdba901', nombre: 'Raquel', especialidad: 'Tarot Intuitivo', imagen_url: 'https://tpaddfpibktbaystjblq.supabase.co/storage/v1/object/public/tarotistas/raquel_1778562859936.jpg' },
+  { id: '0f47986b-191b-463b-8ade-4f6443bdc10f', nombre: 'Verónica', especialidad: 'Canalización Espiritual', imagen_url: 'https://tpaddfpibktbaystjblq.supabase.co/storage/v1/object/public/tarotistas/veronica_1778650560777.jpg' },
+  { id: '9a4bfc88-8477-44bf-adc3-397cd3ede9ca', nombre: 'Yeyo', especialidad: 'Orientación Espiritual Nocturna', imagen_url: 'https://tpaddfpibktbaystjblq.supabase.co/storage/v1/object/public/tarotistas/yeyo_1778651391674.jpg' },
+];
+
 export default function TarotistsGrid() {
-  const [tarotistas, setTarotistas] = useState<any[]>([]);
+  const [tarotistas, setTarotistas] = useState<any[]>(staticTarotistas);
   const [selectedMinutes, setSelectedMinutes] = useState<Record<string, number>>({});
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedTarotista, setSelectedTarotista] = useState<any>(null);
@@ -135,14 +147,14 @@ export default function TarotistsGrid() {
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/tarotistas/available`);
         const result = await response.json();
-        if (result.success) {
+        if (result.success && result.data?.length > 0) {
           const filtered = result.data.filter((t: any) =>
             !t.nombre.toLowerCase().includes('paola')
           );
           setTarotistas(filtered);
         }
       } catch (error) {
-        console.error('Error loading tarotistas:', error);
+        // usar datos estáticos si API falla
       }
     };
     loadTarotistas();
