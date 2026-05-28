@@ -7,11 +7,22 @@ import { useSession } from '@/lib/hooks';
 import { ZADARMA_PHONE_NUMBER } from '@/lib/constants';
 import Header from '@/components/shared/Header';
 import Footer from '@/components/shared/Footer';
+import { useState, useEffect } from 'react';
 
 export function SuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session_id');
   const { data: session, isLoading } = useSession(sessionId);
+  const [chatSpecialist, setChatSpecialist] = useState('');
+
+  useEffect(() => {
+    const sp = localStorage.getItem('vda_pending_specialist');
+    if (sp) {
+      localStorage.removeItem('vda_pending_specialist');
+      localStorage.setItem(`vda_chat_unlocked_${sp}`, 'true');
+      setChatSpecialist(sp);
+    }
+  }, []);
 
   return (
     <div>
@@ -120,6 +131,24 @@ export function SuccessContent() {
                   </button>
                 </div>
               </motion.div>
+
+              {/* Chat Unlock Button */}
+              {chatSpecialist && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  style={{ marginTop: '24px', background: 'linear-gradient(180deg,#0d1a37,#0a1530)', border: '1px solid rgba(214,169,87,.4)', borderRadius: '12px', padding: '24px', textAlign: 'center' }}
+                >
+                  <p style={{ color: '#d6c08a', fontSize: '13px', letterSpacing: '.08em', marginBottom: '8px' }}>¡PAGO CONFIRMADO!</p>
+                  <p style={{ color: '#f1deae', fontFamily: 'Cormorant Garamond, serif', fontSize: '22px', marginBottom: '18px' }}>
+                    Tu consulta con {chatSpecialist} está lista
+                  </p>
+                  <Link href={`/chat?para=${chatSpecialist}`} style={{ display: 'inline-block', background: 'linear-gradient(180deg,#c89a47,#a87a30)', color: '#fff8e1', padding: '14px 32px', borderRadius: '8px', fontFamily: 'Cinzel, serif', fontSize: '15px', textDecoration: 'none', letterSpacing: '.1em' }}>
+                    ABRIR CHAT CON {chatSpecialist.toUpperCase()}
+                  </Link>
+                </motion.div>
+              )}
 
               {/* Back Home */}
               <motion.div

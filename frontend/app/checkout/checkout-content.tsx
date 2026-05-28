@@ -12,6 +12,7 @@ export function CheckoutContent() {
   const searchParams = useSearchParams();
   const minutes = parseInt(searchParams.get('minutes') || '15') as 15 | 20 | 30;
   const taroistaId = searchParams.get('tarotista') || undefined;
+  const specialist = searchParams.get('specialist') || '';
   const pricing = PRICING[minutes];
 
   const [formData, setFormData] = useState({
@@ -41,6 +42,7 @@ export function CheckoutContent() {
 
       // Redirect to Stripe
       if (checkout.checkoutUrl) {
+        if (specialist) localStorage.setItem('vda_pending_specialist', specialist);
         window.location.href = checkout.checkoutUrl;
       }
     } catch (error) {
