@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 interface Session {
   id: string;
   client_name: string;
+  specialist?: string;
   created_at: string;
   chat_messages?: { count: number }[];
 }
@@ -168,9 +169,10 @@ export default function MarcosAdmin() {
                 className={`sitem${active?.id === s.id ? ' active' : ''}`}
                 onClick={() => selectSession(s)}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <div className="sname">{s.client_name}</div>
-                </div>
+                <div className="sname">{s.client_name}</div>
+                {s.specialist && s.specialist !== 'marcos' && (
+                  <div style={{ fontSize: '10px', color: 'rgba(214,169,87,.65)', letterSpacing: '.06em', marginTop: '2px' }}>→ {s.specialist}</div>
+                )}
                 <div className="stime">{fmt(s.created_at)}</div>
                 {s.chat_messages && s.chat_messages[0]?.count > 0 && (
                   <div className="scount">{s.chat_messages[0].count} mensaje{s.chat_messages[0].count !== 1 ? 's' : ''}</div>

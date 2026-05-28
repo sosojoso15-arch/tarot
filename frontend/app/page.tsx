@@ -351,8 +351,8 @@ export default function Home() {
             <img src={wellModal.profileImg} alt={wellModal.nombre} style={{ width: '100%', height: 'auto', borderRadius: '10px 10px 0 0' }} />
             <div style={{ padding: '16px', borderTop: '1px solid rgba(214,169,87,.3)' }}>
               <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: '22px', color: '#f1deae', textAlign: 'center', marginBottom: '12px' }}>{wellModal.nombre}</div>
-              <Link href={`/checkout?minutes=${wellModal.precio}&tarotista=${wellModal.id}`} style={{ display: 'block', width: '100%', background: 'linear-gradient(180deg,#c89a47,#a87a30)', color: '#fff8e1', textAlign: 'center', padding: '14px', borderRadius: '6px', fontFamily: 'Cinzel,serif', fontSize: '15px', textDecoration: 'none', letterSpacing: '.08em' }}>
-                CONSULTAR AHORA · {wellModal.precio}€
+              <Link href={`/chat?para=${wellModal.nombre}`} style={{ display: 'block', width: '100%', background: 'linear-gradient(180deg,#c89a47,#a87a30)', color: '#fff8e1', textAlign: 'center', padding: '14px', borderRadius: '6px', fontFamily: 'Cinzel,serif', fontSize: '15px', textDecoration: 'none', letterSpacing: '.1em' }}>
+                CONSULTAR
               </Link>
             </div>
           </div>

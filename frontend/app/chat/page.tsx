@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 interface Message {
   id: string;
@@ -9,6 +10,12 @@ interface Message {
   message: string;
   created_at: string;
 }
+
+const specialists: Record<string, { nombre: string; rol: string; img: string }> = {
+  'Marcos':   { nombre: 'Marcos',   rol: 'Acompañamiento Nocturno', img: '/marcos.jpg' },
+  'Fernando': { nombre: 'Fernando', rol: 'Método LEMA',             img: '/feri.jpeg'  },
+  'Eli':      { nombre: 'Eli',      rol: 'Registros Akásicos',      img: '/elii.jpeg'  },
+};
 
 const CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Cinzel:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap');
@@ -43,9 +50,15 @@ const CSS = `
   .nbtn:hover{filter:brightness(1.08)}
   .nbtn:disabled{opacity:.55;cursor:not-allowed}
   .empty{color:rgba(232,217,179,.35);font-size:13px;text-align:center;margin-top:60px;line-height:1.7;font-style:italic;font-family:'Cormorant Garamond',serif;}
+  .spav{width:64px;height:64px;border-radius:50%;border:2px solid rgba(214,169,87,.5);overflow:hidden;margin:0 auto 16px;}
+  .spav img{width:100%;height:100%;object-fit:cover;}
 `;
 
-export default function ChatPage() {
+function ChatContent() {
+  const searchParams = useSearchParams();
+  const para = searchParams.get('para') || 'Marcos';
+  const sp = specialists[para] || specialists['Marcos'];
+
   const [name, setName] = useState('');
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -61,7 +74,7 @@ export default function ChatPage() {
       const res = await fetch('/api/chat/sessions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ client_name: name.trim() }),
+        body: JSON.stringify({ client_name: name.trim(), specialist: sp.nombre }),
       });
       const data = await res.json();
       if (data.success) setSessionId(data.data.id);
@@ -113,9 +126,10 @@ export default function ChatPage() {
         <div className="cw">
           <div className="cbox">
             <div className="nbox">
-              <img src="/logo1.png" alt="Voces del Alma" style={{ width: '180px', marginBottom: '24px', opacity: .9 }} />
-              <h2 className="ntit">Consulta con Marcos</h2>
-              <p className="nsub">Acompañamiento Nocturno<br />Escríbele y él te responderá pronto</p>
+              <img src="/logo1.png" alt="Voces del Alma" style={{ width: '160px', marginBottom: '20px', opacity: .85 }} />
+              <div className="spav"><img src={sp.img} alt={sp.nombre} /></div>
+              <h2 className="ntit">Consulta con {sp.nombre}</h2>
+              <p className="nsub">{sp.rol}<br />Escribe tu nombre para comenzar</p>
               <input
                 className="ninp"
                 placeholder="Tu nombre"
@@ -140,21 +154,21 @@ export default function ChatPage() {
       <div className="cw">
         <div className="cbox">
           <div className="chdr">
-            <div className="cav"><img src="/marcos.jpg" alt="Marcos" /></div>
+            <div className="cav"><img src={sp.img} alt={sp.nombre} /></div>
             <div>
-              <div className="cnm">Marcos</div>
-              <div className="crl">Acompañamiento Nocturno</div>
+              <div className="cnm">{sp.nombre}</div>
+              <div className="crl">{sp.rol}</div>
             </div>
           </div>
           <div className="cmsgs">
             {messages.length === 0 && (
               <p className="empty">
-                Tu mensaje ha llegado.<br />Marcos te responderá en breve...
+                Tu mensaje ha llegado.<br />{sp.nombre} te responderá en breve...
               </p>
             )}
             {messages.map(msg => (
               <div key={msg.id} className={`msg ${msg.sender === 'client' ? 'mc' : 'mm'}`}>
-                <div className="msn">{msg.sender === 'marcos' ? 'Marcos' : name}</div>
+                <div className="msn">{msg.sender === 'marcos' ? sp.nombre : name}</div>
                 {msg.message}
               </div>
             ))}
@@ -176,5 +190,13 @@ export default function ChatPage() {
         </div>
       </div>
     </>
+  );
+}
+
+export default function ChatPage() {
+  return (
+    <Suspense fallback={null}>
+      <ChatContent />
+    </Suspense>
   );
 }

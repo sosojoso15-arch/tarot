@@ -17,11 +17,11 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const { client_name } = body;
+  const { client_name, specialist } = body;
   if (!client_name) return NextResponse.json({ error: 'Nombre requerido' }, { status: 400 });
   const { data, error } = await supabase
     .from('chat_sessions')
-    .insert([{ client_name }])
+    .insert([{ client_name, specialist: specialist || 'marcos' }])
     .select()
     .single();
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
