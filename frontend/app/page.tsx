@@ -279,14 +279,14 @@ export default function Home() {
                 ))}
               </div>
             </div>
-            <a className="vda-btn" href="mailto:hello@vocesdelalma.es">Hazte experto <span>→</span></a>
+            <a className="vda-btn" href="https://ig.me/m/vocesdelalma.tarot" target="_blank" rel="noopener noreferrer">Hazte experto <span>→</span></a>
           </section>
 
           {/* FOOTER */}
           <footer className="vda-footer">
             <div className="vda-socials">
-              <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".8" fill="currentColor"/></svg></a>
-              <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M14 8h2V5h-2.5C12 5 11 6 11 7.5V10H9v3h2v8h3v-8h2.2l.3-3H14V8.5c0-.3.2-.5.5-.5H14z"/></svg></a>
+              <a href="https://www.instagram.com/vocesdelalma.tarot" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".8" fill="currentColor"/></svg></a>
+              <a href="https://www.facebook.com/share/1FsHR826CQ/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M14 8h2V5h-2.5C12 5 11 6 11 7.5V10H9v3h2v8h3v-8h2.2l.3-3H14V8.5c0-.3.2-.5.5-.5H14z"/></svg></a>
             </div>
             <div className="vda-copyright">© 2026 Voces del Alma · Todos los derechos reservados</div>
             <div className="vda-moonline">( ☾ ✦ ☽ )</div>
