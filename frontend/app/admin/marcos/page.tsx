@@ -78,23 +78,42 @@ export default function MarcosAdmin() {
   const [sending, setSending] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
 
+  const [currentUser, setCurrentUser] = useState('');
+
   useEffect(() => {
-    if (typeof window !== 'undefined' && localStorage.getItem('marcos_auth') !== 'true') {
-      router.push('/login');
+    if (typeof window !== 'undefined') {
+      const auth = localStorage.getItem('marcos_auth');
+      if (!auth) { router.push('/login'); return; }
+      setCurrentUser(auth);
     }
   }, [router]);
+
+  const specialistKey: Record<string, string> = {
+    'marcos':   'marcos',
+    'fernando': 'Fernando',
+    'eli':      'Eli',
+  };
 
   const fetchSessions = async () => {
     const res = await fetch('/api/chat/sessions');
     const data = await res.json();
-    if (data.success) setSessions(data.data || []);
+    if (data.success) {
+      const all: Session[] = data.data || [];
+      const spFilter = specialistKey[currentUser];
+      if (currentUser === 'marcos') {
+        setSessions(all);
+      } else {
+        setSessions(all.filter(s => s.specialist === spFilter));
+      }
+    }
   };
 
   useEffect(() => {
+    if (!currentUser) return;
     fetchSessions();
     const id = setInterval(fetchSessions, 5000);
     return () => clearInterval(id);
-  }, []);
+  }, [currentUser]);
 
   const fetchMessages = async (sessionId: string) => {
     const res = await fetch(`/api/chat/messages?session_id=${sessionId}`);
@@ -150,7 +169,7 @@ export default function MarcosAdmin() {
         <header className="ahdr">
           <div className="ahdr-brand">
             <img src="/logo1.png" alt="Voces del Alma" />
-            <span className="ahdr-title">PANEL DE CONSULTAS</span>
+            <span className="ahdr-title">{currentUser ? currentUser.toUpperCase() : 'PANEL'} · CONSULTAS</span>
           </div>
           <button className="alogout" onClick={logout}>SALIR</button>
         </header>

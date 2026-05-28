@@ -26,11 +26,18 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const router = useRouter();
 
+  const USERS: Record<string, string> = {
+    'marcos':   'alma2026',
+    'fernando': 'lema2026',
+    'eli':      'akasha2026',
+  };
+
   const login = () => {
     setError('');
-    if (user.trim() === 'marcos' && pass === 'alma2026') {
+    const key = user.trim().toLowerCase();
+    if (USERS[key] && USERS[key] === pass) {
       if (typeof window !== 'undefined') {
-        localStorage.setItem('marcos_auth', 'true');
+        localStorage.setItem('marcos_auth', key);
       }
       router.push('/admin/marcos');
     } else {
