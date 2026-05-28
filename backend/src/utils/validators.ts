@@ -2,8 +2,8 @@ import { z } from 'zod';
 
 export const createSessionSchema = z.object({
   minutes: z.number().int().refine(
-    val => [15, 20, 30].includes(val),
-    'Minutes must be 15, 20, or 30'
+    val => [15, 20, 30, 60, 100].includes(val),
+    'Minutes must be 15, 20, 30, 60, or 100'
   ),
   email: z.string().email('Invalid email'),
   phone: z.string().or(z.literal('')).optional()
