@@ -13,12 +13,13 @@ const tarotistas = [
   { id: 'ad9be26f-5121-49a6-b5ce-492c6bdba901', nombre: 'Raquel', especialidad: 'Tarot Intuitivo', imagen: 'https://tpaddfpibktbaystjblq.supabase.co/storage/v1/object/public/tarotistas/raquel_1778562859936.jpg', review: 'Raquel tiene un don natural para la lectura intuitiva. Sus interpretaciones son profundas y acertadas.' },
   { id: '0f47986b-191b-463b-8ade-4f6443bdc10f', nombre: 'Verónica', especialidad: 'Canalización Espiritual', imagen: 'https://tpaddfpibktbaystjblq.supabase.co/storage/v1/object/public/tarotistas/veronica_1778650560777.jpg', review: 'Verónica es una canalización espiritual pura. Sus mensajes traen claridad y paz interior.' },
   { id: '9a4bfc88-8477-44bf-adc3-397cd3ede9ca', nombre: 'Yeyo', especialidad: 'Orientación Espiritual Nocturna', imagen: 'https://tpaddfpibktbaystjblq.supabase.co/storage/v1/object/public/tarotistas/yeyo_1778651391674.jpg', review: 'Yeyo ofrece orientación espiritual nocturna excepcional. Sus mensajes llegan al alma.' },
+  { id: 'duende-001', nombre: 'Duende', especialidad: 'Magia Natural', imagen: '/duendep.jpeg', review: 'Guía espiritual con conexión profunda a la naturaleza. Sus lecturas son transformadoras y llenas de sabiduría ancestral.' },
 ];
 
 const tarotistaImageMap: Record<string, string> = {
   'paqui': '/PAQUI.jpg', 'mercedes': '/mercedes.jpeg', 'gloria': '/gloria.jpg',
   'yeyo': '/yeyo.jpg', 'raquel': '/minerva.jpg', 'verónica': '/rubi.jpg',
-  'veronica': '/rubi.jpg', 'paulina': '/paulina.jpg', 'marian': '/marian.jpg', 'marcos': '/marcos.jpg',
+  'veronica': '/rubi.jpg', 'paulina': '/paulina.jpg', 'marian': '/marian.jpg', 'marcos': '/marcos.jpg', 'duende': '/duende.jpeg',
 };
 
 function getSpecialImage(nombre: string): string | null {
@@ -36,6 +37,7 @@ export default function Home() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selected, setSelected] = useState<typeof tarotistas[0] | null>(null);
   const [selectedMinutes, setSelectedMinutes] = useState(15);
+  const [wellModal, setWellModal] = useState<{ nombre: string; profileImg: string; precio: number; id: string } | null>(null);
 
   const totalPages = Math.ceil(tarotistas.length / PER_PAGE);
   const visible = tarotistas.slice(page * PER_PAGE, (page + 1) * PER_PAGE);
@@ -48,12 +50,12 @@ export default function Home() {
         *{box-sizing:border-box}
         html,body{margin:0;padding:0}
         .vda-body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--cream);background-image:radial-gradient(1200px 600px at 50% -200px,rgba(183,138,60,.18),transparent 60%),radial-gradient(900px 500px at 90% 100%,rgba(183,138,60,.10),transparent 60%);min-height:100vh;line-height:1.55;-webkit-font-smoothing:antialiased;}
-        .vda-page{max-width:1040px;margin:0 auto;padding:28px 36px 56px;position:relative;}
+        .vda-page{max-width:1040px;margin:0 auto;padding:22px 16px 32px;position:relative;overflow:hidden;}
         .vda-frame{position:absolute;inset:14px;pointer-events:none;border:1px solid rgba(183,138,60,.28);border-radius:4px;}
         .vda-corner{position:absolute;width:46px;height:46px;color:var(--gold);}
         .vda-corner svg{width:100%;height:100%}
         .vda-corner.tl{top:-1px;left:-1px;}.vda-corner.tr{top:-1px;right:-1px;transform:scaleX(-1);}.vda-corner.bl{bottom:-1px;left:-1px;transform:scaleY(-1);}.vda-corner.br{bottom:-1px;right:-1px;transform:scale(-1,-1);}
-        .vda-hero{display:grid;grid-template-columns:0.62fr 1.55fr;gap:12px;align-items:center;padding-top:24px;}
+        .vda-hero{display:grid;grid-template-columns:0.75fr 1.55fr;gap:0px;align-items:center;padding-top:24px;}
         .vda-brand{display:flex;flex-direction:column;align-items:flex-start;gap:6px;margin-bottom:18px;}
         .vda-roman{font-family:'Cinzel',serif;letter-spacing:.32em;font-size:12px;color:var(--gold);margin-left:48px;margin-bottom:2px;}
         .vda-seal{width:96px;height:96px;border-radius:50%;background:radial-gradient(circle at 50% 50%,#142147 0%,#0a1430 70%),var(--navy);border:2px solid var(--gold);box-shadow:0 0 0 4px rgba(183,138,60,.15),inset 0 0 30px rgba(0,0,0,.5);position:relative;display:grid;place-items:center;overflow:hidden;}
@@ -61,13 +63,13 @@ export default function Home() {
         .vda-seal-core{width:54%;height:54%;border-radius:50%;background:radial-gradient(circle at 50% 40%,#1a2a55,#08112a);border:1px solid rgba(214,169,87,.55);display:grid;place-items:center;color:var(--gold-bright);font-family:'Cinzel',serif;font-size:22px;}
         .vda-brand-name{font-family:'Cinzel',serif;font-weight:600;font-size:20px;letter-spacing:.14em;color:var(--ink-soft);margin-top:10px;margin-left:4px;}
         .vda-brand-sub{font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.32em;color:var(--gold);margin-left:4px;}
-        .vda-h1{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:32px;line-height:1.05;color:var(--ink);margin:12px 0 4px;letter-spacing:-0.005em;}
+        .vda-h1{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:44px;line-height:1.05;color:var(--ink);margin:12px 0 4px;letter-spacing:-0.005em;text-align:center;}
         .vda-h1 em{font-style:italic;color:var(--gold);font-weight:500;}
-        .vda-divider{width:50px;height:12px;margin:12px 0 16px;color:var(--gold);}
+        .vda-divider{width:50px;height:12px;margin:12px auto 16px;color:var(--gold);display:block;}
         .vda-divider svg{width:100%;height:100%}
-        .vda-lead{font-family:'Inter',sans-serif;font-weight:600;font-size:11px;color:var(--ink);max-width:240px;margin:0 0 8px;}
-        .vda-copy{font-size:10.5px;color:var(--ink-soft);max-width:250px;line-height:1.6;}
-        .vda-hero-art{width:130%;max-width:none;height:auto;display:block;margin-right:-18%;-webkit-mask-image:linear-gradient(to bottom,#000 60%,rgba(0,0,0,0) 100%),linear-gradient(to left,#000 85%,rgba(0,0,0,0) 100%),linear-gradient(to right,#000 88%,rgba(0,0,0,0) 100%),linear-gradient(to top,#000 90%,rgba(0,0,0,0) 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,#000 60%,rgba(0,0,0,0) 100%),linear-gradient(to left,#000 85%,rgba(0,0,0,0) 100%),linear-gradient(to right,#000 88%,rgba(0,0,0,0) 100%),linear-gradient(to top,#000 90%,rgba(0,0,0,0) 100%);mask-composite:intersect;}
+        .vda-lead{font-family:'Inter',sans-serif;font-weight:600;font-size:15px;color:var(--ink);max-width:320px;margin:0 0 8px;text-align:center;}
+        .vda-copy{font-size:13.5px;color:var(--ink-soft);max-width:320px;line-height:1.6;text-align:center;}
+        .vda-hero-art{width:100%;max-width:540px;height:auto;display:block;margin-left:auto;margin-right:0;-webkit-mask-image:linear-gradient(to bottom,#000 60%,rgba(0,0,0,0) 100%),linear-gradient(to left,#000 85%,rgba(0,0,0,0) 100%),linear-gradient(to right,#000 88%,rgba(0,0,0,0) 100%),linear-gradient(to top,#000 90%,rgba(0,0,0,0) 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,#000 60%,rgba(0,0,0,0) 100%),linear-gradient(to left,#000 85%,rgba(0,0,0,0) 100%),linear-gradient(to right,#000 88%,rgba(0,0,0,0) 100%),linear-gradient(to top,#000 90%,rgba(0,0,0,0) 100%);mask-composite:intersect;}
         .vda-stats{margin-top:40px;display:grid;grid-template-columns:repeat(4,1fr);background:rgba(255,250,236,.55);border:1px solid rgba(183,138,60,.3);border-radius:6px;padding:22px 18px;}
         .vda-stat{display:flex;align-items:center;gap:14px;padding:0 12px;border-right:1px solid rgba(183,138,60,.18);}
         .vda-stat:last-child{border-right:none}
@@ -93,6 +95,18 @@ export default function Home() {
         .vda-dot.active{background:var(--gold);}
         .vda-btn-perfil{margin-top:12px;width:100%;background:transparent;border:1px solid rgba(214,169,87,.5);color:#d6a957;font-family:'Cinzel',serif;font-size:10px;letter-spacing:.12em;padding:7px 4px;border-radius:3px;cursor:pointer;}
         .vda-btn-perfil:hover{background:rgba(214,169,87,.1)}
+        .vda-wellness{margin-top:20px;background:linear-gradient(180deg,#0d1a37 0%,#0a1530 100%);border:1px solid rgba(214,169,87,.35);border-radius:6px;padding:22px 26px;color:#e8d9b3;}
+        .vda-wellness-title{text-align:center;font-family:'Cinzel',serif;font-size:13px;letter-spacing:.42em;color:var(--gold-bright);margin:0 0 22px;display:flex;align-items:center;justify-content:center;gap:14px;}
+        .vda-wellness-title::before,.vda-wellness-title::after{content:"";height:1px;width:60px;background:rgba(214,169,87,.5);}
+        .vda-wellness-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+        .vda-well-card{display:grid;grid-template-columns:110px 1fr;gap:18px;align-items:center;}
+        .vda-well-avatar{width:110px;height:110px;border-radius:50%;border:2px solid var(--gold);overflow:hidden;display:grid;place-items:center;background:linear-gradient(160deg,#2a3a64,#0e1a36);}
+        .vda-well-avatar img{width:100%;height:100%;object-fit:cover;}
+        .vda-well-name{font-family:'Cormorant Garamond',serif;font-size:22px;color:#f1deae;line-height:1;}
+        .vda-well-role{font-size:11.5px;color:#d6c08a;margin-top:4px;margin-bottom:8px;}
+        .vda-well-quote{font-size:12.5px;color:#c8b896;line-height:1.6;margin:0;}
+        .vda-well-stars{color:var(--gold-bright);margin-top:8px;letter-spacing:3px;font-size:13px;}
+        @media(max-width:880px){.vda-wellness-grid{grid-template-columns:1fr;gap:18px;}.vda-well-card{grid-template-columns:90px 1fr;gap:12px;}}
         .vda-cta{margin-top:22px;background:rgba(255,250,236,.55);border:1px solid rgba(183,138,60,.3);border-radius:6px;padding:24px 26px;display:grid;grid-template-columns:200px 1fr auto;gap:22px;align-items:center;}
         .vda-cta-art{width:200px;height:auto;display:block;}
         .vda-cta h2{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:30px;line-height:1.15;color:var(--ink);margin:0 0 8px;}
@@ -152,13 +166,8 @@ export default function Home() {
           {/* HERO */}
           <section className="vda-hero">
             <div>
-              <div className="vda-brand">
-                <div className="vda-roman">XXIII</div>
-                <div className="vda-seal">
-                  <div className="vda-seal-core">✦</div>
-                </div>
-                <div className="vda-brand-name">VOCES DEL ALMA</div>
-                <div className="vda-brand-sub">TAROT &amp; GUÍA ESPIRITUAL</div>
+              <div className="vda-brand" style={{ alignItems: 'center' }}>
+                <img src="/logo1.png" alt="Voces del Alma" style={{ width: '320px', height: 'auto', display: 'block' }} />
               </div>
               <h1 className="vda-h1">Cuando todo parece confuso, <em>tu alma ya conoce la respuesta.</em></h1>
               <div className="vda-divider">
@@ -169,7 +178,7 @@ export default function Home() {
               <p className="vda-lead">Detrás de cada duda hay una verdad esperando ser revelada.</p>
               <p className="vda-copy">Conecta con nuestra red de tarotistas certificadas y recibe la claridad, el propósito y la dirección que tu alma necesita para avanzar.</p>
             </div>
-            <img className="vda-hero-art" src="/inicio.jpeg" alt="" />
+            <img className="vda-hero-art" src="/hero.png" alt="" />
           </section>
 
           {/* STATS */}
@@ -217,6 +226,41 @@ export default function Home() {
             </button>
           </section>
 
+          {/* WELLNESS */}
+          <div className="vda-experts-wrap" style={{ padding: '0 38px' }}>
+          <section className="vda-wellness">
+            <h3 className="vda-wellness-title">BIENESTAR ESPIRITUAL</h3>
+            <div className="vda-wellness-grid">
+              <div className="vda-well-card">
+                <div className="vda-well-avatar">
+                  <img src="/fer.jpeg" alt="Fernando" />
+                </div>
+                <div>
+                  <svg style={{ width: '22px', height: '22px', color: 'var(--gold-bright)', marginBottom: '4px' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2"><polygon points="12,2 22,8 22,16 12,22 2,16 2,8"/><polygon points="12,6 18,9.5 18,14.5 12,18 6,14.5 6,9.5" opacity=".55"/></svg>
+                  <div className="vda-well-name">Fernando</div>
+                  <div className="vda-well-role">Método LEMA</div>
+                  <p className="vda-well-quote">Acompañamiento consciente para liberar bloqueos, transformar patrones y crear la vida que realmente deseas.</p>
+                  <div className="vda-well-stars">★ ★ ★ ★ ★</div>
+                  <button className="vda-btn-perfil" style={{ marginTop: '10px' }} onClick={() => setWellModal({ nombre: 'Fernando', profileImg: '/feri.jpeg', precio: 100, id: 'fernando' })}>VER PERFIL COMPLETO</button>
+                </div>
+              </div>
+              <div className="vda-well-card">
+                <div className="vda-well-avatar">
+                  <img src="/eli.jpeg" alt="Eli" />
+                </div>
+                <div>
+                  <svg style={{ width: '22px', height: '22px', color: 'var(--gold-bright)', marginBottom: '4px' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18 M12 3a14 14 0 0 1 0 18 M12 3a14 14 0 0 0 0 18" opacity=".55"/></svg>
+                  <div className="vda-well-name">Eli</div>
+                  <div className="vda-well-role">Registros Akásicos</div>
+                  <p className="vda-well-quote">Accede a la información de tu alma para obtener respuestas, claridad y guía en tu camino de evolución.</p>
+                  <div className="vda-well-stars">★ ★ ★ ★ ★</div>
+                  <button className="vda-btn-perfil" style={{ marginTop: '10px' }} onClick={() => setWellModal({ nombre: 'Eli', profileImg: '/elii.jpeg', precio: 60, id: 'eli' })}>VER PERFIL COMPLETO</button>
+                </div>
+              </div>
+            </div>
+          </section>
+          </div>
+
           {/* CTA */}
           <section className="vda-cta">
             <img className="vda-cta-art" src="/cta.png" alt="" />
@@ -244,7 +288,7 @@ export default function Home() {
               <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".8" fill="currentColor"/></svg></a>
               <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M14 8h2V5h-2.5C12 5 11 6 11 7.5V10H9v3h2v8h3v-8h2.2l.3-3H14V8.5c0-.3.2-.5.5-.5H14z"/></svg></a>
             </div>
-            <div className="vda-copyright">© 2024 Voces del Alma · Todos los derechos reservados</div>
+            <div className="vda-copyright">© 2026 Voces del Alma · Todos los derechos reservados</div>
             <div className="vda-moonline">( ☾ ✦ ☽ )</div>
           </footer>
         </div>
@@ -288,6 +332,21 @@ export default function Home() {
                 </Link>
               </div>
             )}
+          </div>
+        </div>
+      )}
+      {/* MODAL WELLNESS */}
+      {wellModal && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(10,21,48,.85)', zIndex: 50, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '12px', overflowY: 'auto' }}>
+          <div style={{ background: '#0a1530', border: '1px solid rgba(214,169,87,.4)', borderRadius: '10px', width: '100%', maxWidth: '500px', position: 'relative', maxHeight: '95vh', overflowY: 'auto' }}>
+            <button onClick={() => setWellModal(null)} style={{ position: 'absolute', top: '12px', right: '12px', background: 'rgba(0,0,0,.5)', border: 'none', color: 'white', width: '36px', height: '36px', borderRadius: '50%', fontSize: '18px', cursor: 'pointer', zIndex: 10 }}>✕</button>
+            <img src={wellModal.profileImg} alt={wellModal.nombre} style={{ width: '100%', height: 'auto', borderRadius: '10px 10px 0 0' }} />
+            <div style={{ padding: '16px', borderTop: '1px solid rgba(214,169,87,.3)' }}>
+              <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: '22px', color: '#f1deae', textAlign: 'center', marginBottom: '12px' }}>{wellModal.nombre}</div>
+              <Link href={`/checkout?minutes=${wellModal.precio}&tarotista=${wellModal.id}`} style={{ display: 'block', width: '100%', background: 'linear-gradient(180deg,#c89a47,#a87a30)', color: '#fff8e1', textAlign: 'center', padding: '14px', borderRadius: '6px', fontFamily: 'Cinzel,serif', fontSize: '15px', textDecoration: 'none', letterSpacing: '.08em' }}>
+                CONSULTAR AHORA · {wellModal.precio}€
+              </Link>
+            </div>
           </div>
         </div>
       )}

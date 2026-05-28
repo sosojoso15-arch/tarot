@@ -1,20 +1,10 @@
-export const PRICING = {
-  15: {
-    minutes: 15,
-    price: 10,
-    display: '€10,00',
-  },
-  20: {
-    minutes: 20,
-    price: 15,
-    display: '€15,00',
-  },
-  30: {
-    minutes: 30,
-    price: 20,
-    display: '€20,00',
-  },
-} as const;
+export const PRICING: Record<number, { minutes: number; price: number; display: string }> = {
+  15: { minutes: 15, price: 10, display: '€10,00' },
+  20: { minutes: 20, price: 15, display: '€15,00' },
+  30: { minutes: 30, price: 20, display: '€20,00' },
+  60: { minutes: 60, price: 60, display: '€60,00' },
+  100: { minutes: 100, price: 100, display: '€100,00' },
+};
 
 export const ZADARMA_PHONE_NUMBER = process.env.NEXT_PUBLIC_ZADARMA_PHONE_NUMBER || '+1234567890';
 
