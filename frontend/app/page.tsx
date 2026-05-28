@@ -211,11 +211,7 @@ export default function Home() {
                     <div className="vda-role">{t.especialidad}</div>
                     <p className="vda-quote">"{t.review}"</p>
                     <div className="vda-stars">★ ★ ★ ★ ★</div>
-                    {t.nombre === 'Marcos' ? (
-                      <Link href="/chat" className="vda-btn-perfil" style={{ display: 'block', textAlign: 'center', textDecoration: 'none' }}>CONSULTAR</Link>
-                    ) : (
-                      <button className="vda-btn-perfil" onClick={() => { setSelected(t); setModalOpen(true); }}>VER PERFIL COMPLETO</button>
-                    )}
+                    <button className="vda-btn-perfil" onClick={() => { setSelected(t); setModalOpen(true); }}>VER PERFIL COMPLETO</button>
                   </article>
                 ))}
               </div>
@@ -307,16 +303,24 @@ export default function Home() {
               <>
                 <img src={getSpecialImage(selected.nombre)!} alt={selected.nombre} style={{ width: '100%', height: 'auto', borderRadius: '10px 10px 0 0' }} />
                 <div style={{ padding: '16px', borderTop: '1px solid rgba(214,169,87,.3)' }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px', marginBottom: '12px' }}>
-                    {[{ m: 15, p: '10€' }, { m: 20, p: '15€' }, { m: 30, p: '20€' }].map(pkg => (
-                      <button key={pkg.m} onClick={() => setSelectedMinutes(pkg.m)} style={{ padding: '8px', border: `1px solid ${selectedMinutes === pkg.m ? '#d6a957' : 'rgba(214,169,87,.3)'}`, borderRadius: '6px', background: selectedMinutes === pkg.m ? 'rgba(214,169,87,.2)' : 'transparent', color: '#d6a957', cursor: 'pointer', fontFamily: 'Cinzel,serif', fontSize: '12px' }}>
-                        {pkg.m}m · {pkg.p}
-                      </button>
-                    ))}
-                  </div>
-                  <Link href={`/checkout?minutes=${selectedMinutes}&tarotista=${selected.id}`} style={{ display: 'block', width: '100%', background: 'linear-gradient(180deg,#c89a47,#a87a30)', color: '#fff8e1', textAlign: 'center', padding: '12px', borderRadius: '6px', fontFamily: 'Cinzel,serif', fontSize: '14px', textDecoration: 'none', letterSpacing: '.08em' }}>
-                    CONSULTAR AHORA
-                  </Link>
+                  {selected.nombre === 'Marcos' ? (
+                    <Link href="/chat" style={{ display: 'block', width: '100%', background: 'linear-gradient(180deg,#c89a47,#a87a30)', color: '#fff8e1', textAlign: 'center', padding: '14px', borderRadius: '6px', fontFamily: 'Cinzel,serif', fontSize: '15px', textDecoration: 'none', letterSpacing: '.1em' }}>
+                      CONSULTAR
+                    </Link>
+                  ) : (
+                    <>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px', marginBottom: '12px' }}>
+                        {[{ m: 15, p: '10€' }, { m: 20, p: '15€' }, { m: 30, p: '20€' }].map(pkg => (
+                          <button key={pkg.m} onClick={() => setSelectedMinutes(pkg.m)} style={{ padding: '8px', border: `1px solid ${selectedMinutes === pkg.m ? '#d6a957' : 'rgba(214,169,87,.3)'}`, borderRadius: '6px', background: selectedMinutes === pkg.m ? 'rgba(214,169,87,.2)' : 'transparent', color: '#d6a957', cursor: 'pointer', fontFamily: 'Cinzel,serif', fontSize: '12px' }}>
+                            {pkg.m}m · {pkg.p}
+                          </button>
+                        ))}
+                      </div>
+                      <Link href={`/checkout?minutes=${selectedMinutes}&tarotista=${selected.id}`} style={{ display: 'block', width: '100%', background: 'linear-gradient(180deg,#c89a47,#a87a30)', color: '#fff8e1', textAlign: 'center', padding: '12px', borderRadius: '6px', fontFamily: 'Cinzel,serif', fontSize: '14px', textDecoration: 'none', letterSpacing: '.08em' }}>
+                        CONSULTAR AHORA
+                      </Link>
+                    </>
+                  )}
                 </div>
               </>
             ) : (
