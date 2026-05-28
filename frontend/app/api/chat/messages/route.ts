@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_KEY!
-);
+function getSupabase() {
+  return createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_KEY!);
+}
 
 export async function GET(req: NextRequest) {
+  const supabase = getSupabase();
   const sessionId = req.nextUrl.searchParams.get('session_id');
   if (!sessionId) return NextResponse.json({ error: 'session_id required' }, { status: 400 });
   const { data, error } = await supabase
@@ -19,6 +19,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  const supabase = getSupabase();
   const body = await req.json();
   const { session_id, sender, message } = body;
   if (!session_id || !sender || !message) {
