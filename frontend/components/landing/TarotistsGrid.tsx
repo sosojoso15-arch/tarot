@@ -135,7 +135,7 @@ const staticTarotistas = [
   { id: '9a4bfc88-8477-44bf-adc3-397cd3ede9ca', nombre: 'Yeyo', especialidad: 'Orientación Espiritual Nocturna', imagen_url: 'https://tpaddfpibktbaystjblq.supabase.co/storage/v1/object/public/tarotistas/yeyo_1778651391674.jpg' },
 ];
 
-export default function TarotistsGrid() {
+export default function TarotistsGrid({ overlay = false }: { overlay?: boolean }) {
   const [tarotistas, setTarotistas] = useState<any[]>(staticTarotistas);
   const [selectedMinutes, setSelectedMinutes] = useState<Record<string, number>>({});
   const [modalOpen, setModalOpen] = useState(false);
@@ -183,7 +183,7 @@ export default function TarotistsGrid() {
   };
 
   return (
-    <section id="tarotistas" className="bg-slate-950 py-20 px-6">
+    <section id="tarotistas" className={overlay ? 'py-4 px-2' : 'bg-slate-950 py-20 px-6'}>
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -249,11 +249,14 @@ export default function TarotistsGrid() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="bg-slate-900 border border-yellow-500/40 rounded-2xl p-5 flex-shrink-0 w-72 hover:border-yellow-500/60 transition flex flex-col items-center"
+                  className={overlay
+                    ? "bg-white/90 border border-yellow-500/60 rounded-xl p-3 flex-shrink-0 w-36 hover:border-yellow-500 transition flex flex-col items-center shadow-lg"
+                    : "bg-slate-900 border border-yellow-500/40 rounded-2xl p-5 flex-shrink-0 w-72 hover:border-yellow-500/60 transition flex flex-col items-center"
+                  }
                 >
-                  {/* Foto circular - más grande */}
-                  <div className="mb-4">
-                    <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-yellow-500 flex-shrink-0">
+                  {/* Foto circular */}
+                  <div className={overlay ? "mb-2" : "mb-4"}>
+                    <div className={overlay ? "w-16 h-16 rounded-full overflow-hidden border-2 border-yellow-500 flex-shrink-0" : "w-40 h-40 rounded-full overflow-hidden border-4 border-yellow-500 flex-shrink-0"}>
                       {tarotista.imagen_url ? (
                         <img
                           src={tarotista.imagen_url}
@@ -269,16 +272,13 @@ export default function TarotistsGrid() {
                   </div>
 
                   {/* Nombre */}
-                  <h3 className="text-2xl font-bold text-yellow-500 text-center mb-1">{tarotista.nombre}</h3>
+                  <h3 className={overlay ? "text-sm font-bold text-yellow-700 text-center mb-0.5" : "text-2xl font-bold text-yellow-500 text-center mb-1"}>{tarotista.nombre}</h3>
 
                   {/* Especialidad */}
-                  <p className="text-yellow-400 font-semibold text-xs text-center mb-3">{tarotista.especialidad}</p>
+                  <p className={overlay ? "text-yellow-600 text-xs text-center mb-2 leading-tight" : "text-yellow-400 font-semibold text-xs text-center mb-3"}>{tarotista.especialidad}</p>
 
-                  {/* Divider */}
-                  <div className="text-yellow-500 text-sm mb-3">✦</div>
-
-                  {/* Opinion */}
-                  {firstOpinion && (
+                  {/* Opinion - ocultar en overlay */}
+                  {!overlay && firstOpinion && (
                     <div className="mb-4 flex-grow flex flex-col items-center justify-center px-2">
                       <p className="text-yellow-500 text-lg mb-1">❝</p>
                       <p className="text-yellow-400 text-xs text-center leading-relaxed italic">
@@ -291,7 +291,10 @@ export default function TarotistsGrid() {
                   {/* Botón Ver Perfil */}
                   <button
                     onClick={() => openModal(tarotista)}
-                    className="w-full border-2 border-yellow-500 text-yellow-500 font-bold py-2 rounded-lg hover:bg-yellow-500/10 transition uppercase text-xs tracking-wide"
+                    className={overlay
+                      ? "w-full border border-yellow-600 text-yellow-700 font-bold py-1 rounded-lg hover:bg-yellow-500/10 transition uppercase text-xs"
+                      : "w-full border-2 border-yellow-500 text-yellow-500 font-bold py-2 rounded-lg hover:bg-yellow-500/10 transition uppercase text-xs tracking-wide"
+                    }
                   >
                     VER PERFIL COMPLETO
                   </button>
