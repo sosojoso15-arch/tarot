@@ -12,8 +12,8 @@ interface Message {
   created_at: string;
 }
 
-const specialists: Record<string, { nombre: string; rol: string; img: string; price?: number; id?: string }> = {
-  'Marcos':   { nombre: 'Marcos',   rol: 'Acompañamiento Nocturno', img: '/marcos.jpg' },
+const specialists: Record<string, { nombre: string; rol: string; img: string; price?: number; id?: string; checkoutMinutes?: number }> = {
+  'Marcos':   { nombre: 'Marcos',   rol: 'Acompañamiento Nocturno', img: '/marcos.jpg', id: '0c12defa-6e5c-4cce-802d-913cd3476136' },
   'Fernando': { nombre: 'Fernando', rol: 'Método LEMA',             img: '/feri.jpeg',  price: 100, id: 'fernando' },
   'Eli':      { nombre: 'Eli',      rol: 'Registros Akásicos',      img: '/elii.jpeg',  price: 60,  id: 'eli'      },
 };
@@ -77,8 +77,7 @@ function ChatContent() {
 
   // Mount: check unlock + restore session from localStorage
   useEffect(() => {
-    const isMarcos = para === 'Marcos';
-    const ok = isMarcos || !!localStorage.getItem(UNLOCK_KEY);
+    const ok = !!localStorage.getItem(UNLOCK_KEY);
     setUnlocked(ok);
     if (ok) {
       const savedId   = localStorage.getItem(SESSION_KEY);
@@ -98,7 +97,11 @@ function ChatContent() {
       const res = await fetch('/api/chat/sessions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ client_name: name.trim(), specialist: sp.nombre }),
+        body: JSON.stringify({
+          client_name: name.trim(),
+          specialist: sp.nombre,
+          minutes: localStorage.getItem(`vda_chat_minutes_${para}`) || undefined,
+        }),
       });
       const data = await res.json();
       if (data.success) {
@@ -151,8 +154,9 @@ function ChatContent() {
   // Prevent SSR mismatch
   if (!mounted) return null;
 
-  // Paywall for Fernando / Eli when not unlocked
+  // Paywall when not unlocked
   if (!unlocked) {
+    const isMarcos = para === 'Marcos';
     return (
       <>
         <style>{CSS}</style>
@@ -163,9 +167,15 @@ function ChatContent() {
               <div className="spav"><img src={sp.img} alt={sp.nombre} /></div>
               <h2 className="ntit">Consulta con {sp.nombre}</h2>
               <p className="nsub">{sp.rol}<br />Completa el pago para acceder al chat</p>
-              <Link href={`/checkout?minutes=${sp.price}&tarotista=${sp.id}&specialist=${sp.nombre}`} className="nbtn">
-                CONSULTAR · {sp.price}€
-              </Link>
+              {isMarcos ? (
+                <Link href={`/?openMarcos=1`} className="nbtn">
+                  SELECCIONAR MINUTOS →
+                </Link>
+              ) : (
+                <Link href={`/checkout?minutes=${sp.price}&tarotista=${sp.id}&specialist=${sp.nombre}`} className="nbtn">
+                  CONSULTAR · {sp.price}€
+                </Link>
+              )}
               <p className="paywall-note">Pago único · Acceso inmediato al chat · Seguro con Stripe</p>
             </div>
           </div>

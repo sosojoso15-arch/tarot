@@ -42,7 +42,10 @@ export function CheckoutContent() {
 
       // Redirect to Stripe
       if (checkout.checkoutUrl) {
-        if (specialist) localStorage.setItem('vda_pending_specialist', specialist);
+        if (specialist) {
+          localStorage.setItem('vda_pending_specialist', specialist);
+          localStorage.setItem('vda_pending_minutes', minutes.toString());
+        }
         window.location.href = checkout.checkoutUrl;
       }
     } catch (error) {

@@ -7,6 +7,7 @@ interface Session {
   id: string;
   client_name: string;
   specialist?: string;
+  minutes?: number;
   created_at: string;
   chat_messages?: { count: number }[];
 }
@@ -88,8 +89,8 @@ export default function MarcosAdmin() {
     }
   }, [router]);
 
-  const specialistKey: Record<string, string> = {
-    'marcos':   'marcos',
+  const mySpecialist: Record<string, string> = {
+    'marcos':   'Marcos',
     'fernando': 'Fernando',
     'eli':      'Eli',
   };
@@ -99,12 +100,10 @@ export default function MarcosAdmin() {
     const data = await res.json();
     if (data.success) {
       const all: Session[] = data.data || [];
-      const spFilter = specialistKey[currentUser];
-      if (currentUser === 'marcos') {
-        setSessions(all);
-      } else {
-        setSessions(all.filter(s => s.specialist === spFilter));
-      }
+      const myName = mySpecialist[currentUser] || 'Marcos';
+      setSessions(all.filter(s =>
+        (s.specialist || 'Marcos').toLowerCase() === myName.toLowerCase()
+      ));
     }
   };
 
@@ -189,8 +188,8 @@ export default function MarcosAdmin() {
                 onClick={() => selectSession(s)}
               >
                 <div className="sname">{s.client_name}</div>
-                {s.specialist && s.specialist !== 'marcos' && (
-                  <div style={{ fontSize: '10px', color: 'rgba(214,169,87,.65)', letterSpacing: '.06em', marginTop: '2px' }}>→ {s.specialist}</div>
+                {s.minutes && (
+                  <div style={{ fontSize: '11px', color: '#d6a957', marginTop: '2px', fontWeight: 600 }}>{s.minutes} min</div>
                 )}
                 <div className="stime">{fmt(s.created_at)}</div>
                 {s.chat_messages && s.chat_messages[0]?.count > 0 && (
@@ -210,6 +209,9 @@ export default function MarcosAdmin() {
                 <div className="achat-hdr">
                   <div className="nodot" />
                   <div className="achat-name">{active.client_name}</div>
+                  {active.minutes && (
+                    <div style={{ fontSize: '12px', color: '#d6a957', marginLeft: '8px', fontWeight: 600 }}>{active.minutes} min</div>
+                  )}
                   <div style={{ fontSize: '12px', color: '#8a7a5a', marginLeft: '4px' }}>· {fmt(active.created_at)}</div>
                 </div>
                 <div className="amsgs">

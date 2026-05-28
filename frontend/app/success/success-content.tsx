@@ -16,10 +16,13 @@ export function SuccessContent() {
   const [chatSpecialist, setChatSpecialist] = useState('');
 
   useEffect(() => {
-    const sp = localStorage.getItem('vda_pending_specialist');
+    const sp   = localStorage.getItem('vda_pending_specialist');
+    const mins = localStorage.getItem('vda_pending_minutes');
     if (sp) {
       localStorage.removeItem('vda_pending_specialist');
+      localStorage.removeItem('vda_pending_minutes');
       localStorage.setItem(`vda_chat_unlocked_${sp}`, 'true');
+      if (mins) localStorage.setItem(`vda_chat_minutes_${sp}`, mins);
       setChatSpecialist(sp);
     }
   }, []);
