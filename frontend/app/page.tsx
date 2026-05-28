@@ -211,7 +211,11 @@ export default function Home() {
                     <div className="vda-role">{t.especialidad}</div>
                     <p className="vda-quote">"{t.review}"</p>
                     <div className="vda-stars">★ ★ ★ ★ ★</div>
-                    <button className="vda-btn-perfil" onClick={() => { setSelected(t); setModalOpen(true); }}>VER PERFIL COMPLETO</button>
+                    {t.nombre === 'Marcos' ? (
+                      <Link href="/chat" className="vda-btn-perfil" style={{ display: 'block', textAlign: 'center', textDecoration: 'none' }}>CONSULTAR</Link>
+                    ) : (
+                      <button className="vda-btn-perfil" onClick={() => { setSelected(t); setModalOpen(true); }}>VER PERFIL COMPLETO</button>
+                    )}
                   </article>
                 ))}
               </div>

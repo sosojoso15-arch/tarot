@@ -9,6 +9,7 @@ import authRoutes from './routes/auth.routes';
 import taroistasRoutes from './routes/tarotistas.routes';
 import callsRoutes from './routes/calls.routes';
 import uploadsRoutes from './routes/uploads.routes';
+import chatRoutes from './routes/chat.routes';
 import { errorHandler } from './middleware/errorHandler';
 import { logger } from './utils/logger';
 import { callService } from './services/call.service';
@@ -55,6 +56,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/tarotistas', taroistasRoutes);
 app.use('/api/calls', callsRoutes);
 app.use('/api/uploads', uploadsRoutes);
+app.use('/api/chat', chatRoutes);
 
 // Error handling
 app.use(errorHandler);
