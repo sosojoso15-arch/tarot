@@ -6,7 +6,7 @@ export const PRICING: Record<number, { minutes: number; price: number; display: 
   100: { minutes: 100, price: 100, display: '€100,00' },
 };
 
-export const ZADARMA_PHONE_NUMBER = process.env.NEXT_PUBLIC_ZADARMA_PHONE_NUMBER || '+1234567890';
+export const ZADARMA_PHONE_NUMBER = process.env.NEXT_PUBLIC_ZADARMA_PHONE_NUMBER || '+34919933673';
 
 export const SEO = {
   title: 'Lectura de Tarot Telefónica | Consulta Online',
