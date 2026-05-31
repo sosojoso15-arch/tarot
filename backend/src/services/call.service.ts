@@ -1,10 +1,44 @@
 import axios from 'axios';
-import { ZADARMA_CONFIG, getZadarmaAuthHeaders } from '../config/zadarma';
+import { ZADARMA_CONFIG, getZadarmaAuth, TAROTISTA_EXTENSIONS } from '../config/zadarma';
 import { supabase } from '../config/database';
 import { ApiError } from '../middleware/errorHandler';
 import { logger } from '../utils/logger';
 
 export const callService = {
+
+  // Notificar a tarotista por llamada: "Tienes nuevo cliente de X minutos"
+  async notifyTarotista(taroistaNombre: string, minutes: number) {
+    try {
+      const ext = TAROTISTA_EXTENSIONS[taroistaNombre.toLowerCase()];
+      if (!ext) {
+        logger.warn(`No extension found for tarotista: ${taroistaNombre}`);
+        return;
+      }
+
+      const internalFrom = `${ZADARMA_CONFIG.pbxId}-${ext.padStart(3, '0')}`;
+      const params: Record<string, string> = {
+        from: internalFrom,
+        to:   ZADARMA_CONFIG.phoneNumber,
+        predicted: '1',
+      };
+
+      const response = await axios.post(
+        `${ZADARMA_CONFIG.apiUrl}/request/callback/`,
+        new URLSearchParams(params).toString(),
+        {
+          headers: {
+            'Authorization': getZadarmaAuth(params),
+            'Content-Type': 'application/x-www-form-urlencoded',
+          }
+        }
+      );
+
+      logger.info(`Notified tarotista ${taroistaNombre} (ext ${ext}): ${minutes} min — ${JSON.stringify(response.data)}`);
+    } catch (error: any) {
+      logger.warn(`Could not notify tarotista ${taroistaNombre}:`, error?.message);
+    }
+  },
+
   // Iniciar llamada entre cliente y tarotista
   async initiateCall(sessionId: string, clientPhone: string, taroistaId: string) {
     try {
@@ -43,7 +77,7 @@ export const callService = {
         `${ZADARMA_CONFIG.apiUrl}/call/`,
         callData,
         {
-          headers: getZadarmaAuthHeaders()
+          headers: { 'Authorization': getZadarmaAuth({}) }
         }
       );
 
@@ -97,7 +131,7 @@ export const callService = {
       const response = await axios.get(
         `${ZADARMA_CONFIG.apiUrl}/call/${callId}/`,
         {
-          headers: getZadarmaAuthHeaders()
+          headers: { 'Authorization': getZadarmaAuth({}) }
         }
       );
 
@@ -115,7 +149,7 @@ export const callService = {
         `${ZADARMA_CONFIG.apiUrl}/call/${callId}/hangup/`,
         {},
         {
-          headers: getZadarmaAuthHeaders()
+          headers: { 'Authorization': getZadarmaAuth({}) }
         }
       );
 

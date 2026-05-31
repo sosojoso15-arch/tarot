@@ -155,14 +155,19 @@ export const stripeService = {
         .eq('id', metadata.user_id)
         .single();
 
-      // Initiate call if tarotista assigned
-      if (session?.tarotista_id && user?.phone) {
+      // Notify tarotista via Zadarma call
+      if (session?.tarotista_id) {
         try {
-          await callService.initiateCall(sessionId, user.phone, session.tarotista_id);
-          logger.info(`Call initiated for session: ${sessionId}`);
+          const { data: tarotista } = await supabase
+            .from('tarotistas')
+            .select('nombre')
+            .eq('id', session.tarotista_id)
+            .single();
+          if (tarotista?.nombre) {
+            await callService.notifyTarotista(tarotista.nombre, session.minutes);
+          }
         } catch (callError) {
-          logger.warn('Failed to initiate call:', callError);
-          // Don't throw - payment is successful even if call fails
+          logger.warn('Failed to notify tarotista:', callError);
         }
       }
 
