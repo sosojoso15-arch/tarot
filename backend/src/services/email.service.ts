@@ -2,12 +2,18 @@ import { Resend } from 'resend';
 import { logger } from '../utils/logger';
 import { Session } from '../types';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function getResend() {
+  const key = process.env.RESEND_API_KEY;
+  if (!key || key === 're_placeholder') return null;
+  return new Resend(key);
+}
 
 export const emailService = {
   async sendConfirmationEmail(email: string, session: Session) {
     try {
-      const phoneNumber = process.env.ZADARMA_PHONE_NUMBER || '+1234567890';
+      const resend = getResend();
+      if (!resend) { logger.info('Email skipped: no RESEND_API_KEY'); return; }
+      const phoneNumber = process.env.ZADARMA_PHONE_NUMBER || '+34919933673';
 
       await resend.emails.send({
         from: process.env.EMAIL_FROM || 'noreply@tarotplataforma.com',
@@ -52,6 +58,8 @@ export const emailService = {
 
   async sendPaymentFailedEmail(email: string, reason?: string) {
     try {
+      const resend = getResend();
+      if (!resend) return;
       await resend.emails.send({
         from: process.env.EMAIL_FROM || 'noreply@tarotplataforma.com',
         to: email,
@@ -78,6 +86,8 @@ export const emailService = {
 
   async sendWeeklyReport(adminEmail: string, stats: any) {
     try {
+      const resend = getResend();
+      if (!resend) return;
       await resend.emails.send({
         from: process.env.EMAIL_FROM || 'noreply@tarotplataforma.com',
         to: adminEmail,
