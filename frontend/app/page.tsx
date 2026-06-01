@@ -109,7 +109,7 @@ export default function Home() {
         .vda-dot.active{background:var(--gold);}
         .vda-btn-perfil{margin-top:12px;width:100%;background:transparent;border:1px solid rgba(214,169,87,.5);color:#d6a957;font-family:'Cinzel',serif;font-size:10px;letter-spacing:.12em;padding:7px 4px;border-radius:3px;cursor:pointer;}
         .vda-btn-perfil:hover{background:rgba(214,169,87,.1)}
-        .vda-wellness{margin-top:20px;background:linear-gradient(180deg,#0d1a37 0%,#0a1530 100%);border:1px solid rgba(214,169,87,.35);border-radius:6px;padding:22px 26px;color:#e8d9b3;}
+        .vda-wellness{margin-top:20px;background:linear-gradient(180deg,#0d1a37 0%,#0a1530 100%);border:2px solid rgba(214,169,87,.7);border-radius:8px;padding:22px 26px;color:#e8d9b3;box-shadow:0 0 28px rgba(214,169,87,.18),inset 0 0 40px rgba(214,169,87,.04);}
         .vda-wellness-title{text-align:center;font-family:'Cinzel',serif;font-size:13px;letter-spacing:.42em;color:var(--gold-bright);margin:0 0 22px;display:flex;align-items:center;justify-content:center;gap:14px;}
         .vda-wellness-title::before,.vda-wellness-title::after{content:"";height:1px;width:60px;background:rgba(214,169,87,.5);}
         .vda-wellness-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
@@ -212,6 +212,7 @@ export default function Home() {
 
           {/* CAROUSEL */}
           <section className="vda-experts-wrap">
+            <h3 className="vda-wellness-title" style={{ marginBottom: '14px', marginTop: '8px' }}>TAROTISTAS</h3>
             <button className="vda-nav left" onClick={() => setPage(p => Math.max(0, p - 1))} aria-label="Anterior">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M15 6l-6 6 6 6"/></svg>
             </button>
