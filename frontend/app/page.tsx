@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 const tarotistas = [
@@ -38,6 +38,20 @@ export default function Home() {
   const [selected, setSelected] = useState<typeof tarotistas[0] | null>(null);
   const [selectedMinutes, setSelectedMinutes] = useState(15);
   const [wellModal, setWellModal] = useState<{ nombre: string; profileImg: string; precio: number; id: string } | null>(null);
+  const [onlineStatus, setOnlineStatus] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    const fetchStatus = async () => {
+      try {
+        const res = await fetch('/api/tarotistas/status');
+        const data = await res.json();
+        if (data.success) setOnlineStatus(data.status);
+      } catch {}
+    };
+    fetchStatus();
+    const id = setInterval(fetchStatus, 30000);
+    return () => clearInterval(id);
+  }, []);
 
   const totalPages = Math.ceil(tarotistas.length / PER_PAGE);
   const visible = tarotistas.slice(page * PER_PAGE, (page + 1) * PER_PAGE);
@@ -88,7 +102,7 @@ export default function Home() {
         .vda-role{font-size:11.5px;color:#d6c08a;margin-top:6px;letter-spacing:.04em;}
         .vda-quote{font-size:13.5px;color:#c8b896;line-height:1.55;margin-top:14px;font-style:italic;font-family:'Cormorant Garamond',serif;}
         .vda-stars{color:var(--gold-bright);margin-top:14px;letter-spacing:3px;font-size:13px;}
-        .vda-nav{position:absolute;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:rgba(255,250,236,.6);border:1px solid rgba(183,138,60,.35);color:var(--gold);display:grid;place-items:center;cursor:pointer;user-select:none;}
+        .vda-nav{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;background:linear-gradient(180deg,#3b82f6,#1d4ed8);border:2px solid rgba(96,165,250,.6);color:#fff;display:grid;place-items:center;cursor:pointer;user-select:none;box-shadow:0 4px 14px rgba(59,130,246,.45);}
         .vda-nav.left{left:0}.vda-nav.right{right:0}
         .vda-dots{display:flex;justify-content:center;gap:8px;margin-top:14px;}
         .vda-dot{width:8px;height:8px;border-radius:50%;background:rgba(183,138,60,.35);cursor:pointer;}
@@ -206,7 +220,10 @@ export default function Home() {
                 {visible.map(t => (
                   <article key={t.id} className="vda-card">
                     <svg className="vda-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>
-                    <div className="vda-avatar"><img src={t.imagen} alt={t.nombre} /></div>
+                    <div style={{ position: 'relative', display: 'inline-block' }}>
+                      <div className="vda-avatar"><img src={t.imagen} alt={t.nombre} /></div>
+                      <span style={{ position: 'absolute', bottom: '4px', right: '4px', width: '13px', height: '13px', borderRadius: '50%', background: onlineStatus[t.nombre] ? '#22c55e' : '#ef4444', border: '2px solid #0a1530', display: 'block' }} />
+                    </div>
                     <div className="vda-name">{t.nombre}</div>
                     <div className="vda-role">{t.especialidad}</div>
                     <p className="vda-quote">"{t.review}"</p>
