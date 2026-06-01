@@ -297,7 +297,7 @@ export default function Home() {
       {/* MODAL */}
       {modalOpen && selected && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(10,21,48,.85)', zIndex: 50, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '12px', overflowY: 'auto' }}>
-          <div style={{ background: '#0a1530', border: '1px solid rgba(214,169,87,.4)', borderRadius: '10px', width: '100%', maxWidth: '500px', position: 'relative', maxHeight: '95vh', overflowY: 'auto' }}>
+          <div style={{ background: '#0a1530', border: '1px solid rgba(214,169,87,.4)', borderRadius: '10px', width: '100%', maxWidth: '720px', position: 'relative', maxHeight: '95vh', overflowY: 'auto' }}>
             <button onClick={() => setModalOpen(false)} style={{ position: 'absolute', top: '12px', right: '12px', background: 'rgba(0,0,0,.5)', border: 'none', color: 'white', width: '36px', height: '36px', borderRadius: '50%', fontSize: '18px', cursor: 'pointer', zIndex: 10 }}>✕</button>
             {getSpecialImage(selected.nombre) ? (
               <>
@@ -340,7 +340,7 @@ export default function Home() {
       {/* MODAL WELLNESS */}
       {wellModal && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(10,21,48,.85)', zIndex: 50, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '12px', overflowY: 'auto' }}>
-          <div style={{ background: '#0a1530', border: '1px solid rgba(214,169,87,.4)', borderRadius: '10px', width: '100%', maxWidth: '500px', position: 'relative', maxHeight: '95vh', overflowY: 'auto' }}>
+          <div style={{ background: '#0a1530', border: '1px solid rgba(214,169,87,.4)', borderRadius: '10px', width: '100%', maxWidth: '720px', position: 'relative', maxHeight: '95vh', overflowY: 'auto' }}>
             <button onClick={() => setWellModal(null)} style={{ position: 'absolute', top: '12px', right: '12px', background: 'rgba(0,0,0,.5)', border: 'none', color: 'white', width: '36px', height: '36px', borderRadius: '50%', fontSize: '18px', cursor: 'pointer', zIndex: 10 }}>✕</button>
             <img src={wellModal.profileImg} alt={wellModal.nombre} style={{ width: '100%', height: 'auto', borderRadius: '10px 10px 0 0' }} />
             <div style={{ padding: '16px', borderTop: '1px solid rgba(214,169,87,.3)' }}>
