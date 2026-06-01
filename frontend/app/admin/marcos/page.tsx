@@ -91,7 +91,7 @@ export default function MarcosAdmin() {
 
   const mySpecialist: Record<string, string> = {
     'marcos':   'Marcos',
-    'fernando': 'Fernando',
+    'fernando': 'Fer',
     'eli':      'Eli',
   };
 

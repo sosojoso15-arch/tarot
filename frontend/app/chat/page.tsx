@@ -14,7 +14,7 @@ interface Message {
 
 const specialists: Record<string, { nombre: string; rol: string; img: string; price?: number; id?: string; checkoutMinutes?: number }> = {
   'Marcos':   { nombre: 'Marcos',   rol: 'Acompañamiento Nocturno', img: '/marcos.jpg', id: '0c12defa-6e5c-4cce-802d-913cd3476136' },
-  'Fernando': { nombre: 'Fernando', rol: 'Método LEMA',             img: '/feri.jpeg',  price: 100, id: 'fernando' },
+  'Fer':      { nombre: 'Fer',       rol: 'Método LEMA',             img: '/feri.jpeg',  price: 100, id: 'fernando' },
   'Eli':      { nombre: 'Eli',      rol: 'Registros Akásicos',      img: '/elii.jpeg',  price: 60,  id: 'eli'      },
 };
 

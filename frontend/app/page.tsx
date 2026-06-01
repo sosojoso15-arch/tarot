@@ -102,7 +102,7 @@ export default function Home() {
         .vda-role{font-size:11.5px;color:#d6c08a;margin-top:6px;letter-spacing:.04em;}
         .vda-quote{font-size:13.5px;color:#c8b896;line-height:1.55;margin-top:14px;font-style:italic;font-family:'Cormorant Garamond',serif;}
         .vda-stars{color:var(--gold-bright);margin-top:14px;letter-spacing:3px;font-size:13px;}
-        .vda-nav{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;background:linear-gradient(180deg,#3b82f6,#1d4ed8);border:2px solid rgba(96,165,250,.6);color:#fff;display:grid;place-items:center;cursor:pointer;user-select:none;box-shadow:0 4px 14px rgba(59,130,246,.45);}
+        .vda-nav{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;background:linear-gradient(180deg,#c89a47,#a87a30);border:2px solid rgba(214,169,87,.7);color:#fff8e1;display:grid;place-items:center;cursor:pointer;user-select:none;box-shadow:0 4px 14px rgba(168,122,48,.55);}
         .vda-nav.left{left:0}.vda-nav.right{right:0}
         .vda-dots{display:flex;justify-content:center;gap:8px;margin-top:14px;}
         .vda-dot{width:8px;height:8px;border-radius:50%;background:rgba(183,138,60,.35);cursor:pointer;}
@@ -254,11 +254,11 @@ export default function Home() {
                 </div>
                 <div>
                   <svg style={{ width: '22px', height: '22px', color: 'var(--gold-bright)', marginBottom: '4px' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2"><polygon points="12,2 22,8 22,16 12,22 2,16 2,8"/><polygon points="12,6 18,9.5 18,14.5 12,18 6,14.5 6,9.5" opacity=".55"/></svg>
-                  <div className="vda-well-name">Fernando</div>
+                  <div className="vda-well-name">Fer</div>
                   <div className="vda-well-role">Método LEMA</div>
                   <p className="vda-well-quote">Acompañamiento consciente para liberar bloqueos, transformar patrones y crear la vida que realmente deseas.</p>
                   <div className="vda-well-stars">★ ★ ★ ★ ★</div>
-                  <button className="vda-btn-perfil" style={{ marginTop: '10px' }} onClick={() => setWellModal({ nombre: 'Fernando', profileImg: '/feri.jpeg', precio: 100, id: 'fernando' })}>VER PERFIL COMPLETO</button>
+                  <button className="vda-btn-perfil" style={{ marginTop: '10px' }} onClick={() => setWellModal({ nombre: 'Fer', profileImg: '/feri.jpeg', precio: 100, id: 'fernando' })}>VER PERFIL COMPLETO</button>
                 </div>
               </div>
               <div className="vda-well-card">
