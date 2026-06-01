@@ -10,7 +10,7 @@ const tarotistas = [
   { id: 'b0335491-9e31-4488-9292-ab89532ef7a0', nombre: 'Paulina', especialidad: 'Tarot Terapéutico', imagen: 'https://tpaddfpibktbaystjblq.supabase.co/storage/v1/object/public/tarotistas/paulina_1778650234616.jpg', review: 'Excelente en todos los sentidos. La recomiendo, acudo a ella siempre que tengo dudas.' },
   { id: '18beff79-cdc7-4b12-9ef3-066180ac5cf2', nombre: 'Mercedes', especialidad: 'Consultas Sentimentales', imagen: 'https://tpaddfpibktbaystjblq.supabase.co/storage/v1/object/public/tarotistas/mercedes_1778649370330.jpg', review: 'Mercedes tiene un don especial para conectar. Me sentí escuchada y comprendida desde el inicio.' },
   { id: '0c12defa-6e5c-4cce-802d-913cd3476136', nombre: 'Marcos', especialidad: 'Acompañamiento Nocturno', imagen: 'https://tpaddfpibktbaystjblq.supabase.co/storage/v1/object/public/tarotistas/marcos_1778562782805.jpg', review: 'Marcos es excepcional, sus lecturas nocturnas tienen una vibra muy especial y profunda.' },
-  { id: 'ad9be26f-5121-49a6-b5ce-492c6bdba901', nombre: 'Raquel', especialidad: 'Tarot Intuitivo', imagen: 'https://tpaddfpibktbaystjblq.supabase.co/storage/v1/object/public/tarotistas/raquel_1778562859936.jpg', review: 'Raquel tiene un don natural para la lectura intuitiva. Sus interpretaciones son profundas y acertadas.' },
+  { id: 'ad9be26f-5121-49a6-b5ce-492c6bdba901', nombre: 'Minerva', especialidad: 'Tarot Intuitivo', imagen: 'https://tpaddfpibktbaystjblq.supabase.co/storage/v1/object/public/tarotistas/raquel_1778562859936.jpg', review: 'Minerva tiene un don natural para la lectura intuitiva. Sus interpretaciones son profundas y acertadas.' },
   { id: '0f47986b-191b-463b-8ade-4f6443bdc10f', nombre: 'Verónica', especialidad: 'Canalización Espiritual', imagen: 'https://tpaddfpibktbaystjblq.supabase.co/storage/v1/object/public/tarotistas/veronica_1778650560777.jpg', review: 'Verónica es una canalización espiritual pura. Sus mensajes traen claridad y paz interior.' },
   { id: '9a4bfc88-8477-44bf-adc3-397cd3ede9ca', nombre: 'Yeyo', especialidad: 'Orientación Espiritual Nocturna', imagen: 'https://tpaddfpibktbaystjblq.supabase.co/storage/v1/object/public/tarotistas/yeyo_1778651391674.jpg', review: 'Yeyo ofrece orientación espiritual nocturna excepcional. Sus mensajes llegan al alma.' },
   { id: 'duende-001', nombre: 'Duende', especialidad: 'Magia Natural', imagen: '/duendep.jpeg', review: 'Guía espiritual con conexión profunda a la naturaleza. Sus lecturas son transformadoras y llenas de sabiduría ancestral.' },
@@ -18,7 +18,7 @@ const tarotistas = [
 
 const tarotistaImageMap: Record<string, string> = {
   'paqui': '/PAQUI.jpg', 'mercedes': '/mercedes.jpeg', 'gloria': '/gloria.jpg',
-  'yeyo': '/yeyo.jpg', 'raquel': '/minerva.jpg', 'verónica': '/rubi.jpg',
+  'yeyo': '/yeyo.jpg', 'minerva': '/minerva.jpg', 'verónica': '/rubi.jpg',
   'veronica': '/rubi.jpg', 'paulina': '/paulina.jpg', 'marian': '/marian.jpg', 'marcos': '/marcos.jpg', 'duende': '/duende.jpeg',
 };
 

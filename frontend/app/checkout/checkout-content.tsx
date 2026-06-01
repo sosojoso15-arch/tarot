@@ -85,8 +85,8 @@ export function CheckoutContent() {
 
               <div className="space-y-4 mb-8 pb-8 border-b border-gray-200">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Consulta de tarot</span>
-                  <span className="text-blue-950 font-medium">{minutes} minutos</span>
+                  <span className="text-gray-600">{minutes >= 60 ? 'Consulta de bienestar espiritual' : 'Consulta de tarot'}</span>
+                  {minutes < 60 && <span className="text-blue-950 font-medium">{minutes} minutos</span>}
                 </div>
                 <div className="flex justify-between items-center text-lg">
                   <span className="font-bold text-blue-950">Total</span>
