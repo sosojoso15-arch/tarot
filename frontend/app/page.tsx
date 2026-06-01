@@ -212,11 +212,11 @@ export default function Home() {
 
           {/* CAROUSEL */}
           <section className="vda-experts-wrap">
-            <h3 className="vda-wellness-title" style={{ marginBottom: '14px', marginTop: '8px' }}>TAROTISTAS</h3>
             <button className="vda-nav left" onClick={() => setPage(p => Math.max(0, p - 1))} aria-label="Anterior">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M15 6l-6 6 6 6"/></svg>
             </button>
             <div className="vda-experts">
+              <h3 className="vda-wellness-title" style={{ marginBottom: '18px' }}>TAROTISTAS</h3>
               <div className="vda-experts-inner">
                 {visible.map(t => (
                   <article key={t.id} className="vda-card">
