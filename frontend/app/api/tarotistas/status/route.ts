@@ -17,6 +17,7 @@ const EXTENSION_MAP: Record<string, string> = {
 function getZadarmaAuth(params: Record<string, string> = {}): string {
   const apiKey    = process.env.ZADARMA_API_KEY    || '';
   const apiSecret = process.env.ZADARMA_API_SECRET || '';
+  if (!apiKey || !apiSecret) return '';
   const sortedStr = Object.keys(params).sort().map(k => `${k}=${params[k]}`).join('&');
   const md5  = crypto.createHash('md5').update(sortedStr).digest('hex');
   const sign = crypto.createHmac('sha1', apiSecret).update(sortedStr + md5).digest('base64');
@@ -24,6 +25,12 @@ function getZadarmaAuth(params: Record<string, string> = {}): string {
 }
 
 export async function GET() {
+  const apiKey = process.env.ZADARMA_API_KEY || '';
+  if (!apiKey) {
+    // No keys configured — return unknown status for all
+    return NextResponse.json({ success: true, status: {}, unknown: true });
+  }
+
   try {
     const res = await fetch('https://api.zadarma.com/v1/pbx/internal/', {
       headers: { 'Authorization': getZadarmaAuth() },
@@ -31,17 +38,22 @@ export async function GET() {
     });
     const data = await res.json();
 
-    // Build status map: nombre -> online|offline
+    if (data.status !== 'success') {
+      return NextResponse.json({ success: true, status: {}, unknown: true });
+    }
+
     const status: Record<string, boolean> = {};
-    if (data.status === 'success' && Array.isArray(data.info)) {
-      for (const ext of data.info) {
-        const nombre = EXTENSION_MAP[String(ext.number || ext.extension)];
-        if (nombre) status[nombre] = ext.status === 'online' || ext.online === true || ext.registered === true;
+    const list = data.info || data.data || [];
+    for (const ext of list) {
+      const num = String(ext.number || ext.extension || ext.pbx_extension || '');
+      const nombre = EXTENSION_MAP[num];
+      if (nombre) {
+        status[nombre] = ext.status === 'online' || ext.online === 1 || ext.online === true || ext.registered === 1 || ext.registered === true;
       }
     }
 
-    return NextResponse.json({ success: true, status });
+    return NextResponse.json({ success: true, status, unknown: false });
   } catch {
-    return NextResponse.json({ success: false, status: {} });
+    return NextResponse.json({ success: true, status: {}, unknown: true });
   }
 }

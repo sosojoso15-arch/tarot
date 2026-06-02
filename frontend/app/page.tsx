@@ -39,13 +39,17 @@ export default function Home() {
   const [selectedMinutes, setSelectedMinutes] = useState(15);
   const [wellModal, setWellModal] = useState<{ nombre: string; profileImg: string; precio: number; id: string } | null>(null);
   const [onlineStatus, setOnlineStatus] = useState<Record<string, boolean>>({});
+  const [statusUnknown, setStatusUnknown] = useState(true);
 
   useEffect(() => {
     const fetchStatus = async () => {
       try {
         const res = await fetch('/api/tarotistas/status');
         const data = await res.json();
-        if (data.success) setOnlineStatus(data.status);
+        if (data.success) {
+          setOnlineStatus(data.status);
+          setStatusUnknown(data.unknown === true);
+        }
       } catch {}
     };
     fetchStatus();
@@ -223,7 +227,7 @@ export default function Home() {
                     <svg className="vda-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>
                     <div style={{ position: 'relative', display: 'inline-block' }}>
                       <div className="vda-avatar"><img src={t.imagen} alt={t.nombre} /></div>
-                      <span style={{ position: 'absolute', bottom: '4px', right: '4px', width: '13px', height: '13px', borderRadius: '50%', background: onlineStatus[t.nombre] ? '#22c55e' : '#ef4444', border: '2px solid #0a1530', display: 'block' }} />
+                      <span style={{ position: 'absolute', bottom: '4px', right: '4px', width: '13px', height: '13px', borderRadius: '50%', background: statusUnknown ? 'rgba(255,255,255,.25)' : onlineStatus[t.nombre] ? '#22c55e' : '#ef4444', border: '2px solid #0a1530', display: 'block' }} />
                     </div>
                     <div className="vda-name">{t.nombre}</div>
                     <div className="vda-role">{t.especialidad}</div>

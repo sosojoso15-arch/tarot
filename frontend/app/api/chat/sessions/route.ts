@@ -9,10 +9,20 @@ export async function GET() {
   const supabase = getSupabase();
   const { data, error } = await supabase
     .from('chat_sessions')
-    .select('*, chat_messages(count)')
+    .select('*, chat_messages(count, created_at)')
     .order('created_at', { ascending: false });
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  return NextResponse.json({ success: true, data });
+
+  // Add last_message_at per session
+  const enriched = (data || []).map((s: any) => {
+    const msgs = s.chat_messages || [];
+    const lastTs = msgs.length > 0
+      ? msgs.reduce((max: string, m: any) => m.created_at > max ? m.created_at : max, msgs[0].created_at)
+      : null;
+    return { ...s, last_message_at: lastTs };
+  });
+
+  return NextResponse.json({ success: true, data: enriched });
 }
 
 export async function POST(req: NextRequest) {

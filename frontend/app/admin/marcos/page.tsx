@@ -9,6 +9,7 @@ interface Session {
   specialist?: string;
   minutes?: number;
   created_at: string;
+  last_message_at?: string;
   chat_messages?: { count: number }[];
 }
 
@@ -187,7 +188,12 @@ export default function MarcosAdmin() {
                 className={`sitem${active?.id === s.id ? ' active' : ''}`}
                 onClick={() => selectSession(s)}
               >
-                <div className="sname">{s.client_name}</div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
+                  <div className="sname">{s.client_name}</div>
+                  {s.last_message_at && (Date.now() - new Date(s.last_message_at).getTime()) < 5 * 60 * 1000 && (
+                    <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#22c55e', display: 'inline-block', boxShadow: '0 0 6px #22c55e', flexShrink: 0 }} />
+                  )}
+                </div>
                 {s.minutes && (
                   <div style={{ fontSize: '11px', color: '#d6a957', marginTop: '2px', fontWeight: 600 }}>{s.minutes} min</div>
                 )}
