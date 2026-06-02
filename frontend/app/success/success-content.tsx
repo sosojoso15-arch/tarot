@@ -48,12 +48,13 @@ export function SuccessContent() {
   const [chatSpecialist, setChatSpecialist] = useState('');
 
   useEffect(() => {
-    const sp   = localStorage.getItem('vda_pending_specialist');
-    const mins = localStorage.getItem('vda_pending_minutes');
+    // Read specialist from URL param (most reliable across domains)
+    const spFromUrl = searchParams.get('specialist');
+    const sp = spFromUrl || localStorage.getItem('vda_pending_specialist') || '';
     if (sp) {
       localStorage.removeItem('vda_pending_specialist');
-      localStorage.removeItem('vda_pending_minutes');
       localStorage.setItem(`vda_chat_unlocked_${sp}`, 'true');
+      const mins = searchParams.get('minutes') || localStorage.getItem('vda_pending_minutes') || '';
       if (mins) localStorage.setItem(`vda_chat_minutes_${sp}`, mins);
       setChatSpecialist(sp);
     }

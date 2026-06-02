@@ -12,7 +12,8 @@ export function useCreateSession() {
 
 export function useCreateCheckout() {
   return useMutation({
-    mutationFn: (sessionId: string) => api.createCheckout(sessionId),
+    mutationFn: ({ sessionId, specialist }: { sessionId: string; specialist?: string }) =>
+      api.createCheckout(sessionId, specialist),
   });
 }
 

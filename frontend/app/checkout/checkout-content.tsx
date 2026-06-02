@@ -38,14 +38,10 @@ export function CheckoutContent() {
       });
 
       // Create checkout
-      const checkout = await createCheckout.mutateAsync(session.id);
+      const checkout = await createCheckout.mutateAsync({ sessionId: session.id, specialist });
 
       // Redirect to Stripe
       if (checkout.checkoutUrl) {
-        if (specialist) {
-          localStorage.setItem('vda_pending_specialist', specialist);
-          localStorage.setItem('vda_pending_minutes', minutes.toString());
-        }
         window.location.href = checkout.checkoutUrl;
       }
     } catch (error) {

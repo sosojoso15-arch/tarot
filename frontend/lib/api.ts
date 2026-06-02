@@ -27,9 +27,10 @@ export const api = {
     return response.data.data!;
   },
 
-  async createCheckout(sessionId: string): Promise<{ checkoutUrl: string }> {
+  async createCheckout(sessionId: string, specialist?: string): Promise<{ checkoutUrl: string }> {
     const response = await client.post<ApiResponse<{ checkoutUrl: string }>>('/api/stripe/create-checkout', {
       session_id: sessionId,
+      specialist: specialist || '',
     });
     if (!response.data.success) {
       throw new Error(response.data.error || 'Failed to create checkout');

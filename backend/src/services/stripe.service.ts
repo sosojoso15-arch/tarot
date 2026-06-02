@@ -7,7 +7,7 @@ import { callService } from './call.service';
 import crypto from 'crypto';
 
 export const stripeService = {
-  async createCheckoutSession(sessionId: string) {
+  async createCheckoutSession(sessionId: string, specialist?: string) {
     try {
       // Get session details
       const { data: session, error: sessionError } = await supabase
@@ -39,10 +39,10 @@ export const stripeService = {
         line_items: [
           {
             price_data: {
-              currency: 'usd',
+              currency: 'eur',
               product_data: {
-                name: `Tarot Reading - ${session.minutes} minutes`,
-                description: `Professional tarot reading consultation`
+                name: session.minutes >= 60 ? `Consulta de Bienestar Espiritual` : `Consulta de Tarot - ${session.minutes} minutos`,
+                description: `Voces del Alma · Sesión privada`
               },
               unit_amount: pricing.amount_cents
             },
@@ -50,7 +50,7 @@ export const stripeService = {
           }
         ],
         mode: 'payment',
-        success_url: `${process.env.FRONTEND_URL}/success?session_id=${sessionId}&checkout_session_id={CHECKOUT_SESSION_ID}`,
+        success_url: `${process.env.FRONTEND_URL}/success?session_id=${sessionId}&checkout_session_id={CHECKOUT_SESSION_ID}${specialist ? `&specialist=${encodeURIComponent(specialist)}` : ''}`,
         cancel_url: `${process.env.FRONTEND_URL}/checkout?session_id=${sessionId}`,
         customer_email: user.email,
         metadata: {

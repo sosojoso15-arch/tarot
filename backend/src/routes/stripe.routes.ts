@@ -8,8 +8,8 @@ const router = Router();
 router.post(
   '/create-checkout',
   asyncHandler(async (req: Request, res: Response) => {
-    const { session_id } = req.body;
-    const checkoutUrl = await stripeService.createCheckoutSession(session_id);
+    const { session_id, specialist } = req.body;
+    const checkoutUrl = await stripeService.createCheckoutSession(session_id, specialist);
     res.json({ success: true, data: { checkoutUrl } });
   })
 );
