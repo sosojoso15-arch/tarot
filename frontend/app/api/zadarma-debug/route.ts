@@ -5,7 +5,7 @@ export async function GET() {
   const apiKey    = process.env.ZADARMA_API_KEY    || '';
   const apiSecret = process.env.ZADARMA_API_SECRET || '';
 
-  const method = '/v1/pbx/internal/';
+  const method = '/v1/pbx/internal/100/status/';
   const params = '';
   const md5  = crypto.createHash('md5').update(params).digest('hex');
   const sign = crypto.createHmac('sha1', apiSecret).update(method + params + md5).digest('hex');

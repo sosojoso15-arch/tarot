@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Voces del Alma — Tarot & Guía Espiritual</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cinzel:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --cream: #f0e0d1;
+    --cream-2: #ebdec3;
+    --cream-3: #e3d4b3;
+    --ink: #1a1305;
+    --ink-soft: #3d2f15;
+    --navy: #0e1a36;
+    --navy-2: #0a1530;
+    --navy-edge: #1a2a4f;
+    --gold: #b78a3c;
+    --gold-bright: #d6a957;
+    --gold-soft: #cba35a;
+    --rule: rgba(183,138,60,.35);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--cream);
+    background-image:
+      radial-gradient(1200px 600px at 50% -200px, rgba(183,138,60,.18), transparent 60%),
+      radial-gradient(900px 500px at 90% 100%, rgba(183,138,60,.10), transparent 60%);
+    min-height:100vh;
+    line-height:1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page{
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 28px 36px 56px;
+    position:relative;
+  }
+  /* Decorative corner frames */
+  .frame{
+    position:absolute; inset: 14px;
+    pointer-events:none;
+    border: 1px solid rgba(183,138,60,.28);
+    border-radius: 4px;
+  }
+  .corner{position:absolute; width:46px; height:46px; color: var(--gold);}
+  .corner svg{width:100%;height:100%}
+  .corner.tl{top:-1px; left:-1px;}
+  .corner.tr{top:-1px; right:-1px; transform: scaleX(-1);}
+  .corner.bl{bottom:-1px; left:-1px; transform: scaleY(-1);}
+  .corner.br{bottom:-1px; right:-1px; transform: scale(-1,-1);}
+
+  /* ========== HERO ========== */
+  .hero{
+    display:grid;
+    grid-template-columns: 0.62fr 1.55fr;
+    gap: 12px;
+    align-items:center;
+    padding-top: 24px;
+  }
+  .brand{
+    display:flex; flex-direction:column; align-items:flex-start; gap:6px;
+    margin-bottom: 18px;
+  }
+  .roman{
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.32em;
+    font-size: 12px;
+    color: var(--gold);
+    margin-left: 48px;
+    margin-bottom: 2px;
+  }
+  .seal{
+    width: 96px; height: 96px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 50% 50%, #142147 0%, #0a1430 70%),
+      var(--navy);
+    border: 2px solid var(--gold);
+    box-shadow: 0 0 0 4px rgba(183,138,60,.15), inset 0 0 30px rgba(0,0,0,.5);
+    position:relative;
+    display:grid; place-items:center;
+    overflow:hidden;
+  }
+  .seal::before{
+    content:"";
+    position:absolute; inset:8px;
+    border-radius:50%;
+    border: 1px solid rgba(214,169,87,.45);
+  }
+  .seal-inner{
+    width: 78%; height: 78%;
+    border-radius:50%;
+    position:relative;
+    background:
+      conic-gradient(from 0deg,
+        rgba(214,169,87,.0) 0deg, rgba(214,169,87,.35) 18deg, rgba(214,169,87,0) 36deg,
+        rgba(214,169,87,0) 60deg, rgba(214,169,87,.35) 78deg, rgba(214,169,87,0) 96deg,
+        rgba(214,169,87,0) 120deg, rgba(214,169,87,.35) 138deg, rgba(214,169,87,0) 156deg,
+        rgba(214,169,87,0) 180deg, rgba(214,169,87,.35) 198deg, rgba(214,169,87,0) 216deg,
+        rgba(214,169,87,0) 240deg, rgba(214,169,87,.35) 258deg, rgba(214,169,87,0) 276deg,
+        rgba(214,169,87,0) 300deg, rgba(214,169,87,.35) 318deg, rgba(214,169,87,0) 336deg);
+    display:grid; place-items:center;
+  }
+  .seal-letters{
+    position:absolute; inset:0;
+    font-family:'Cinzel', serif;
+    color: var(--gold-bright);
+    font-size: 12px;
+    letter-spacing: .15em;
+  }
+  .seal-letters span{
+    position:absolute;
+    left:50%; top:50%;
+    transform-origin: 0 0;
+  }
+  .seal-core{
+    width: 54%; height:54%;
+    border-radius:50%;
+    background: radial-gradient(circle at 50% 40%, #1a2a55, #08112a);
+    border: 1px solid rgba(214,169,87,.55);
+    display:grid; place-items:center;
+    color: var(--gold-bright);
+    font-family:'Cinzel', serif;
+    font-size: 22px;
+  }
+  .brand-name{
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 20px;
+    letter-spacing: .14em;
+    color: var(--ink-soft);
+    margin-top: 10px;
+    margin-left: 4px;
+  }
+  .brand-sub{
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    letter-spacing: .32em;
+    color: var(--gold);
+    margin-left: 4px;
+  }
+  h1.headline{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 1.05;
+    color: var(--ink);
+    margin: 12px 0 4px;
+    letter-spacing: -0.005em;
+  }
+  h1.headline em{
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 500;
+  }
+  .divider{
+    width: 50px; height: 12px;
+    margin: 12px 0 16px;
+    color: var(--gold);
+  }
+  .divider svg{width:100%;height:100%}
+  .lead{
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--ink);
+    max-width: 240px;
+    margin: 0 0 8px;
+  }
+  .copy{
+    font-size: 10.5px;
+    color: var(--ink-soft);
+    max-width: 250px;
+    line-height: 1.6;
+  }
+
+  /* Hero right image - difumina más los bordes irregulares */
+  .hero-art{
+    width: 130%;
+    max-width: none;
+    height: auto;
+    display: block;
+    margin-right: -18%;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    -webkit-mask-image:
+      linear-gradient(to bottom, #000 60%, rgba(0,0,0,0) 100%),
+      linear-gradient(to left,   #000 85%, rgba(0,0,0,0) 100%),
+      linear-gradient(to right,  #000 88%, rgba(0,0,0,0) 100%),
+      linear-gradient(to top,    #000 90%, rgba(0,0,0,0) 100%);
+    -webkit-mask-composite: source-in;
+            mask-image:
+      linear-gradient(to bottom, #000 60%, rgba(0,0,0,0) 100%),
+      linear-gradient(to left,   #000 85%, rgba(0,0,0,0) 100%),
+      linear-gradient(to right,  #000 88%, rgba(0,0,0,0) 100%),
+      linear-gradient(to top,    #000 90%, rgba(0,0,0,0) 100%);
+            mask-composite: intersect;
+  }
+
+  /* ========== STATS ========== */
+  .stats{
+    margin-top: 40px;
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: rgba(255,250,236,.55);
+    border: 1px solid rgba(183,138,60,.3);
+    border-radius: 6px;
+    padding: 22px 18px;
+  }
+  .stat{
+    display:flex; align-items:center; gap: 14px;
+    padding: 0 12px;
+    border-right: 1px solid rgba(183,138,60,.18);
+  }
+  .stat:last-child{border-right:none}
+  .stat-icon{
+    width: 34px; height: 34px; flex:none;
+    color: var(--gold);
+    display:grid; place-items:center;
+  }
+  .stat-icon svg{width:100%;height:100%}
+  .stat-num{
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    color: var(--ink);
+    font-weight: 600;
+    line-height: 1;
+  }
+  .stat-label{
+    font-size: 12px;
+    color: var(--ink-soft);
+    opacity: .85;
+    margin-top: 4px;
+  }
+
+  /* ========== EXPERT GRID ========== */
+  .experts-wrap{
+    margin-top: 22px;
+    position:relative;
+    padding: 0 38px;
+  }
+  .experts{
+    background: linear-gradient(180deg, #0d1a37 0%, #0a1530 100%);
+    border: 1px solid rgba(214,169,87,.35);
+    border-radius: 6px;
+    padding: 26px 22px 22px;
+    box-shadow: inset 0 0 60px rgba(0,0,0,.35);
+    position:relative;
+  }
+  .experts-inner{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .card{
+    background: transparent;
+    border: 1px solid rgba(214,169,87,.35);
+    border-radius: 5px;
+    padding: 18px 14px 16px;
+    color: #e8d9b3;
+    position:relative;
+    display:flex; flex-direction:column; align-items:center;
+    text-align:center;
+  }
+  .heart{
+    position:absolute; right:10px; top:10px;
+    color: rgba(214,169,87,.65);
+    width: 16px; height:16px;
+  }
+  .avatar{
+    width: 110px; height:110px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    box-shadow: 0 0 0 3px rgba(214,169,87,.12);
+    overflow:hidden;
+    background:
+      repeating-linear-gradient(45deg, rgba(255,255,255,.05) 0 3px, transparent 3px 10px),
+      linear-gradient(160deg, #2a3a64, #0e1a36);
+    display:grid; place-items:center;
+    color: rgba(214,169,87,.55);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 9px; letter-spacing:.15em;
+  }
+  .name{
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    color: #f1deae;
+    margin-top: 14px;
+    line-height:1;
+  }
+  .role{
+    font-size: 11.5px;
+    color: #d6c08a;
+    margin-top: 6px;
+    letter-spacing:.04em;
+  }
+  .quote{
+    font-size: 12px;
+    color: #c8b896;
+    line-height: 1.55;
+    margin-top: 14px;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13.5px;
+  }
+  .stars{
+    color: var(--gold-bright);
+    margin-top: 14px;
+    letter-spacing: 3px;
+    font-size: 13px;
+  }
+  .nav-arrow{
+    position:absolute; top:50%; transform: translateY(-50%);
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: rgba(255,250,236,.6);
+    border: 1px solid rgba(183,138,60,.35);
+    color: var(--gold);
+    display:grid; place-items:center;
+    cursor:pointer;
+    user-select:none;
+  }
+  .nav-arrow.left{left: 0;}
+  .nav-arrow.right{right: 0;}
+  .dots{
+    display:flex; justify-content:center; gap:8px;
+    margin-top: 14px;
+  }
+  .dot{
+    width:8px; height:8px; border-radius:50%;
+    background: rgba(183,138,60,.35);
+  }
+  .dot.active{background: var(--gold);}
+
+  /* ========== WELLNESS BAND ========== */
+  .wellness{
+    margin-top: 20px;
+    background: linear-gradient(180deg, #0d1a37 0%, #0a1530 100%);
+    border: 1px solid rgba(214,169,87,.35);
+    border-radius: 6px;
+    padding: 22px 26px;
+    color: #e8d9b3;
+  }
+  .wellness-title{
+    text-align:center;
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: .42em;
+    color: var(--gold-bright);
+    margin: 0 0 22px;
+    display:flex; align-items:center; justify-content:center; gap:14px;
+  }
+  .wellness-title::before, .wellness-title::after{
+    content:""; height:1px; width: 60px; background: rgba(214,169,87,.5);
+  }
+  .wellness-grid{
+    display:grid; grid-template-columns: 1fr 1fr; gap: 28px;
+  }
+  .well-card{
+    display:grid; grid-template-columns: 130px 1fr; gap: 18px;
+    align-items:center;
+  }
+  .well-card .avatar{width: 120px; height:120px;}
+  .well-icon{
+    width: 26px; height: 26px;
+    color: var(--gold-bright);
+    margin-bottom: 4px;
+  }
+  .well-name{
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    color:#f1deae;
+    line-height:1;
+  }
+  .well-role{
+    font-size: 11.5px; color: #d6c08a;
+    margin-top: 4px; margin-bottom: 10px;
+  }
+  .well-quote{
+    font-size: 12.5px; color:#c8b896; line-height:1.6;
+    margin: 0;
+  }
+  .well-stars{
+    color: var(--gold-bright);
+    margin-top: 10px;
+    letter-spacing: 3px;
+    font-size: 13px;
+  }
+
+  /* ========== CTA ========== */
+  .cta{
+    margin-top: 22px;
+    background: rgba(255,250,236,.55);
+    border: 1px solid rgba(183,138,60,.3);
+    border-radius: 6px;
+    padding: 24px 26px;
+    display:grid;
+    grid-template-columns: 200px 1fr auto;
+    gap: 22px;
+    align-items:center;
+  }
+  .cta-art{
+    width: 200px;
+    height: auto;
+    display: block;
+    background: transparent;
+    border: none;
+  }
+  .cta h2{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 1.15;
+    color: var(--ink);
+    margin: 0 0 8px;
+  }
+  .cta p{
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin: 0 0 14px;
+    max-width: 480px;
+  }
+  .cta-features{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    max-width: 520px;
+  }
+  .feat{
+    display:flex; flex-direction:column; align-items:center; text-align:center; gap:4px;
+  }
+  .feat-icon{width:22px; height:22px; color: var(--gold);}
+  .feat-label{
+    font-size: 11px; color: var(--ink-soft); line-height:1.3;
+  }
+  .btn{
+    background: linear-gradient(180deg, #c89a47 0%, #a87a30 100%);
+    color: #fff8e1;
+    border: 1px solid rgba(120,85,30,.6);
+    padding: 16px 26px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    letter-spacing: .02em;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 6px 16px -8px rgba(120,85,30,.55), inset 0 1px 0 rgba(255,255,255,.18);
+    text-decoration:none;
+    display:inline-flex; align-items:center; gap:10px;
+    white-space:nowrap;
+  }
+  .btn:hover{filter: brightness(1.06)}
+
+  /* ========== FOOTER ========== */
+  footer{
+    margin-top: 28px;
+    text-align:center;
+    padding: 18px 0 6px;
+  }
+  .socials{
+    display:flex; justify-content:center; gap: 10px; margin-bottom: 10px;
+  }
+  .socials a{
+    width: 28px; height:28px;
+    color: var(--gold);
+    display:grid; place-items:center;
+    border: 1px solid rgba(183,138,60,.35);
+    border-radius: 50%;
+  }
+  .socials svg{width:14px; height:14px}
+  .copyright{
+    font-size: 11px;
+    color: var(--ink-soft);
+    letter-spacing:.04em;
+  }
+  .moonline{
+    margin-top: 6px;
+    color: var(--gold);
+    letter-spacing: .6em;
+    font-size: 11px;
+  }
+
+  /* responsive */
+  @media (max-width: 880px){
+    .page{padding: 18px 20px 40px;}
+    .hero{grid-template-columns: 1fr; gap: 24px;}
+    .hero-art{width: 100%; margin-right: 0;}
+    .roman{margin-left: 56px; font-size: 13px;}
+    .seal{width: 110px; height: 110px;}
+    .brand-name{font-size: 22px; margin-top: 12px;}
+    .brand-sub{font-size: 10px;}
+    h1.headline{font-size: 44px; max-width: 100%;}
+    .lead{font-size: 14px; max-width: 100%;}
+    .copy{font-size: 12.5px; max-width: 100%;}
+    .divider{width: 60px; height: 14px; margin: 16px 0 20px;}
+    .stats{grid-template-columns: repeat(2, 1fr); gap: 18px 0; padding: 18px 12px;}
+    .stat{border-right:none; padding: 6px 8px;}
+    .stat:nth-child(odd){border-right: 1px solid rgba(183,138,60,.18);}
+    .stat-num{font-size: 20px;}
+    .stat-label{font-size: 11px;}
+    .experts-wrap{padding: 0 24px;}
+    .experts-inner{grid-template-columns: repeat(2, 1fr); gap: 12px;}
+    .card{padding: 14px 10px 12px;}
+    .avatar{width: 90px; height: 90px;}
+    .name{font-size: 19px;}
+    .role{font-size: 11px;}
+    .quote{font-size: 11.5px;}
+    .nav-arrow{width: 26px; height: 26px;}
+    .wellness{padding: 18px 16px;}
+    .wellness-title{font-size: 11px; letter-spacing: .3em;}
+    .wellness-grid{grid-template-columns: 1fr; gap: 18px;}
+    .well-card{grid-template-columns: 100px 1fr; gap: 14px;}
+    .well-card .avatar{width: 100px; height: 100px;}
+    .well-name{font-size: 19px;}
+    .well-role{font-size: 11px;}
+    .well-quote{font-size: 12px;}
+    .cta{grid-template-columns: 1fr; gap: 16px; padding: 20px;}
+    .cta-art{width: 160px; margin: 0 auto;}
+    .cta h2{font-size: 22px; text-align: center;}
+    .cta p{font-size: 12.5px; text-align: center; margin-left:auto; margin-right:auto;}
+    .cta-features{margin: 0 auto; max-width: 100%;}
+    .feat-label{font-size: 10px;}
+    .btn{margin: 0 auto; font-size: 17px; padding: 14px 22px;}
+  }
+  @media (max-width: 480px){
+    .page{padding: 14px 14px 36px;}
+    h1.headline{font-size: 36px;}
+    .experts-wrap{padding: 0 18px;}
+    .experts-inner{grid-template-columns: 1fr;}
+    .stats{grid-template-columns: 1fr 1fr;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="frame"></div>
+  <div class="corner tl"><svg viewBox="0 0 46 46" fill="none" stroke="currentColor" stroke-width="1"><path d="M2 18 L2 2 L18 2"/><path d="M6 6 L14 6 M6 6 L6 14" opacity=".55"/><circle cx="2" cy="2" r="1.4" fill="currentColor" stroke="none"/></svg></div>
+  <div class="corner tr"><svg viewBox="0 0 46 46" fill="none" stroke="currentColor" stroke-width="1"><path d="M2 18 L2 2 L18 2"/><path d="M6 6 L14 6 M6 6 L6 14" opacity=".55"/><circle cx="2" cy="2" r="1.4" fill="currentColor" stroke="none"/></svg></div>
+  <div class="corner bl"><svg viewBox="0 0 46 46" fill="none" stroke="currentColor" stroke-width="1"><path d="M2 18 L2 2 L18 2"/><path d="M6 6 L14 6 M6 6 L6 14" opacity=".55"/><circle cx="2" cy="2" r="1.4" fill="currentColor" stroke="none"/></svg></div>
+  <div class="corner br"><svg viewBox="0 0 46 46" fill="none" stroke="currentColor" stroke-width="1"><path d="M2 18 L2 2 L18 2"/><path d="M6 6 L14 6 M6 6 L6 14" opacity=".55"/><circle cx="2" cy="2" r="1.4" fill="currentColor" stroke="none"/></svg></div>
+
+  <!-- ============== HERO ============== -->
+  <section class="hero">
+    <div>
+      <div class="brand">
+        <div class="roman">XXIII</div>
+        <div class="seal" aria-hidden="true">
+          <div class="seal-inner">
+            <div class="seal-core">✦</div>
+          </div>
+        </div>
+        <div class="brand-name">VOCES DEL ALMA</div>
+        <div class="brand-sub">TAROT &amp; GUÍA ESPIRITUAL</div>
+      </div>
+
+      <h1 class="headline">Cuando todo parece confuso, <em>tu alma ya conoce la respuesta.</em></h1>
+
+      <div class="divider"><svg viewBox="0 0 60 14" fill="none" stroke="currentColor" stroke-width="1"><line x1="0" y1="7" x2="22" y2="7"/><path d="M30 2 L34 7 L30 12 L26 7 Z" fill="currentColor"/><line x1="38" y1="7" x2="60" y2="7"/></svg></div>
+
+      <p class="lead">Detrás de cada duda hay una verdad esperando ser revelada.</p>
+      <p class="copy">Conecta con nuestra red de tarotistas certificadas y recibe la claridad, el propósito y la dirección que tu alma necesita para avanzar.</p>
+    </div>
+
+    <img class="hero-art" src="assets/hero.png" alt="" />
+  </section>
+
+  <!-- ============== STATS ============== -->
+  <section class="stats">
+    <div class="stat">
+      <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c.6-3.4 3-5.2 6-5.2s5.4 1.8 6 5.2"/><circle cx="16.5" cy="7" r="2.4"/><path d="M14 14.4c.7-.3 1.6-.5 2.5-.5 2.6 0 4.4 1.5 5 4.1"/></svg></div>
+      <div><div class="stat-num">5000+</div><div class="stat-label">Clientes satisfechos</div></div>
+    </div>
+    <div class="stat">
+      <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 3l2.5 5.4 5.9.6-4.4 4 1.3 5.8L12 16l-5.3 2.8 1.3-5.8L3.6 9l5.9-.6L12 3z"/></svg></div>
+      <div><div class="stat-num">4.9 / 5</div><div class="stat-label">Valoración promedio</div></div>
+    </div>
+    <div class="stat">
+      <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3l8 3v5c0 5-3.6 8.4-8 10-4.4-1.6-8-5-8-10V6l8-3z"/><path d="M9 12l2.2 2.2L16 9.8" /></svg></div>
+      <div><div class="stat-num">100%</div><div class="stat-label">Consultas confidenciales</div></div>
+    </div>
+    <div class="stat">
+      <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg></div>
+      <div><div class="stat-num">24 / 7</div><div class="stat-label">Siempre disponibles</div></div>
+    </div>
+  </section>
+
+  <!-- ============== EXPERT CAROUSEL ============== -->
+  <section class="experts-wrap">
+    <div class="nav-arrow left" aria-label="Anterior">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg>
+    </div>
+    <div class="experts">
+      <div class="experts-inner">
+        <article class="card">
+          <svg class="heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>
+          <div class="avatar">FOTO · RETRATO</div>
+          <div class="name">Silvia</div>
+          <div class="role">Profesional · Psicóloga</div>
+          <p class="quote">"[Espacio para testimonio real del cliente. Reemplaza este texto con la reseña que aparece en tu sitio actual.]"</p>
+          <div class="stars">★ ★ ★ ★ ★</div>
+        </article>
+
+        <article class="card">
+          <svg class="heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>
+          <div class="avatar">FOTO · RETRATO</div>
+          <div class="name">Gloria Miranda</div>
+          <div class="role">Evolutivo</div>
+          <p class="quote">"[Espacio para testimonio real del cliente. Reemplaza este texto con la reseña que aparece en tu sitio actual.]"</p>
+          <div class="stars">★ ★ ★ ★ ★</div>
+        </article>
+
+        <article class="card">
+          <svg class="heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>
+          <div class="avatar">FOTO · RETRATO</div>
+          <div class="name">Marian</div>
+          <div class="role">Tarot y Reiki</div>
+          <p class="quote">"[Espacio para testimonio real del cliente. Reemplaza este texto con la reseña que aparece en tu sitio actual.]"</p>
+          <div class="stars">★ ★ ★ ★ ★</div>
+        </article>
+
+        <article class="card">
+          <svg class="heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>
+          <div class="avatar">FOTO · RETRATO</div>
+          <div class="name">Paulina</div>
+          <div class="role">Terapéutico</div>
+          <p class="quote">"[Espacio para testimonio real del cliente. Reemplaza este texto con la reseña que aparece en tu sitio actual.]"</p>
+          <div class="stars">★ ★ ★ ★ ★</div>
+        </article>
+      </div>
+      <div class="dots">
+        <div class="dot"></div>
+        <div class="dot active"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+    <div class="nav-arrow right" aria-label="Siguiente">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg>
+    </div>
+  </section>
+
+  <!-- ============== WELLNESS ============== -->
+  <section class="wellness">
+    <h3 class="wellness-title">BIENESTAR ESPIRITUAL</h3>
+    <div class="wellness-grid">
+      <div class="well-card">
+        <div class="avatar">FOTO · RETRATO</div>
+        <div>
+          <svg class="well-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><polygon points="12,2 22,8 22,16 12,22 2,16 2,8" /><polygon points="12,6 18,9.5 18,14.5 12,18 6,14.5 6,9.5" opacity=".55"/></svg>
+          <div class="well-name">Fernando</div>
+          <div class="well-role">Método LEMA</div>
+          <p class="well-quote">Acompañamiento consciente para liberar bloqueos, transformar patrones y crear la vida que realmente deseas.</p>
+          <div class="well-stars">★ ★ ★ ★ ★</div>
+        </div>
+      </div>
+      <div class="well-card">
+        <div class="avatar">FOTO · RETRATO</div>
+        <div>
+          <svg class="well-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18 M12 3a14 14 0 0 1 0 18 M12 3a14 14 0 0 0 0 18" opacity=".55"/></svg>
+          <div class="well-name">Eli</div>
+          <div class="well-role">Registros Akásicos</div>
+          <p class="well-quote">Accede a la información de tu alma para obtener respuestas, claridad y guía en tu camino de evolución.</p>
+          <div class="well-stars">★ ★ ★ ★ ★</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== CTA ============== -->
+  <section class="cta">
+    <img class="cta-art" src="assets/cta.png" alt="" />
+    <div>
+      <h2>¿Quieres ser un nuevo miembro de Voces del Alma?</h2>
+      <p>Únete a nuestra comunidad y accede a recursos exclusivos, contenido espiritual y herramientas para tu crecimiento.</p>
+      <div class="cta-features">
+        <div class="feat">
+          <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="9" cy="8" r="3"/><path d="M3 19c.5-3 3-4.6 6-4.6S14.5 16 15 19"/><circle cx="17" cy="7" r="2.2"/></svg>
+          <div class="feat-label">Comunidad<br/>de expertos</div>
+        </div>
+        <div class="feat">
+          <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 12s3.6-6.4 10-6.4S22 12 22 12s-3.6 6.4-10 6.4S2 12 2 12z"/><circle cx="12" cy="12" r="2.5"/></svg>
+          <div class="feat-label">Visibilidad<br/>garantizada</div>
+        </div>
+        <div class="feat">
+          <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3l2.5 5.4 5.9.6-4.4 4 1.3 5.8L12 16l-5.3 2.8 1.3-5.8L3.6 9l5.9-.6L12 3z"/></svg>
+          <div class="feat-label">Consultas<br/>constantes</div>
+        </div>
+        <div class="feat">
+          <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><polyline points="3,17 9,11 13,15 21,7"/><polyline points="15,7 21,7 21,13"/></svg>
+          <div class="feat-label">Crecimiento<br/>profesional</div>
+        </div>
+      </div>
+    </div>
+    <a class="btn" href="#">Hazte experto <span>→</span></a>
+  </section>
+
+  <!-- ============== FOOTER ============== -->
+  <footer>
+    <div class="socials">
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".8" fill="currentColor"/></svg></a>
+      <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M14 8h2V5h-2.5C12 5 11 6 11 7.5V10H9v3h2v8h3v-8h2.2l.3-3H14V8.5c0-.3.2-.5.5-.5H14z"/></svg></a>
+    </div>
+    <div class="copyright">© 2024 Voces del Alma · Todos los derechos reservados</div>
+    <div class="moonline">( ☾ ✦ ☽ )</div>
+  </footer>
+</div>
+</body>
+</html>
