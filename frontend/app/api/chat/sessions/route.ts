@@ -7,20 +7,32 @@ function getSupabase() {
 
 export async function GET() {
   const supabase = getSupabase();
-  const { data, error } = await supabase
+
+  const { data: sessions, error } = await supabase
     .from('chat_sessions')
-    .select('*, chat_messages(count, created_at)')
+    .select('*')
     .order('created_at', { ascending: false });
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
-  // Add last_message_at per session
-  const enriched = (data || []).map((s: any) => {
-    const msgs = s.chat_messages || [];
-    const lastTs = msgs.length > 0
-      ? msgs.reduce((max: string, m: any) => m.created_at > max ? m.created_at : max, msgs[0].created_at)
-      : null;
-    return { ...s, last_message_at: lastTs };
-  });
+  // Fetch all messages separately (no JOIN, avoids FK dependency)
+  const { data: msgs } = await supabase
+    .from('chat_messages')
+    .select('session_id, created_at');
+
+  const counts: Record<string, number> = {};
+  const lastTs: Record<string, string> = {};
+  for (const m of msgs || []) {
+    counts[m.session_id] = (counts[m.session_id] || 0) + 1;
+    if (!lastTs[m.session_id] || m.created_at > lastTs[m.session_id]) {
+      lastTs[m.session_id] = m.created_at;
+    }
+  }
+
+  const enriched = (sessions || []).map((s: any) => ({
+    ...s,
+    chat_messages: [{ count: counts[s.id] || 0 }],
+    last_message_at: lastTs[s.id] || null,
+  }));
 
   return NextResponse.json({ success: true, data: enriched });
 }
