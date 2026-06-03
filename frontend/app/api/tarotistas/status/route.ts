@@ -14,43 +14,48 @@ const EXTENSION_MAP: Record<string, string> = {
   '109': 'Duende',
 };
 
-function getZadarmaAuth(params: Record<string, string> = {}): string {
+function zadarmaGet(method: string) {
   const apiKey    = process.env.ZADARMA_API_KEY    || '';
   const apiSecret = process.env.ZADARMA_API_SECRET || '';
-  if (!apiKey || !apiSecret) return '';
-  const sortedStr = Object.keys(params).sort().map(k => `${k}=${params[k]}`).join('&');
-  const md5  = crypto.createHash('md5').update(sortedStr).digest('hex');
-  const sign = crypto.createHmac('sha1', apiSecret).update(sortedStr + md5).digest('base64');
-  return `Zadarma ${apiKey}:${sign}`;
+  const params = '';
+  const md5  = crypto.createHash('md5').update(params).digest('hex');
+  const sign = crypto.createHmac('sha1', apiSecret).update(method + params + md5).digest('hex');
+  const auth = `${apiKey}:${Buffer.from(sign).toString('base64')}`;
+  return fetch('https://api.zadarma.com' + method, { headers: { 'Authorization': auth }, next: { revalidate: 0 } });
 }
 
 export async function GET() {
   const apiKey = process.env.ZADARMA_API_KEY || '';
-  if (!apiKey) {
-    // No keys configured — return unknown status for all
-    return NextResponse.json({ success: true, status: {}, unknown: true });
-  }
+  if (!apiKey) return NextResponse.json({ success: true, status: {}, unknown: true });
 
   try {
-    const res = await fetch('https://api.zadarma.com/v1/pbx/internal/', {
-      headers: { 'Authorization': getZadarmaAuth() },
-      next: { revalidate: 0 },
-    });
-    const data = await res.json();
-
-    if (data.status !== 'success') {
+    // Get list of extensions
+    const listRes = await zadarmaGet('/v1/pbx/internal/');
+    const listData = await listRes.json();
+    if (listData.status !== 'success' || !Array.isArray(listData.numbers)) {
       return NextResponse.json({ success: true, status: {}, unknown: true });
     }
 
+    // Query online status for each extension in parallel
     const status: Record<string, boolean> = {};
-    const list = data.info || data.data || [];
-    for (const ext of list) {
-      const num = String(ext.number || ext.extension || ext.pbx_extension || '');
-      const nombre = EXTENSION_MAP[num];
-      if (nombre) {
-        status[nombre] = ext.status === 'online' || ext.online === 1 || ext.online === true || ext.registered === 1 || ext.registered === true;
-      }
-    }
+    await Promise.all(
+      listData.numbers.map(async (num: number) => {
+        const nombre = EXTENSION_MAP[String(num)];
+        if (!nombre) return;
+        try {
+          const r = await zadarmaGet(`/v1/pbx/internal/${num}/status/`);
+          const d = await r.json();
+          const online = d.status === 'success' && (
+            d.is_online === true || d.is_online === 'true' || d.is_online === 1 ||
+            d.online === true || d.online === 'true' || d.online === 1 ||
+            d.registered === true || d.registration === 'online'
+          );
+          status[nombre] = !!online;
+        } catch {
+          status[nombre] = false;
+        }
+      })
+    );
 
     return NextResponse.json({ success: true, status, unknown: false });
   } catch {
