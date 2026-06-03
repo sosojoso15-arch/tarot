@@ -108,6 +108,22 @@ export default function MarcosAdmin() {
     }
   };
 
+  // Heartbeat: mark this specialist as online while panel is open
+  useEffect(() => {
+    if (!currentUser) return;
+    const myName = mySpecialist[currentUser] || 'Marcos';
+    const ping = () => {
+      fetch('/api/presence', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ specialist: myName }),
+      }).catch(() => {});
+    };
+    ping();
+    const id = setInterval(ping, 20000);
+    return () => clearInterval(id);
+  }, [currentUser]);
+
   useEffect(() => {
     if (!currentUser) return;
     fetchSessions();

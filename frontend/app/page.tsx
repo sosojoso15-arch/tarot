@@ -44,12 +44,19 @@ export default function Home() {
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const res = await fetch('/api/tarotistas/status');
-        const data = await res.json();
-        if (data.success) {
-          setOnlineStatus(data.status);
-          setStatusUnknown(data.unknown === true);
+        const [zRes, pRes] = await Promise.all([
+          fetch('/api/tarotistas/status'),
+          fetch('/api/presence'),
+        ]);
+        const zData = await zRes.json();
+        const pData = await pRes.json();
+        const merged: Record<string, boolean> = zData.success ? { ...zData.status } : {};
+        // Chat specialists use panel presence instead of Zadarma
+        if (pData.success && pData.online) {
+          for (const name in pData.online) merged[name] = pData.online[name];
         }
+        setOnlineStatus(merged);
+        setStatusUnknown(zData.unknown === true && !pData.success);
       } catch {}
     };
     fetchStatus();
