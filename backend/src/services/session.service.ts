@@ -43,11 +43,17 @@ export const sessionService = {
       const pricing = getPricing(validated.minutes);
       const sessionCode = generateSessionCode();
 
+      // Only store tarotista_id if it's a valid UUID (phone tarotistas)
+      const isUuid = typeof tarotista_id === 'string' &&
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(tarotista_id);
+      const validTarotistaId = isUuid ? tarotista_id : null;
+
       // Create session
       const { data: session, error: sessionError } = await supabase
         .from('sessions')
         .insert({
           user_id: user.id,
+          tarotista_id: validTarotistaId,
           minutes: validated.minutes,
           status: 'pending',
           price_cents: pricing.amount_cents,
